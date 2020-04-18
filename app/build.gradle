@@ -1,0 +1,91 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+def STRING = "String"
+def BOOLEAN = "boolean"
+def BASE_URL = "BASE_URL"
+def APP_ID = "APP_ID"
+
+Properties props = new Properties()
+props.load(new FileInputStream(file("gradle.properties")))
+def base_address = props.getProperty("base_url").toString()
+def app_id = props.getProperty("app_id").toString()
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "koshur.kashmirievents"
+        minSdkVersion 22
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField STRING, BASE_URL, base_address
+        buildConfigField STRING, APP_ID, app_id
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    implementation 'com.google.android.material:material:1.1.0'
+
+    /*Room */
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-rxjava2:$roomVersion"
+
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+    implementation 'com.github.sundeepk:compact-calendar-view:1.9.1'
+    implementation 'pub.devrel:easypermissions:0.1.5'
+    implementation('com.google.api-client:google-api-client-android:1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+
+    implementation "com.github.kizitonwose:CalendarView:0.3.1"
+
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    // android architecture component
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_Logging_Version"
+
+    // Databinding collection adapter
+    implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:3.1.1"
+    implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:3.1.1"
+
+    // Timber for Logging
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    testImplementation 'junit:junit:4.13'
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}

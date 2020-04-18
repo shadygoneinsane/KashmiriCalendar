@@ -1,20 +1,19 @@
-package vikesh.dass.lockmeout.local.database
+package koushur.kashmirievents.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import vikesh.dass.lockmeout.local.dao.RunningLockProfileDao
-import vikesh.dass.lockmeout.local.dao.ScheduleLockProfileDao
-import vikesh.dass.lockmeout.local.entity.RunningLockProfile
-import vikesh.dass.lockmeout.local.entity.ScheduleLockProfile
+import koushur.kashmirievents.database.dao.MonthDataDao
+import koushur.kashmirievents.database.entity.MonthDataEntity
 
-/****
+/**
  * Application Database
- **/
-@Database(entities = [ScheduleLockProfile::class, RunningLockProfile::class],
-        version = 2, exportSchema = false)
+ */
+@Database(
+    entities = [MonthDataEntity::class],
+    version = 1, exportSchema = false
+)
 abstract class AppDb : RoomDatabase() {
 
-    abstract fun scheduleLockProfileDao(): ScheduleLockProfileDao
+    abstract fun monthDataDao(): MonthDataDao
 
-    abstract fun runningLockProfileDao(): RunningLockProfileDao
 }

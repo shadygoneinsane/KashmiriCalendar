@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/example_5_item_view_bg_color"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/eventDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#5D4037"
+        android:gravity="center"
+        android:lineSpacingExtra="2.5dp"
+        android:textAllCaps="true"
+        android:textColor="@color/example_5_text_grey"
+        android:textSize="12sp"
+        tools:text="THU JUN 30\n14:00" />
+
+    <TextView
+        android:id="@+id/eventName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_8"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:textColor="@color/example_5_text_grey"
+        android:textSize="16sp"
+        tools:text="Ashtami" />
+</LinearLayout>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Koushir Calendar</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="rate">Rate</string>
+    <string name="contact">Contact for support</string>
+    <string name="about">About</string>
+
+    <string name="something_wrong">Something went wrong</string>
+    <string name="reload">RETRY</string>
+    <string name="today">TODAY</string>
+    <string name="forecast">FORECAST</string>
+</resources>

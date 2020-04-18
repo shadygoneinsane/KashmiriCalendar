@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorAccent">#FF5252</color>
+    <color name="state_normal">#7298ce</color>
+    <color name="state_pressed">#5f8ac7</color>
+    <color name="state_focused">#85a6d5</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="end_not_pressed">#3864a1</color>
+
+    <color name="LightPrimaryColor">#B2DFDB</color>
+    <color name="TextIconsColor">#FFFFFF</color>
+    <color name="PrimaryTextColor">#212121</color>
+    <color name="secondary_color">#757575</color>
+    <color name="DividerColor">#BDBDBD</color>
+
+
+    <color name="grey">#BEBEBE</color>
+    <color name="twitter">#23C4FF</color>
+
+    <color name="colorTextPrimary1">#01458e</color>
+    <color name="colorTextPrimary2">#333333</color>
+    <color name="colorTextPrimary3">#0f0f0f</color>
+
+    <color name="colorTextSecondary1">#666666</color>
+    <color name="colorTextSecondary2">#999999</color>
+    <color name="colorTextSecondary3">#efefef</color>
+
+    //Calendar
+    <color name="example_5_page_bg_color">#0E0E0E</color>
+    <color name="example_5_item_view_bg_color">#1B1B1B</color>
+    <color name="example_5_toolbar_color">#282828</color>
+    <color name="example_5_text_grey">#bdbdbd</color>
+    <color name="example_5_text_grey_light">#616161</color>
+
+    <color name="brown_700">#5D4037</color>
+    <color name="blue_grey_700">#455A64</color>
+    <color name="orange_800">#EF6C00</color>
+    <color name="green_700">#388E3C</color>
+    <color name="teal_700">#00796B</color>
+    <color name="pink_700">#C2185B</color>
+    <color name="red_800">#c62828</color>
+    <color name="blue_800">#1565C0</color>
+    <color name="cyan_700">#0097A7</color>
+</resources>

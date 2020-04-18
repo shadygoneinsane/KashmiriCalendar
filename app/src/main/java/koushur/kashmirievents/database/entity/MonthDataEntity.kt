@@ -3,8 +3,8 @@ package koushur.kashmirievents.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "ScheduleLockProfile")
-data class ScheduleLockProfile(
+@Entity(tableName = "monthData")
+data class MonthDataEntity(
     @PrimaryKey
     val Date: String,
 
