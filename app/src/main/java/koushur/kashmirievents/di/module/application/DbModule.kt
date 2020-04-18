@@ -18,9 +18,12 @@ class DbModule {
     @Singleton
     fun provideAppDatabase(): AppDb {
         return Room
-            .databaseBuilder(BaseApplication.applicationContext(), AppDb::class.java, "calendar.db")
+            .databaseBuilder(
+                BaseApplication.applicationContext(),
+                AppDb::class.java,
+                "calendarData.db"
+            )
             .createFromAsset("database/calendar.db")
-            .fallbackToDestructiveMigration()
             .build()
     }
 

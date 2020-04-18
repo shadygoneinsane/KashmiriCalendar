@@ -5,7 +5,9 @@ import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.children
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,21 +39,21 @@ import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.TextStyle
 import java.util.*
 
-class EventsAdapter : RecyclerView.Adapter<EventsAdapter.Example5FlightsViewHolder>() {
+class EventsAdapter : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
     val events = mutableListOf<Event>()
     private val formatter = DateTimeFormatter.ofPattern("EEE' 'dd MMM'\n'HH:mm")
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Example5FlightsViewHolder {
-        return Example5FlightsViewHolder(parent.inflate(R.layout.layout_event_item))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsViewHolder {
+        return EventsViewHolder(parent.inflate(R.layout.layout_event_item))
     }
 
-    override fun onBindViewHolder(viewHolder: Example5FlightsViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: EventsViewHolder, position: Int) {
         viewHolder.bind(events[position])
     }
 
     override fun getItemCount(): Int = events.size
 
-    inner class Example5FlightsViewHolder(override val containerView: View) :
+    inner class EventsViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(event: Event) {
@@ -81,6 +83,10 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
         exFiveRv.adapter = eventsAdapter
         exFiveRv.addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
         eventsAdapter.notifyDataSetChanged()
+
+        viewModel.data.observe(this, Observer {
+            Toast.makeText(requireContext(), it.events, Toast.LENGTH_LONG).show()
+        })
 
         val daysOfWeek = daysOfWeekFromLocale()
         val currentMonth = YearMonth.now()

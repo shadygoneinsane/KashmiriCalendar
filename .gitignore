@@ -1,5 +1,7 @@
 *.iml
 .gradle
+.idea
+.idea/sonarIssues.xml
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
