@@ -85,7 +85,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
         eventsAdapter.notifyDataSetChanged()
 
         viewModel.data.observe(this, Observer {
-            Toast.makeText(requireContext(), it.events, Toast.LENGTH_LONG).show()
+            if (it.isNotEmpty()) {
+                Toast.makeText(requireContext(), it[0].entry, Toast.LENGTH_LONG).show()
+            } else Toast.makeText(requireContext(), "empty list ", Toast.LENGTH_LONG).show()
         })
 
         val daysOfWeek = daysOfWeekFromLocale()

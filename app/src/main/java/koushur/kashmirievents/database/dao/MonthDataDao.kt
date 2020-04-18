@@ -1,8 +1,8 @@
 package koushur.kashmirievents.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
+import io.reactivex.Single
 import koushur.kashmirievents.database.entity.MonthDataEntity
 
 /**
@@ -13,6 +13,7 @@ import koushur.kashmirievents.database.entity.MonthDataEntity
  */
 @Dao
 interface MonthDataDao {
-    @Query("SELECT * FROM monthData")
-    fun fetchData(): LiveData<MonthDataEntity>
+    @Query("SELECT * FROM dateEvents")
+    fun fetchData(): Single<List<MonthDataEntity>>
+
 }

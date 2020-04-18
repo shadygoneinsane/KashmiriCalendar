@@ -1,31 +1,19 @@
 package koushur.kashmirievents.presentation.base
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import koushur.kashmirievents.presentation.common.SingleEvent
-import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 open class BaseViewModel : ViewModel() {
 
-    /**
-     * Live data to handle error
-     */
-    private var errorLiveData = MediatorLiveData<SingleEvent<String>>()
+    private val disposable = CompositeDisposable()
 
-    val mErrorLiveData: LiveData<SingleEvent<String>>
-        get() = errorLiveData
+    fun Disposable.add() {
+        disposable.add(this)
+    }
 
-    /**
-     * Live data to handle loading
-     */
-    private var loadingLiveData = SingleLiveEvent<Boolean>()
-
-    val mLoadingLiveData: SingleLiveEvent<Boolean>
-        get() = loadingLiveData
-
-
-    protected fun handleError(error: String) {
-        errorLiveData.postValue(SingleEvent(error))
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
     }
 }

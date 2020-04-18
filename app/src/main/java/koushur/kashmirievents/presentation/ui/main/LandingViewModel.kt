@@ -1,6 +1,6 @@
 package koushur.kashmirievents.presentation.ui.main
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import koushur.kashmirievents.database.entity.MonthDataEntity
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.repository.CalendarRepository
@@ -10,9 +10,16 @@ class LandingViewModel @Inject constructor(private val repository: CalendarRepos
     BaseViewModel() {
 
     val monthName = "March"
-    var data: LiveData<MonthDataEntity> = repository.fetchMonthDataEntity(monthName)
+    var data = MutableLiveData<List<MonthDataEntity>>()
 
-    fun fetchData(){
-        data.value
+    fun fetchData() {
+        repository.fetchMonthDataEntity(monthName)
+            .subscribe({
+                data.value = it
+            }, {
+            }).add()
+
     }
+
+    val query: String = ""
 }

@@ -15,6 +15,8 @@ buildscript {
         data_binding_compiler_version = '3.1.4'
         timber_version = '4.7.1'
         roomVersion = '2.2.5'
+        rx_android = "2.1.1"
+        rxjava2 = "2.1.3"
     }
     repositories {
         google()

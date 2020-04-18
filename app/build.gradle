@@ -55,6 +55,10 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-rxjava2:$roomVersion"
 
+    /*RxJava2*/
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_android"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava2"
+
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation 'com.github.sundeepk:compact-calendar-view:1.9.1'
     implementation 'pub.devrel:easypermissions:0.1.5'

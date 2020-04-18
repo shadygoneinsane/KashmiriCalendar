@@ -4,11 +4,11 @@ import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "monthData")
+@Entity(tableName = "dateEvents")
 data class MonthDataEntity(
 
     @PrimaryKey
     @NonNull val date: String = "",
 
-    @NonNull val events: String = ""
+    @NonNull val entry: String = ""
 )

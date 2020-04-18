@@ -9,9 +9,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
-import koushur.kashmirievents.presentation.common.SingleEvent
-import koushur.kashmirievents.presentation.common.extensions.observe
-import koushur.kashmirievents.presentation.common.extensions.toast
 import dagger.android.support.DaggerFragment
 import koushir.kashmirievents.R
 import javax.inject.Inject
@@ -33,7 +30,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel> : DaggerFr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[provideViewModelClass()]
-        handleObserver()
     }
 
     override fun onCreateView(
@@ -51,20 +47,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel> : DaggerFr
         super.onViewCreated(view, savedInstanceState)
         viewBinding.setVariable(viewModelVariable, viewModel)
         viewBinding.executePendingBindings()
-    }
-
-    private fun handleObserver() {
-        observe(viewModel.mErrorLiveData, ::observeError)
-        observe(viewModel.mLoadingLiveData, ::observeLoading)
-    }
-
-    internal fun observeError(error: SingleEvent<String>) {
-        // handle error here
-        error.getContentIfNotHandled()?.let { err ->
-            context?.let {
-                err.toast(it)
-            }
-        }
     }
 
     /**
