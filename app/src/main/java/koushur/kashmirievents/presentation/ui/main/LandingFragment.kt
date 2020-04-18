@@ -84,9 +84,10 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
         exFiveRv.addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
         eventsAdapter.notifyDataSetChanged()
 
+        viewModel.fetchData()
         viewModel.data.observe(this, Observer {
             if (it.isNotEmpty()) {
-                Toast.makeText(requireContext(), it[0].entry, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), it[0].events, Toast.LENGTH_LONG).show()
             } else Toast.makeText(requireContext(), "empty list ", Toast.LENGTH_LONG).show()
         })
 

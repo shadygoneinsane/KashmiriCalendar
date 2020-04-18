@@ -13,7 +13,7 @@ import koushur.kashmirievents.database.entity.MonthDataEntity
  */
 @Dao
 interface MonthDataDao {
-    @Query("SELECT * FROM dateEvents")
+    @Query("SELECT * FROM monthData")
     fun fetchData(): Single<List<MonthDataEntity>>
 
 }
