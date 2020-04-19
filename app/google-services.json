@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "652388004659",
+    "firebase_url": "https://koshur-app.firebaseio.com",
+    "project_id": "koshur-app",
+    "storage_bucket": "koshur-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652388004659:android:18f1554a5339bcd3354446",
+        "android_client_info": {
+          "package_name": "koshur.kashmirievents"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652388004659-padspl3ukqsr9fs5gbn333gqudvi5d3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb0p-qUo-j_2VWp8R08GoZGraok20qH4A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652388004659-padspl3ukqsr9fs5gbn333gqudvi5d3t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

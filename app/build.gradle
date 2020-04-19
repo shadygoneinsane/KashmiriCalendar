@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 def STRING = "String"
 def BOOLEAN = "boolean"
@@ -28,8 +29,19 @@ android {
         buildConfigField STRING, BASE_URL, base_address
         buildConfigField STRING, APP_ID, app_id
     }
+
+    signingConfigs {
+        release {
+            storeFile project.KEYSTORE_STORE_FILE
+            storePassword project.KEYSTORE_STORE_PASSWORD
+            keyAlias project.KEYSTORE_KEY_ALIAS
+            keyPassword project.KEYSTORE_KEY_PASSWORD
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -81,15 +93,13 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_Logging_Version"
 
-    // Databinding collection adapter
+    // Data binding collection adapter
     implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:3.1.1"
     implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:3.1.1"
 
     // Timber for Logging
     implementation "com.jakewharton.timber:timber:$timber_version"
 
-    testImplementation 'junit:junit:4.13'
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
