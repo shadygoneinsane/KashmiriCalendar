@@ -1,5 +1,6 @@
 package koushur.kashmirievents.presentation.ui.main
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
@@ -37,6 +38,8 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.TextStyle
+import java.io.IOException
+import java.io.InputStream
 import java.util.*
 
 class EventsAdapter : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
@@ -84,7 +87,12 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
         exFiveRv.addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
         eventsAdapter.notifyDataSetChanged()
 
-        viewModel.fetchData()
+        activity?.let {
+            loadJSONFromAsset(it)?.let { jsonStr ->
+                viewModel.fetchData(jsonStr)
+            }
+        }
+
         viewModel.data.observe(this, Observer {
             if (it.isNotEmpty()) {
                 Toast.makeText(requireContext(), it[0].events, Toast.LENGTH_LONG).show()
@@ -235,5 +243,21 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
         eventsAdapter.events.clear()
         eventsAdapter.events.addAll(events[date].orEmpty())
         eventsAdapter.notifyDataSetChanged()
+    }
+
+    fun loadJSONFromAsset(activity: Activity): String? {
+        var json: String? = null
+        json = try {
+            val input: InputStream = activity.assets.open("database/20_21.json")
+            val size: Int = input.available()
+            val buffer = ByteArray(size)
+            input.read(buffer)
+            input.close()
+            String(buffer, Charsets.UTF_8)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return null
+        }
+        return json
     }
 }

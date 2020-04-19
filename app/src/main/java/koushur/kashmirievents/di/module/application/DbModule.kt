@@ -23,7 +23,6 @@ class DbModule {
                 AppDb::class.java,
                 "calendarData.db"
             )
-            .createFromAsset("database/calendar.db")
             .build()
     }
 
