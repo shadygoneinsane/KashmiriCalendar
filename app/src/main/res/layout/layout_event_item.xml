@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/example_5_item_view_bg_color"
-    android:orientation="horizontal">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/eventDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#5D4037"
-        android:gravity="center"
-        android:lineSpacingExtra="2.5dp"
-        android:textAllCaps="true"
-        android:textColor="@color/example_5_text_grey"
-        android:textSize="12sp"
-        tools:text="THU JUN 30\n14:00" />
+    <data>
 
-    <TextView
-        android:id="@+id/eventName"
-        android:layout_width="wrap_content"
+        <variable
+            name="clickListener"
+            type="koushur.kashmirievents.interfaces.OnOptionClickListener" />
+
+        <variable
+            name="event"
+            type="koushur.kashmirievents.data.Event" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/parentEventName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_8"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center"
-        android:textColor="@color/example_5_text_grey"
-        android:textSize="16sp"
-        tools:text="Ashtami" />
-</LinearLayout>
+        android:layout_marginTop="@dimen/dimen_4dp"
+        android:orientation="horizontal"
+        app:setColor="@{event.color}"
+        tools:background="@color/cv_item_view_bg_color">
+
+        <TextView
+            android:id="@+id/eventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="@{event.eventName}"
+            android:textColor="@color/cv_text_grey"
+            android:textSize="@dimen/dimen_16sp"
+            tools:text="Ashtami" />
+    </LinearLayout>
+</layout>

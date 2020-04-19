@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/exFiveDayLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="1dp"
+    android:background="@color/cv_item_view_bg_color">
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="@dimen/dimen_2dp"
+        android:gravity="center"
+        android:textColor="@color/cv_text_grey"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        tools:text="24" />
+
+    <TextView
+        android:id="@+id/dayTopText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_4dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toTopOf="@+id/dayTop"
+        tools:text="Ashtami, Ram Navam" />
+
+    <View
+        android:id="@+id/dayTop"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dimen_4dp"
+        android:background="@color/blue_grey_700"
+        app:layout_constraintBottom_toTopOf="@+id/dayBottomText" />
+
+    <TextView
+        android:id="@+id/dayBottomText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_4dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toTopOf="@+id/dayBottom"
+        tools:text="Ashtami" />
+
+    <View
+        android:id="@+id/dayBottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dimen_4dp"
+        android:background="@color/brown_700"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
