@@ -6,7 +6,7 @@ import io.reactivex.Single
 import koushur.kashmirievents.database.entity.MonthDataEntity
 
 /**
- * File Description
+ * Dao class for Data
  *
  * Author: Vikesh Dass
  * Created on: 30-03-2020

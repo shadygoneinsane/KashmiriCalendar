@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -27,16 +26,13 @@ import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.FragmentLandingBinding
 import koushur.kashmirievents.data.Event
 import koushur.kashmirievents.data.Importance
-import koushur.kashmirievents.database.entity.MonthDataEntity
 import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.utils.daysOfWeekFromLocale
 import koushur.kashmirievents.presentation.utils.getColorCompat
 import koushur.kashmirievents.presentation.utils.setTextColorRes
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Month
 import org.threeten.bp.YearMonth
-import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.TextStyle
 import java.io.IOException
 import java.io.InputStream
@@ -47,10 +43,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
     override fun layoutId(): Int = R.layout.fragment_landing
     override val viewModelVariable = BR.viewModel
 
-    private lateinit var events: Map<LocalDate, List<Event>>
     private var selectedDate: LocalDate? = null
-
-    private val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,12 +70,6 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
                 viewModel.fetchData(jsonStr)
             }
         }
-
-        viewModel.data.observe(this, Observer { dataList ->
-            if (dataList.isNotEmpty()) {
-                events = generateEvents(dataList).groupBy { it.time.toLocalDate() }
-            } else Toast.makeText(requireContext(), "empty data ", Toast.LENGTH_LONG).show()
-        })
 
         val daysOfWeek = daysOfWeekFromLocale()
         val currentMonth = YearMonth.now()
@@ -143,27 +130,8 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
                 // Clear selection if we scroll to a new month.
                 selectedDate = null
                 exFiveCalendar.notifyDateChanged(it)
-                updateAdapterForDate(null)
+                viewModel.updateList(null)
             }
-        }
-    }
-
-    private fun generateEvents(inputData: List<MonthDataEntity>): List<Event> {
-        val list = mutableListOf<Event>()
-        inputData.map {
-            val todayLocalDate: LocalDateTime = LocalDate.parse(it.date, formatter).atTime(0, 0)
-            list.add(Event(todayLocalDate, it.imp, it.events, returnColor(it.imp)))
-        }
-
-        return list
-    }
-
-    private fun returnColor(@Importance imp: Int): Int {
-        return when (imp) {
-            Importance.high -> R.color.red_800
-            Importance.med -> R.color.teal_700
-            Importance.low -> R.color.brown_700
-            else -> R.color.brown_700
         }
     }
 
@@ -183,7 +151,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
                     selectedDate = day.date
                     exFiveCalendar.notifyDateChanged(day.date)
                     oldDate?.let { exFiveCalendar.notifyDateChanged(it) }
-                    updateAdapterForDate(day.date)
+                    viewModel.updateList(day.date)
                 }
             }
         }
@@ -193,18 +161,19 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
         container.dateTV.setTextColorRes(R.color.cv_text_grey)
         container.layout.setBackgroundResource(if (selectedDate == day.date) R.drawable.drawable_selected_bg else 0)
 
-        val eventsList = events[day.date]
-        eventsList?.let {
-            if (it.count() == 1) {
-                setTextViewData(container.topTV, container.topView, eventsList[0])
+        viewModel.getEvents()?.let { map ->
+            val eventsList = map[day.date]
+            eventsList?.let { listEvents ->
+                if (listEvents.count() == 1) {
+                    setTextViewData(container.topTV, container.topView, eventsList[0])
 
-                container.bottomTV.text = ""
-                container.bottomTV.visibility = View.GONE
-                container.bottomView.visibility = View.GONE
-            } else {
-                setTextViewData(container.topTV, container.topView, eventsList[0])
-
-                setTextViewData(container.bottomTV, container.bottomView, eventsList[1])
+                    container.bottomTV.text = ""
+                    container.bottomTV.visibility = View.GONE
+                    container.bottomView.visibility = View.GONE
+                } else if (listEvents.count() == 2) {
+                    setTextViewData(container.topTV, container.topView, eventsList[0])
+                    setTextViewData(container.bottomTV, container.bottomView, eventsList[1])
+                }
             }
         }
     }
@@ -228,7 +197,6 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
 
             }
             else -> {
-                tv.setTypeface(Typeface.DEFAULT, Typeface.NORMAL)
                 tv.setTextColor(tv.context.getColorCompat(R.color.white))
             }
         }
@@ -244,11 +212,6 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
         super.onStop()
         requireActivity().window.statusBarColor =
             requireContext().getColorCompat(R.color.colorPrimaryDark)
-    }
-
-
-    private fun updateAdapterForDate(date: LocalDate?) {
-        viewModel.updateList(events[date].orEmpty())
     }
 
     private fun loadJSONFromAsset(activity: Activity): String? {
