@@ -11,7 +11,7 @@ Calendar is created using `CalendarView`
 Collections to RecyclerViews binding using  `BindingCollectionAdapter`
 
 ## Screenshots
-<img src="https://github.com/shadygoneinsane/KashmiriCalendar/blob/master/screenshots/screenshot_1.png" alt="Screenshot 1"/><img src="https://github.com/shadygoneinsane/KashmiriCalendar/blob/master/screenshots/screenshot_1.png" alt="Screenshot 2"/>
+<img src="https://github.com/shadygoneinsane/KashmiriCalendar/blob/master/screenshots/screenshot_1.png" alt="Screenshot 1"/>  <img src="https://github.com/shadygoneinsane/KashmiriCalendar/blob/master/screenshots/screenshot_1.png" alt="Screenshot 2"/>
 
 ### Libraries
 * [Android Support Library][support-lib]
