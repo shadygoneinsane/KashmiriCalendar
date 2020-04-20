@@ -7,6 +7,7 @@ Repository is written in `Kotlin` and is based on `MVVM(ViewModel, LiveData)`
 Dependency Injection is implemented using `Dagger2`
 Caching is implemented using `Room Database`
 Data binding using `Data Binding`
+Calendar is created using `CalendarView`
 Collections to RecyclerViews binding using  `BindingCollectionAdapter`
 
 ## Screenshots
@@ -20,6 +21,7 @@ Collections to RecyclerViews binding using  `BindingCollectionAdapter`
 * [Dagger 2][dagger2] for dependency injection
 * [Retrofit][retrofit] for REST api communication
 * [Glide][glide] for image loading
+* [CalendarView][calendarview] for calendar
 * [BindingCollectionAdapter][bindingcollectionadapter] binding Collections to RecyclerView
 
 
@@ -31,5 +33,6 @@ Collections to RecyclerViews binding using  `BindingCollectionAdapter`
 [retrofit]: http://square.github.io/retrofit
 [glide]: https://github.com/bumptech/glide
 [bindingcollectionadapter]: https://github.com/evant/binding-collection-adapter
+[calendarview]: https://github.com/kizitonwose/CalendarView
 
 
