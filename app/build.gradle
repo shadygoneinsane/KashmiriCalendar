@@ -40,10 +40,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            applicationIdSuffix '.debug'
+            resValue "string", "app_name", "@string/app_name_debug"
+        }
+
         release {
             signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "@string/app_name_release"
         }
     }
 

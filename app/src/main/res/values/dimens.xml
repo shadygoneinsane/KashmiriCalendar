@@ -16,5 +16,8 @@
     <dimen name="placeholderImageDimen">60dp</dimen>
     <dimen name="placeholderTextHeight">8dp</dimen>
     <dimen name="padding_10">10dp</dimen>
-    <dimen name="dimen_8">8dp</dimen>
+    <dimen name="dimen_15sp">15sp</dimen>
+    <dimen name="dimen_6dp">6dp</dimen>
+    <dimen name="dimen_8sp">8sp</dimen>
+    <dimen name="dimen_10sp">10sp</dimen>
 </resources>

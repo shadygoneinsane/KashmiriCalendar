@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_2dp"
         android:orientation="horizontal"
-        app:setColor="@{event.color}"
+        app:setImp="@{event.eventImp}"
         tools:background="@color/cv_item_view_bg_color">
 
         <TextView
@@ -27,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_6dp"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
+            android:gravity="start"
             android:text="@{event.eventName}"
+            android:textAlignment="viewStart"
             android:textColor="@color/cv_text_grey"
             android:textSize="@dimen/dimen_14sp"
             tools:text="Ashtami" />

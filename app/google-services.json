@@ -34,6 +34,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652388004659:android:35d1092103c0daab354446",
+        "android_client_info": {
+          "package_name": "koshur.kashmirievents.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652388004659-padspl3ukqsr9fs5gbn333gqudvi5d3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb0p-qUo-j_2VWp8R08GoZGraok20qH4A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652388004659-padspl3ukqsr9fs5gbn333gqudvi5d3t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

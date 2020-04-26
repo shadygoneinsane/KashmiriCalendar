@@ -27,9 +27,7 @@ import koushir.kashmirievents.databinding.FragmentLandingBinding
 import koushur.kashmirievents.data.Event
 import koushur.kashmirievents.data.Importance
 import koushur.kashmirievents.presentation.base.BaseFragment
-import koushur.kashmirievents.presentation.utils.daysOfWeekFromLocale
-import koushur.kashmirievents.presentation.utils.getColorCompat
-import koushur.kashmirievents.presentation.utils.setTextColorRes
+import koushur.kashmirievents.presentation.utils.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import org.threeten.bp.YearMonth
@@ -63,11 +61,20 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        exFiveRv.addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
+        rv_highlight_events.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                RecyclerView.VERTICAL
+            )
+        )
 
         activity?.let {
-            loadJSONFromAsset(it)?.let { jsonStr ->
-                viewModel.fetchData(jsonStr)
+            loadJSONFromAsset(it, AppConstants.dbEvents)?.let { jsonStr ->
+                viewModel.fetchEventsData(jsonStr)
+            }
+
+            loadJSONFromAsset(it, AppConstants.dbSpecialEvents)?.let { jsonStr ->
+                viewModel.fetchSpecialEventsData(jsonStr)
             }
         }
 
@@ -75,10 +82,11 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
         val currentMonth = YearMonth.now()
         exFiveCalendar.setup(
             YearMonth.of(2020, Month.MARCH),
-            YearMonth.of(2021, Month.MARCH),
+            YearMonth.of(2021, Month.APRIL),
             daysOfWeek.first()
         )
         exFiveCalendar.scrollToMonth(currentMonth)
+        viewModel.updateSpecialItemsList(currentMonth)
 
         exFiveCalendar.dayBinder = object : DayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view)
@@ -126,6 +134,8 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
         exFiveCalendar.monthScrollListener = { month ->
             viewModel.setMonthName(month)
 
+            viewModel.updateSpecialItemsList(month.yearMonth)
+
             selectedDate?.let {
                 // Clear selection if we scroll to a new month.
                 selectedDate = null
@@ -164,15 +174,26 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
         viewModel.getEvents()?.let { map ->
             val eventsList = map[day.date]
             eventsList?.let { listEvents ->
-                if (listEvents.count() == 1) {
-                    setTextViewData(container.topTV, container.topView, eventsList[0])
+                when {
+                    listEvents.count() == 1 -> {
+                        //Timber.d("Date : ${day.date} | Event found is ${listEvents[0]}")
 
-                    container.bottomTV.text = ""
-                    container.bottomTV.visibility = View.GONE
-                    container.bottomView.visibility = View.GONE
-                } else if (listEvents.count() == 2) {
-                    setTextViewData(container.topTV, container.topView, eventsList[0])
-                    setTextViewData(container.bottomTV, container.bottomView, eventsList[1])
+                        setTextViewData(container.topTV, container.topView, eventsList[0])
+
+                        container.bottomTV.text = ""
+                        container.bottomTV.makeGone()
+                        container.bottomView.makeGone()
+                    }
+                    listEvents.count() == 2 -> {
+                        container.dateTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6f)
+
+                        //Timber.d("Date : ${day.date} | Events found are 1: ${listEvents[0]} 2: ${listEvents[1]}")
+                        setTextViewData(container.topTV, container.topView, eventsList[0])
+                        setTextViewData(container.bottomTV, container.bottomView, eventsList[1])
+                    }
+                    else -> {
+                        //Timber.d("Date : ${day.date} | Events found $listEvents}")
+                    }
                 }
             }
         }
@@ -181,6 +202,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
     private fun setTextViewData(tv: TextView, decorView: View, event: Event) {
         tv.text = event.eventName
         decorView.setBackgroundColor(tv.context.getColorCompat(event.color))
+
+        tv.makeVisible()
+        decorView.makeVisible()
 
         when (event.eventImp) {
             Importance.high -> {
@@ -214,9 +238,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
             requireContext().getColorCompat(R.color.colorPrimaryDark)
     }
 
-    private fun loadJSONFromAsset(activity: Activity): String? {
+    private fun loadJSONFromAsset(activity: Activity, fileName: String): String? {
         return try {
-            val input: InputStream = activity.assets.open("database/20_21.json")
+            val input: InputStream = activity.assets.open(fileName)
             val size: Int = input.available()
             val buffer = ByteArray(size)
             input.read(buffer)
