@@ -1,14 +1,12 @@
 package koushur.kashmirievents.di.module.application
 
-import dagger.Module
-import dagger.Provides
-import koushur.kashmirievents.database.dao.MonthDataDao
 import koushur.kashmirievents.repository.CalendarRepository
+import org.koin.dsl.module
 
-@Module(includes = [DbModule::class])
-class RepositoryModule {
-    @Provides
-    fun provideSampleRepository(monthDataDao: MonthDataDao): CalendarRepository {
-        return CalendarRepository(monthDataDao)
-    }
+/**
+ * This is repository module
+ */
+val remoteRepositoryModule = module {
+
+    factory<CalendarRepository> { CalendarRepository(monthDataDao = get()) }
 }

@@ -1,74 +1,57 @@
 package koushur.kashmirievents.di.module.application
 
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import dagger.Module
-import dagger.Provides
 import koushir.kashmirievents.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
-import javax.inject.Named
-import javax.inject.Singleton
+import java.util.concurrent.TimeUnit
 
-@Module
-class RetrofitModule {
+val retrofitModule = module {
+    single { provideLoggingInterceptor() }
+    single { provideBaseUrl() }
+    single { provideOkHttpClient(get()) }
+    single { provideRetrofit(get(), get()) }
+}
 
-    companion object {
-        private const val BASE_URL = "baseUrl"
-    }
+/**
+ * The method returns the Retrofit object
+ */
+private fun provideRetrofit(
+    baseUrl: String,
+    okHttpClient: OkHttpClient.Builder
+): Retrofit {
+    return Retrofit.Builder().client(okHttpClient.build())
+        .addConverterFactory(provideGsonConverterFactory())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .baseUrl(baseUrl)
+        .build()
+}
 
-    /*
-    * The method returns the Retrofit object
-    * */
-    @Provides
-    @Singleton
-    fun provideRetrofit(
-        @Named(BASE_URL) baseUrl: String,
-        okHttpClient: OkHttpClient.Builder,
-        gsonConverterFactory: GsonConverterFactory
-    ): Retrofit {
-        Timber.v("Base Url $baseUrl")
-        return Retrofit.Builder()
-            .client(okHttpClient.build())
-            .addConverterFactory(gsonConverterFactory)
-            .baseUrl(baseUrl)
-            .build()
-    }
+private fun provideBaseUrl(): String {
+    return BuildConfig.BASE_URL
+}
 
-    /**
-     * The method returns the Gson object
-     */
-    @Provides
-    fun gson(): Gson {
-        val gsonBuilder = GsonBuilder()
-        gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        return gsonBuilder.create()
-    }
+private fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient.Builder {
+    val httpClient = OkHttpClient.Builder()
+    if (BuildConfig.DEBUG) httpClient.addInterceptor(httpLoggingInterceptor)
 
-    @Provides
-    fun gsonConverterFactory(gson: Gson): GsonConverterFactory {
-        return GsonConverterFactory.create(gson)
-    }
+    httpClient.readTimeout(2, TimeUnit.MINUTES)
+    httpClient.writeTimeout(3, TimeUnit.MINUTES)
+    httpClient.connectTimeout(3, TimeUnit.MINUTES)
+    httpClient.build()
 
+    return httpClient
+}
 
-    @Singleton
-    @Provides
-    fun createLoggingInterceptor(): HttpLoggingInterceptor {
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
-        return logging
-    }
+private fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+    return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+}
 
-    @Singleton
-    @Provides
-    fun createHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient.Builder {
-        val httpClient = OkHttpClient.Builder()
-        if (BuildConfig.DEBUG)
-            httpClient.addInterceptor(httpLoggingInterceptor)
-        Timber.v("")
-        return httpClient
-    }
+private fun provideGsonConverterFactory(): GsonConverterFactory {
+    val gsonBuilder = GsonBuilder()
+    return GsonConverterFactory.create(gsonBuilder.create())
 }

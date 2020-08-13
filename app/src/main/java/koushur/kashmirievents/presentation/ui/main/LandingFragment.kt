@@ -27,7 +27,9 @@ import koushir.kashmirievents.databinding.FragmentLandingBinding
 import koushur.kashmirievents.data.Event
 import koushur.kashmirievents.data.Importance
 import koushur.kashmirievents.presentation.base.BaseFragment
+import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.utils.*
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import org.threeten.bp.YearMonth
@@ -36,12 +38,14 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.*
 
-class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>() {
-    override fun provideViewModelClass() = LandingViewModel::class.java
+class LandingFragment : BaseFragment<FragmentLandingBinding>() {
     override fun layoutId(): Int = R.layout.fragment_landing
-    override val viewModelVariable = BR.viewModel
-
+    private val viewModel: LandingViewModel by viewModel()
     private var selectedDate: LocalDate? = null
+
+    override fun provideViewModel(): BaseViewModel? {
+        return viewModel
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +65,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding, LandingViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewBinding.setVariable(BR.viewModel, viewModel)
+        viewBinding.executePendingBindings()
+
         rv_highlight_events.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),

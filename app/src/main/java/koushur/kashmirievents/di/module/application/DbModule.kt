@@ -1,34 +1,14 @@
 package koushur.kashmirievents.di.module.application
 
 import androidx.room.Room
-import dagger.Module
-import dagger.Provides
-import koushur.kashmirievents.BaseApplication
 import koushur.kashmirievents.database.AppDb
-import koushur.kashmirievents.database.dao.MonthDataDao
-import javax.inject.Singleton
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
 /**
  * Created by Vikesh Dass
  */
-@Module
-class DbModule {
-
-    @Provides
-    @Singleton
-    fun provideAppDatabase(): AppDb {
-        return Room
-            .databaseBuilder(
-                BaseApplication.applicationContext(),
-                AppDb::class.java,
-                "calendarData.db"
-            )
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideMonthDataDao(appDb: AppDb): MonthDataDao {
-        return appDb.monthDataDao()
-    }
+val DbModule = module {
+    single { Room.databaseBuilder(androidContext(), AppDb::class.java, "calendarData.db").build() }
+    single { get<AppDb>().monthDataDao() }
 }

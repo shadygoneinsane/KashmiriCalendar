@@ -6,9 +6,8 @@ import io.reactivex.schedulers.Schedulers
 import koushur.kashmirievents.database.dao.MonthDataDao
 import koushur.kashmirievents.database.entity.MonthDataEntity
 import koushur.kashmirievents.presentation.common.ResultState
-import javax.inject.Inject
 
-class CalendarRepository @Inject constructor(private val monthDataDao: MonthDataDao) {
+class CalendarRepository(private val monthDataDao: MonthDataDao) {
     fun fetchMonthDataEntity(month: String): Single<ResultState<List<MonthDataEntity>>> {
         return monthDataDao.fetchData()
             .subscribeOn(Schedulers.io())
