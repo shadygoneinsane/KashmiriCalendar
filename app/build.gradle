@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId "koshur.kashmirievents"
         minSdkVersion 22
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 3
         versionName "1.0.01"
 
