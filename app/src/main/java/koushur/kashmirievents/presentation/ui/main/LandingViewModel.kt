@@ -19,9 +19,8 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.DateTimeFormatter
-import javax.inject.Inject
 
-class LandingViewModel @Inject constructor(private val repository: CalendarRepository) :
+class LandingViewModel(private val repository: CalendarRepository) :
     BaseViewModel() {
 
     val monthName = MutableLiveData<String>()

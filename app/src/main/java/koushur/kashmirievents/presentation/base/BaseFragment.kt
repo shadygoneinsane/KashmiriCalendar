@@ -8,28 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModelProvider
-import dagger.android.support.DaggerFragment
+import androidx.fragment.app.Fragment
 import koushir.kashmirievents.R
-import javax.inject.Inject
 
 
-abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel> : DaggerFragment() {
-
-    abstract fun provideViewModelClass(): Class<VM>
+abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
+    abstract fun provideViewModel(): BaseViewModel?
     abstract fun layoutId(): Int
-    abstract val viewModelVariable: Int
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     protected lateinit var viewBinding: VB
-    protected lateinit var viewModel: VM
+    private var baseViewModel: BaseViewModel? = null
     private lateinit var progressAlertDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory)[provideViewModelClass()]
     }
 
     override fun onCreateView(
@@ -45,8 +37,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel> : DaggerFr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewBinding.setVariable(viewModelVariable, viewModel)
-        viewBinding.executePendingBindings()
     }
 
     /**

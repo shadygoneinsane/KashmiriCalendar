@@ -12,7 +12,7 @@ Collections to RecyclerViews binding using  `BindingCollectionAdapter`
 
 ## Screenshots
 <img src="https://github.com/shadygoneinsane/KashmiriCalendar/blob/master/screenshots/screenshot_l_may.png" alt="Screenshot 1"/>  <img src="https://github.com/shadygoneinsane/KashmiriCalendar/blob/master/screenshots/screenshot_l_feb.png" alt="Screenshot 2"/>
-<img src="https://github.com/shadygoneinsane/KashmiriCalendar/blob/master/screenshots/screenshot_l_nov.png" alt="Screenshot 3"/>  <img src="https://github.com/shadygoneinsane/KashmiriCalendar/blob/master/screenshots/screenshot_april.png" alt="Screenshot 4"/>
+<img src="https://github.com/shadygoneinsane/KashmiriCalendar/blob/master/screenshots/screenshot_nov.png" alt="Screenshot 3"/>  <img src="https://github.com/shadygoneinsane/KashmiriCalendar/blob/master/screenshots/screenshot_april.png" alt="Screenshot 4"/>
 
 ### Libraries
 * [Android Support Library][support-lib]

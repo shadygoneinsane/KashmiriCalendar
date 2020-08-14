@@ -1,12 +1,11 @@
 package koushur.kashmirievents.presentation.base
 
 import android.os.Bundle
-import dagger.android.support.DaggerAppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
-abstract class BaseActivity : DaggerAppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-
 }
