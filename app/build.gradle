@@ -31,12 +31,12 @@ android {
     }
 
     signingConfigs {
-        release {
+        /*release {
             storeFile project.KEYSTORE_STORE_FILE
             storePassword project.KEYSTORE_STORE_PASSWORD
             keyAlias project.KEYSTORE_KEY_ALIAS
             keyPassword project.KEYSTORE_KEY_PASSWORD
-        }
+        }*/
     }
 
     buildTypes {
@@ -46,12 +46,12 @@ android {
             resValue "string", "app_name", "@string/app_name_debug"
         }
 
-        release {
+        /*release {
             signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "app_name", "@string/app_name_release"
-        }
+        }*/
     }
 
     compileOptions {
