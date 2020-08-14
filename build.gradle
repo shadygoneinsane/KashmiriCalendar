@@ -30,7 +30,7 @@ allprojects {
 
         // DEPENDENCIES VERSIONS
         retrofit_version = '2.6.1'
-        okhttp_Logging_Version = '3.11.0'
+        okhttp_Logging_Version = '4.3.1'
         lifecycleVersion = '2.2.0'
         data_binding_compiler_version = '3.1.4'
         timber_version = '4.7.1'
