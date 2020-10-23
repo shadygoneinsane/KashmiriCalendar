@@ -7,9 +7,6 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
 import androidx.core.view.children
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -68,10 +65,17 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
         viewBinding.setVariable(BR.viewModel, viewModel)
         viewBinding.executePendingBindings()
 
-        rv_highlight_events.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                RecyclerView.VERTICAL
+        viewBinding.rvHighlightEvents.addItemDecoration(
+            ItemDivider(
+                resources.getDimensionPixelSize(R.dimen.dimen_4dp),
+                resources.getDimensionPixelSize((R.dimen.dimen_4dp))
+            )
+        )
+
+        viewBinding.rvMajorEvents.addItemDecoration(
+            ItemDivider(
+                resources.getDimensionPixelSize(R.dimen.dimen_4dp),
+                resources.getDimensionPixelSize((R.dimen.dimen_4dp))
             )
         )
 
@@ -87,15 +91,15 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
 
         val daysOfWeek = daysOfWeekFromLocale()
         val currentMonth = YearMonth.now()
-        exFiveCalendar.setup(
+        viewBinding.exFiveCalendar.setup(
             YearMonth.of(2020, Month.MARCH),
             YearMonth.of(2021, Month.APRIL),
             daysOfWeek.first()
         )
-        exFiveCalendar.scrollToMonth(currentMonth)
+        viewBinding.exFiveCalendar.scrollToMonth(currentMonth)
         viewModel.updateSpecialItemsList(currentMonth)
 
-        exFiveCalendar.dayBinder = object : DayBinder<DayViewContainer> {
+        viewBinding.exFiveCalendar.dayBinder = object : DayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view)
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.day = day
@@ -119,26 +123,30 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
             val legendLayout = view.legendLayout
         }
 
-        exFiveCalendar.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthViewContainer> {
-            override fun create(view: View) = MonthViewContainer(view)
-            override fun bind(container: MonthViewContainer, month: CalendarMonth) {
-                // Setup each header day text if we have not done that already.
-                if (container.legendLayout.tag == null) {
-                    container.legendLayout.tag = month.yearMonth
-                    container.legendLayout.children.map { it as TextView }
-                        .forEachIndexed { index, tv ->
-                            tv.text =
-                                daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
-                                    .toUpperCase(Locale.ENGLISH)
-                            tv.setTextColorRes(R.color.cv_text_grey)
-                            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-                        }
-                    month.yearMonth
+        viewBinding.exFiveCalendar.monthHeaderBinder =
+            object : MonthHeaderFooterBinder<MonthViewContainer> {
+                override fun create(view: View) = MonthViewContainer(view)
+                override fun bind(container: MonthViewContainer, month: CalendarMonth) {
+                    // Setup each header day text if we have not done that already.
+                    if (container.legendLayout.tag == null) {
+                        container.legendLayout.tag = month.yearMonth
+                        container.legendLayout.children.map { it as TextView }
+                            .forEachIndexed { index, tv ->
+                                tv.text =
+                                    daysOfWeek[index].getDisplayName(
+                                        TextStyle.SHORT,
+                                        Locale.ENGLISH
+                                    )
+                                        .toUpperCase(Locale.ENGLISH)
+                                tv.setTextColorRes(R.color.cv_text_grey)
+                                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                            }
+                        month.yearMonth
+                    }
                 }
             }
-        }
 
-        exFiveCalendar.monthScrollListener = { month ->
+        viewBinding.exFiveCalendar.monthScrollListener = { month ->
             viewModel.setMonthName(month)
 
             viewModel.updateSpecialItemsList(month.yearMonth)
@@ -146,7 +154,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
             selectedDate?.let {
                 // Clear selection if we scroll to a new month.
                 selectedDate = null
-                exFiveCalendar.notifyDateChanged(it)
+                viewBinding.exFiveCalendar.notifyDateChanged(it)
                 viewModel.updateList(null)
             }
         }
@@ -177,6 +185,13 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
     private fun setDatDataAndColor(container: DayViewContainer, day: CalendarDay) {
         container.dateTV.setTextColorRes(R.color.cv_text_grey)
         container.layout.setBackgroundResource(if (selectedDate == day.date) R.drawable.drawable_selected_bg else 0)
+
+        //highlighting today's date
+        if (day.date == viewModel.getToday()) {
+            container.layout.setBackgroundResource(
+                R.drawable.drawable_selected_highlighted_bg
+            )
+        }
 
         viewModel.getEvents()?.let { map ->
             val eventsList = map[day.date]
@@ -225,7 +240,6 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
             Importance.low -> {
                 tv.setTypeface(Typeface.DEFAULT, Typeface.NORMAL)
                 tv.setTextColor(tv.context.getColorCompat(R.color.white))
-
             }
             else -> {
                 tv.setTextColor(tv.context.getColorCompat(R.color.white))

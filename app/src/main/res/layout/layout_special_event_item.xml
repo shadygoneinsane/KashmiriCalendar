@@ -17,7 +17,6 @@
         android:id="@+id/parentEventName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_2dp"
         android:orientation="horizontal"
         app:setImp="@{event.eventImp}"
         tools:background="@color/cv_item_view_bg_color">
@@ -31,7 +30,7 @@
             android:text="@{event.eventName}"
             android:textAlignment="viewStart"
             android:textColor="@color/cv_text_grey"
-            android:textSize="@dimen/dimen_14sp"
+            android:textSize="@dimen/dimen_16sp"
             tools:text="Ashtami" />
     </LinearLayout>
 </layout>

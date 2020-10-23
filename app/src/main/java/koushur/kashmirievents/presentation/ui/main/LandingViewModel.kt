@@ -27,6 +27,15 @@ class LandingViewModel(private val repository: CalendarRepository) :
     private lateinit var specialEvents: Map<YearMonth, List<Event>>
     private lateinit var events: Map<LocalDate, List<Event>>
     private lateinit var eventsPerMonth: Map<YearMonth, List<Event>>
+    val prevMonthEvent = SingleLiveEvent<Void>()
+    val nextMonthEvent = SingleLiveEvent<Void>()
+    val selectedDayItemBinding = ItemBinding.of<Event>(BR.event, R.layout.layout_event_item)
+    val selectedDayItems = ObservableArrayList<Event>()
+    val specialItemBinding = ItemBinding.of<Event>(BR.event, R.layout.layout_special_event_item)
+    val specialItems = ObservableArrayList<Event>()
+    private val today = LocalDate.now()
+
+    fun getToday() = today
 
     fun getEvents(): Map<LocalDate, List<Event>>? {
         return if (::events.isInitialized)
@@ -40,12 +49,10 @@ class LandingViewModel(private val repository: CalendarRepository) :
         monthName.value = "${monthTitleFormatter.format(month.yearMonth)} ${month.yearMonth.year}"
     }
 
-    val prevMonthEvent = SingleLiveEvent<Void>()
     fun leftClickEvent() {
         prevMonthEvent.call()
     }
 
-    val nextMonthEvent = SingleLiveEvent<Void>()
     fun rightClickEvent() {
         nextMonthEvent.call()
     }
@@ -84,15 +91,12 @@ class LandingViewModel(private val repository: CalendarRepository) :
         }
     }
 
-    val items = ObservableArrayList<Event>()
     fun updateList(date: LocalDate?) {
-        items.clear()
-        items.addAll(events[date].orEmpty())
+        selectedDayItems.clear()
+        selectedDayItems.addAll(events[date].orEmpty())
     }
 
-    val itemBinding = ItemBinding.of<Event>(BR.event, R.layout.layout_event_item)
 
-    val specialItems = ObservableArrayList<Event>()
     fun updateSpecialItemsList(yearMonth: YearMonth) {
         specialItems.clear()
         specialItems.addAll(specialEvents[yearMonth].orEmpty())
@@ -103,7 +107,7 @@ class LandingViewModel(private val repository: CalendarRepository) :
                 specialItems.add(
                     Event(
                         it.time, it.eventImp,
-                        "On ${it.time.toLocalDate().format(formatter)} -> ${it.eventName} ",
+                        "On ${it.time.toLocalDate().format(formatter)} - ${it.eventName} ",
                         it.color
                     )
                 )
@@ -111,5 +115,4 @@ class LandingViewModel(private val repository: CalendarRepository) :
         }
     }
 
-    val specialItemBinding = ItemBinding.of<Event>(BR.event, R.layout.layout_special_event_item)
 }

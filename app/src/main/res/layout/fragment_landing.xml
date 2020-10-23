@@ -11,7 +11,7 @@
 
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -29,13 +29,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/cv_toolbar_color"
-                android:theme="@style/AppTheme.AppBarOverlay">
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:liftOnScroll="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:padding="14dp"
+                    app:layout_collapseMode="pin">
 
                     <ImageView
                         android:id="@+id/previousMonthImage"
@@ -100,8 +102,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="14dp">
+                    android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_highlight_events"
@@ -109,13 +110,16 @@
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
                         android:orientation="vertical"
-                        app:itemBinding="@{viewModel.itemBinding}"
-                        app:items="@{viewModel.items}"
+                        android:padding="8dp"
+                        app:itemBinding="@{viewModel.selectedDayItemBinding}"
+                        app:items="@{viewModel.selectedDayItems}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0" />
+                        app:layout_constraintVertical_bias="0"
+                        tools:itemCount="4"
+                        tools:listitem="@layout/layout_event_item" />
 
                     <View
                         android:id="@+id/separator_1"
@@ -149,6 +153,7 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="@dimen/dimen_2dp"
                         android:background="@color/blue_grey_700"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toTopOf="@+id/rv_major_events"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -161,6 +166,7 @@
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
                         android:orientation="vertical"
+                        android:padding="8dp"
                         app:itemBinding="@{viewModel.specialItemBinding}"
                         app:items="@{viewModel.specialItems}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -168,9 +174,11 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_title_major"
-                        app:layout_constraintVertical_bias="0" />
+                        app:layout_constraintVertical_bias="0"
+                        tools:itemCount="4"
+                        tools:listitem="@layout/layout_special_event_item" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>
