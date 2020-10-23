@@ -15,10 +15,10 @@ import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
 import koushur.kashmirievents.presentation.utils.returnColor
 import koushur.kashmirievents.repository.CalendarRepository
 import me.tatarka.bindingcollectionadapter2.ItemBinding
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.YearMonth
-import org.threeten.bp.format.DateTimeFormatter
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 
 class LandingViewModel(private val repository: CalendarRepository) :
     BaseViewModel() {

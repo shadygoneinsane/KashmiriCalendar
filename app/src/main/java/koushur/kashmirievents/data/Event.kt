@@ -2,7 +2,7 @@ package koushur.kashmirievents.data
 
 import androidx.annotation.ColorRes
 import androidx.annotation.IntDef
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 
 
 /**

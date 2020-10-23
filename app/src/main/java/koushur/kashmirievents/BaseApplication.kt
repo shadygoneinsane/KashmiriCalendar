@@ -2,7 +2,6 @@ package koushur.kashmirievents
 
 import android.app.Application
 import android.content.Context
-import com.jakewharton.threetenabp.AndroidThreeTen
 import koushir.kashmirievents.BuildConfig
 import koushur.kashmirievents.di.module.application.DbModule
 import koushur.kashmirievents.di.module.application.remoteRepositoryModule
@@ -26,7 +25,6 @@ class BaseApplication : Application(), KoinComponent {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        AndroidThreeTen.init(this)
 
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())

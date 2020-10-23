@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'io.fabric'
 
 def STRING = "String"
 def BASE_URL = "BASE_URL"
@@ -15,13 +14,13 @@ def base_address = props.getProperty("base_url").toString()
 def app_id = props.getProperty("app_id").toString()
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion project.android_sdk_version
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "koshur.kashmirievents"
         minSdkVersion 22
-        targetSdkVersion 29
+        targetSdkVersion project.android_sdk_version
         versionCode 4
         versionName "1.0.02"
 
@@ -55,6 +54,8 @@ android {
     }
 
     compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -72,11 +73,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.1'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
 
     /*Room */
     implementation "androidx.room:room-runtime:$roomVersion"
@@ -88,13 +89,14 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjava2"
 
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
-    implementation 'com.github.sundeepk:compact-calendar-view:1.9.1'
     implementation 'pub.devrel:easypermissions:0.1.5'
     implementation('com.google.api-client:google-api-client-android:1.22.0') {
         exclude group: 'org.apache.httpcomponents'
     }
 
-    implementation "com.github.kizitonwose:CalendarView:0.3.1"
+    // calendar view used in app
+    implementation "com.github.kizitonwose:CalendarView:0.4.5"
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
 
     implementation "org.koin:koin-core:$koin_version"
     implementation "org.koin:koin-android:$koin_version"
@@ -116,7 +118,5 @@ dependencies {
     // Timber for Logging
     implementation "com.jakewharton.timber:timber:$timber_version"
 
-    implementation 'com.google.firebase:firebase-analytics:17.3.0'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
-
+    implementation 'com.google.firebase:firebase-analytics:17.6.0'
 }

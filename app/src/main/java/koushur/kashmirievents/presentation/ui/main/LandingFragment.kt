@@ -30,12 +30,12 @@ import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.utils.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.threeten.bp.LocalDate
-import org.threeten.bp.Month
-import org.threeten.bp.YearMonth
-import org.threeten.bp.format.TextStyle
 import java.io.IOException
 import java.io.InputStream
+import java.time.LocalDate
+import java.time.Month
+import java.time.YearMonth
+import java.time.format.TextStyle
 import java.util.*
 
 class LandingFragment : BaseFragment<FragmentLandingBinding>() {
@@ -50,13 +50,13 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.prevMonthEvent.observe(this, Observer {
+        viewModel.prevMonthEvent.observe(this, {
             exFiveCalendar.findFirstVisibleMonth()?.let {
                 exFiveCalendar.smoothScrollToMonth(it.yearMonth.previous)
             }
         })
 
-        viewModel.nextMonthEvent.observe(this, Observer {
+        viewModel.nextMonthEvent.observe(this, {
             exFiveCalendar.findFirstVisibleMonth()?.let {
                 exFiveCalendar.smoothScrollToMonth(it.yearMonth.next)
             }

@@ -14,4 +14,8 @@
     <string name="today">TODAY</string>
     <string name="forecast">FORECAST</string>
     <string name="important_events_for_this_month">Important events for this month :</string>
+
+    <!-- content desc for images -->
+    <string name="cd_left_navigation">Left navigation</string>
+    <string name="cd_right_navigation">Right navigation</string>
 </resources>

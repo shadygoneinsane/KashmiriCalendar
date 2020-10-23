@@ -43,12 +43,13 @@
                         android:layout_height="36dp"
                         android:layout_marginEnd="22dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/cd_left_navigation"
                         android:onClick="@{() -> viewModel.leftClickEvent()}"
-                        android:tint="@color/cv_text_grey"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_chevron_left" />
+                        app:srcCompat="@drawable/ic_chevron_left"
+                        app:tint="@color/cv_text_grey" />
 
                     <TextView
                         android:id="@+id/monthYearTV"
@@ -69,12 +70,13 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/cd_right_navigation"
                         android:onClick="@{() -> viewModel.rightClickEvent()}"
-                        android:tint="@color/cv_text_grey"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_chevron_right" />
+                        app:srcCompat="@drawable/ic_chevron_right"
+                        app:tint="@color/cv_text_grey" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.AppBarLayout>
