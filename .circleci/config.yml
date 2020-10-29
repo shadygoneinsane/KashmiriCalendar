@@ -12,11 +12,11 @@ jobs:
 
       - run:
           name: Create release.keystore.jks
-          command: echo $RELEASE_KEYSTORE_BASE64 | base64 -d > $releaseKeyStore
+          command: echo $RELEASE_KEYSTORE_BASE64 | base64 -d > $storeFile
 
       - run:
           name: Create ~/keys/keystore.properies
-          command: printf 'releaseKeyAlias=%s\nreleaseKeyPassword=%s\nreleaseKeyStore=%s\nreleaseStorePassword=%s' $releaseKeyAlias $releaseKeyPassword $releaseKeyStore $releaseStorePassword > ~/keys/keystore.properties
+          command: printf 'KEYSTORE_KEY_ALIAS=%s\nKEYSTORE_KEY_PASSWORD=%s\nstoreFile=%s\nKEYSTORE_STORE_PASSWORD=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD $storeFile $KEYSTORE_STORE_PASSWORD > ~/keys/keystore.properties
 
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
