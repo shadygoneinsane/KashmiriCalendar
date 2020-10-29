@@ -11,7 +11,7 @@ jobs:
       - run: echo "Build process is started"
 
       - run:
-          name: Create keystore.jks
+          name: Create ~/code/keys/release/release.jks
           command: |
             mkdir -p ~/code/keys/release;
             echo "$RELEASE_KEYSTORE_BASE64"
@@ -21,11 +21,11 @@ jobs:
           name: Create ~/keys/keystore.properies
           command: |
             mkdir -p ~/code/keys;
-            printf 'keyAlias=%s\nkeyPassword=%s\nstoreFile=%s\nstorePassword=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD $code/keys/release/release.jks $KEYSTORE_STORE_PASSWORD > ~/code/keys/keystore.properties
+            printf 'keyAlias=%s\nkeyPassword=%s\nstoreFile=%s\nstorePassword=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD ~/code/keys/release/release.jks $KEYSTORE_STORE_PASSWORD > ~/code/keys/keystore.properties
 
       - store_artifacts:
                 path: ~/code/keys/keystore.properties
-                destination: artifact-file
+                destination: artifact-test
 
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
