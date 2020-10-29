@@ -11,8 +11,8 @@ jobs:
       - run: echo "Build process is started 👯"
 
       - run:
-          name: Create release.keystore.jks
-          command: echo $RELEASE_KEYSTORE_BASE64 | base64 -d > $storeFile
+          name: Create keystore.jks
+          command: echo $RELEASE_KEYSTORE_BASE64 | base64 -d > "$storeFile"
 
       - run:
           name: Create ~/keys/keystore.properies
