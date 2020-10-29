@@ -8,19 +8,20 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-      - run: echo "Build process is started 👯"
+      - run: echo "Build process is started"
 
       - run:
           name: Create keystore.jks
           command: |
+            mkdir -p ~/code/keys/release;
             echo "$RELEASE_KEYSTORE_BASE64"
-            base64 -d > release.jks
+            base64 -d > ~/code/keys/release/release.jks
 
       - run:
           name: Create ~/keys/keystore.properies
           command: |
             mkdir -p ~/code/keys;
-            printf 'KEYSTORE_KEY_ALIAS=%s\nKEYSTORE_KEY_PASSWORD=%s\nstoreFile=%s\nKEYSTORE_STORE_PASSWORD=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD $release.jks $KEYSTORE_STORE_PASSWORD > ~/code/keys/keystore.properties
+            printf 'keyAlias=%s\nkeyPassword=%s\nstoreFile=%s\nstorePassword=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD $code/keys/release/release.jks $KEYSTORE_STORE_PASSWORD > ~/code/keys/keystore.properties
 
       - store_artifacts:
                 path: ~/code/keys/keystore.properties
