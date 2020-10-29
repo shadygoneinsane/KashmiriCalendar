@@ -35,7 +35,7 @@ class LandingViewModel(private val repository: CalendarRepository) :
     val specialItems = ObservableArrayList<Event>()
     private val today = LocalDate.now()
 
-    fun getToday() = today
+    fun getToday(): LocalDate = today
 
     fun getEvents(): Map<LocalDate, List<Event>>? {
         return if (::events.isInitialized)

@@ -1,24 +1,10 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="TextParent">
+    <style name="TextParent" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">@color/colorTextPrimary2</item>
+        <item name="fontFamily">@font/source_sans_pro_regular</item>
     </style>
 
     <style name="TextSubHeader" parent="TextParent">
@@ -35,5 +21,12 @@
 
     <style name="TextESmall" parent="TextParent">
         <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="Widget.BottomNavigationView" parent="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
+        <item name="labelVisibilityMode">selected</item>
+        <item name="itemIconTint">@color/bottom_nav_item</item>
+        <item name="itemTextColor">@color/bottom_nav_item</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigation</item>
     </style>
 </resources>

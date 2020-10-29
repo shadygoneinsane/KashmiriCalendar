@@ -15,11 +15,10 @@ import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import com.kizitonwose.calendarview.utils.next
 import com.kizitonwose.calendarview.utils.previous
-import kotlinx.android.synthetic.main.calendar_day.view.*
-import kotlinx.android.synthetic.main.fragment_landing.*
-import kotlinx.android.synthetic.main.layout_cv_month_header.view.*
+import kotlinx.android.synthetic.main.layout_cv_day_legend.view.*
 import koushir.kashmirievents.BR
 import koushir.kashmirievents.R
+import koushir.kashmirievents.databinding.CalendarDayBinding
 import koushir.kashmirievents.databinding.FragmentLandingBinding
 import koushur.kashmirievents.data.Event
 import koushur.kashmirievents.data.Importance
@@ -48,14 +47,14 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
         super.onCreate(savedInstanceState)
 
         viewModel.prevMonthEvent.observe(this, {
-            exFiveCalendar.findFirstVisibleMonth()?.let {
-                exFiveCalendar.smoothScrollToMonth(it.yearMonth.previous)
+            viewBinding.cvMain.findFirstVisibleMonth()?.let {
+                viewBinding.cvMain.smoothScrollToMonth(it.yearMonth.previous)
             }
         })
 
         viewModel.nextMonthEvent.observe(this, {
-            exFiveCalendar.findFirstVisibleMonth()?.let {
-                exFiveCalendar.smoothScrollToMonth(it.yearMonth.next)
+            viewBinding.cvMain.findFirstVisibleMonth()?.let {
+                viewBinding.cvMain.smoothScrollToMonth(it.yearMonth.next)
             }
         })
     }
@@ -91,15 +90,15 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
 
         val daysOfWeek = daysOfWeekFromLocale()
         val currentMonth = YearMonth.now()
-        viewBinding.exFiveCalendar.setup(
+        viewBinding.cvMain.setup(
             YearMonth.of(2020, Month.MARCH),
             YearMonth.of(2021, Month.APRIL),
             daysOfWeek.first()
         )
-        viewBinding.exFiveCalendar.scrollToMonth(currentMonth)
+        viewBinding.cvMain.scrollToMonth(currentMonth)
         viewModel.updateSpecialItemsList(currentMonth)
 
-        viewBinding.exFiveCalendar.dayBinder = object : DayBinder<DayViewContainer> {
+        viewBinding.cvMain.dayBinder = object : DayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view)
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.day = day
@@ -123,7 +122,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
             val legendLayout = view.legendLayout
         }
 
-        viewBinding.exFiveCalendar.monthHeaderBinder =
+        viewBinding.cvMain.monthHeaderBinder =
             object : MonthHeaderFooterBinder<MonthViewContainer> {
                 override fun create(view: View) = MonthViewContainer(view)
                 override fun bind(container: MonthViewContainer, month: CalendarMonth) {
@@ -132,21 +131,17 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
                         container.legendLayout.tag = month.yearMonth
                         container.legendLayout.children.map { it as TextView }
                             .forEachIndexed { index, tv ->
-                                tv.text =
-                                    daysOfWeek[index].getDisplayName(
-                                        TextStyle.SHORT,
-                                        Locale.ENGLISH
-                                    )
-                                        .toUpperCase(Locale.ENGLISH)
+                                tv.text = daysOfWeek[index]
+                                    .getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
+                                    .toUpperCase(Locale.ENGLISH)
                                 tv.setTextColorRes(R.color.cv_text_grey)
                                 tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
                             }
-                        month.yearMonth
                     }
                 }
             }
 
-        viewBinding.exFiveCalendar.monthScrollListener = { month ->
+        viewBinding.cvMain.monthScrollListener = { month ->
             viewModel.setMonthName(month)
 
             viewModel.updateSpecialItemsList(month.yearMonth)
@@ -154,7 +149,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
             selectedDate?.let {
                 // Clear selection if we scroll to a new month.
                 selectedDate = null
-                viewBinding.exFiveCalendar.notifyDateChanged(it)
+                viewBinding.cvMain.notifyDateChanged(it)
                 viewModel.updateList(null)
             }
         }
@@ -162,36 +157,29 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
 
     inner class DayViewContainer(view: View) : ViewContainer(view) {
         lateinit var day: CalendarDay // Will be set when this container is bound.
-        val dateTV: TextView = view.dateText
-        val layout = view.exFiveDayLayout
-        val topView: View = view.dayTop
-        val topTV: TextView = view.dayTopText
-        val bottomView: View = view.dayBottom
-        val bottomTV: TextView = view.dayBottomText
+        private val binding = CalendarDayBinding.bind(view)
+        val dateTV: TextView = binding.dateText
+        val layout = binding.exFiveDayLayout
+        val topView: View = binding.dayTop
+        val topTV: TextView = binding.dayTopText
+        val bottomView: View = binding.dayBottom
+        val bottomTV: TextView = binding.dayBottomText
 
         init {
-            view.setOnClickListener {
-                if (day.owner == DayOwner.THIS_MONTH && selectedDate != day.date) {
-                    val oldDate = selectedDate
-                    selectedDate = day.date
-                    exFiveCalendar.notifyDateChanged(day.date)
-                    oldDate?.let { exFiveCalendar.notifyDateChanged(it) }
-                    viewModel.updateList(day.date)
-                }
-            }
+            view.setOnClickListener { selectDate(day.date) }
         }
     }
 
     private fun setDatDataAndColor(container: DayViewContainer, day: CalendarDay) {
         container.dateTV.setTextColorRes(R.color.cv_text_grey)
-        container.layout.setBackgroundResource(if (selectedDate == day.date) R.drawable.drawable_selected_bg else 0)
-
         //highlighting today's date
-        if (day.date == viewModel.getToday()) {
-            container.layout.setBackgroundResource(
+        container.layout.setBackgroundResource(
+            if (day.date != viewModel.getToday()) {
+                if (selectedDate == day.date) R.drawable.drawable_selected_bg
+                else 0
+            } else
                 R.drawable.drawable_selected_highlighted_bg
-            )
-        }
+        )
 
         viewModel.getEvents()?.let { map ->
             val eventsList = map[day.date]
@@ -207,7 +195,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
                         container.bottomView.makeGone()
                     }
                     listEvents.count() == 2 -> {
-                        container.dateTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6f)
+                        container.dateTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8f)
 
                         //Timber.d("Date : ${day.date} | Events found are 1: ${listEvents[0]} 2: ${listEvents[1]}")
                         setTextViewData(container.topTV, container.topView, eventsList[0])
@@ -247,16 +235,14 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        requireActivity().window.statusBarColor =
-            requireContext().getColorCompat(R.color.cv_toolbar_color)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        requireActivity().window.statusBarColor =
-            requireContext().getColorCompat(R.color.colorPrimaryDark)
+    private fun selectDate(date: LocalDate) {
+        if (selectedDate != date) {
+            val oldDate = selectedDate
+            selectedDate = date
+            viewBinding.cvMain.notifyDateChanged(date)
+            oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
+            viewModel.updateList(date)
+        }
     }
 
     private fun loadJSONFromAsset(activity: Activity, fileName: String): String? {

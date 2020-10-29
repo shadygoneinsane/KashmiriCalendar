@@ -2,8 +2,6 @@
     <string name="app_name_release">Koushir Calendar</string>
     <string name="app_name_debug">Koushir Cal dubug</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="rate">Rate</string>
     <string name="contact">Contact for support</string>
@@ -11,11 +9,13 @@
 
     <string name="something_wrong">Something went wrong</string>
     <string name="reload">RETRY</string>
-    <string name="today">TODAY</string>
-    <string name="forecast">FORECAST</string>
     <string name="important_events_for_this_month">Important events for this month :</string>
 
     <!-- content desc for images -->
     <string name="cd_left_navigation">Left navigation</string>
     <string name="cd_right_navigation">Right navigation</string>
+
+    <!-- menu items -->
+    <string name="calendar">Calendar</string>
+    <string name="featured">Featured</string>
 </resources>

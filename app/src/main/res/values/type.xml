@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/source_sans_pro_semi_bold</item>
+    </style>
+
+    <style name="TextAppearance.BottomNavigation" parent="TextAppearance.Caption">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.08</item>
+    </style>
+</resources>
