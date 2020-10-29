@@ -14,17 +14,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_4dp"
-        android:background="@color/white">
+        android:layout_height="match_parent"
+        android:padding="@dimen/dimen_4dp">
 
         <TextView
             android:id="@+id/tv_article_title"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:autoSizeMaxTextSize="@dimen/dimen_sp28"
-            android:autoSizeMinTextSize="@dimen/dimen_sp19"
-            android:lineSpacingExtra="2dp"
+            android:layout_height="0dp"
+            android:lineSpacingExtra="1dp"
             android:text="@{aarti.aartiString}"
             android:textAlignment="center"
             android:textSize="@dimen/dimen_sp19"
@@ -33,6 +30,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/item_ganeshaarti" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
