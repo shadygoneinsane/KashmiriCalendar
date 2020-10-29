@@ -1,4 +1,4 @@
-package koushur.kashmirievents.presentation.ui.main
+package koushur.kashmirievents.presentation.ui.main.calendar
 
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData

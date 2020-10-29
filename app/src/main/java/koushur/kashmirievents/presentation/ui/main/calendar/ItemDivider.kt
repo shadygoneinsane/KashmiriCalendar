@@ -1,4 +1,4 @@
-package koushur.kashmirievents.presentation.ui.main
+package koushur.kashmirievents.presentation.ui.main.calendar
 
 import android.graphics.Rect
 import android.view.View
