@@ -12,7 +12,7 @@ jobs:
 
       - run:
           name: Create keystore.jks
-          command: base64 -d <<< "$RELEASE_KEYSTORE_BASE64" > ~/keys/release/KashmiriEvents.jks
+          command: base64 -d <<< "$RELEASE_KEYSTORE_BASE64" > ~/code/keys/release/KashmiriEvents.jks
 
       - run:
           name: Create ~/keys/keystore.properies
