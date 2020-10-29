@@ -12,11 +12,11 @@ jobs:
 
       - run:
           name: Create keystore.jks
-          command: echo "$RELEASE_KEYSTORE_BASE64" | base64 -d > ~/keys/release/KashmiriEvents.jks
+          command: echo "$RELEASE_KEYSTORE_BASE64" | base64 -d > "$storeFile"
 
       - run:
           name: Create ~/keys/keystore.properies
-          command: printf 'KEYSTORE_KEY_ALIAS=%s\nKEYSTORE_KEY_PASSWORD=%s\nstoreFile=%s\nKEYSTORE_STORE_PASSWORD=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD ~/keys/release/KashmiriEvents.jks $KEYSTORE_STORE_PASSWORD > ~/keys/keystore.properties
+          command: printf 'KEYSTORE_KEY_ALIAS=%s\nKEYSTORE_KEY_PASSWORD=%s\nstoreFile=%s\nKEYSTORE_STORE_PASSWORD=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD $storeFile $KEYSTORE_STORE_PASSWORD > ~/keys/keystore.properties
 
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
