@@ -12,7 +12,7 @@ jobs:
 
       - run:
           name: Create keystore.jks
-          command: echo "$RELEASE_KEYSTORE_BASE64" | base64 -d > .signing/release.jks
+          command: echo "$RELEASE_KEYSTORE_BASE64" | base64 -d > release.jks
 
       - run:
           name: Create ~/keys/keystore.properies
