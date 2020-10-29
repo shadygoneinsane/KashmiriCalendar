@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.children
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -26,6 +27,7 @@ import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.utils.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import java.time.LocalDate
@@ -34,10 +36,11 @@ import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.*
 
-class LandingFragment : BaseFragment<FragmentLandingBinding>() {
-    override fun layoutId(): Int = R.layout.fragment_landing
+class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_landing) {
     private val viewModel: LandingViewModel by viewModel()
     private var selectedDate: LocalDate? = null
+    val daysOfWeek = daysOfWeekFromLocale()
+    private val currentMonth: YearMonth = YearMonth.now()
 
     override fun provideViewModel(): BaseViewModel? {
         return viewModel
@@ -45,6 +48,15 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        activity?.let {
+            loadJSONFromAsset(it, AppConstants.dbEvents)?.let { allEvents ->
+                viewModel.fetchEventsData(allEvents)
+            }
+            loadJSONFromAsset(it, AppConstants.dbSpecialEvents)?.let { specialEvents ->
+                viewModel.fetchSpecialEventsData(specialEvents)
+            }
+        }
 
         viewModel.prevMonthEvent.observe(this, {
             viewBinding.cvMain.findFirstVisibleMonth()?.let {
@@ -78,18 +90,6 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
             )
         )
 
-        activity?.let {
-            loadJSONFromAsset(it, AppConstants.dbEvents)?.let { jsonStr ->
-                viewModel.fetchEventsData(jsonStr)
-            }
-
-            loadJSONFromAsset(it, AppConstants.dbSpecialEvents)?.let { jsonStr ->
-                viewModel.fetchSpecialEventsData(jsonStr)
-            }
-        }
-
-        val daysOfWeek = daysOfWeekFromLocale()
-        val currentMonth = YearMonth.now()
         viewBinding.cvMain.setup(
             YearMonth.of(2020, Month.MARCH),
             YearMonth.of(2021, Month.APRIL),
@@ -98,29 +98,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
         viewBinding.cvMain.scrollToMonth(currentMonth)
         viewModel.updateSpecialItemsList(currentMonth)
 
-        viewBinding.cvMain.dayBinder = object : DayBinder<DayViewContainer> {
-            override fun create(view: View) = DayViewContainer(view)
-            override fun bind(container: DayViewContainer, day: CalendarDay) {
-                container.day = day
-                container.dateTV.text = day.date.dayOfMonth.toString()
-
-                val bottomDecorView = container.bottomView
-
-                container.topView.background = null
-                bottomDecorView.background = null
-
-                if (day.owner == DayOwner.THIS_MONTH) {
-                    setDatDataAndColor(container, day)
-                } else {
-                    container.dateTV.setTextColorRes(R.color.cv_text_grey_light)
-                    container.layout.background = null
-                }
-            }
-        }
-
-        class MonthViewContainer(view: View) : ViewContainer(view) {
-            val legendLayout = view.legendLayout
-        }
+        viewBinding.cvMain.dayBinder = CVDayBinder()
 
         viewBinding.cvMain.monthHeaderBinder =
             object : MonthHeaderFooterBinder<MonthViewContainer> {
@@ -155,6 +133,28 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
         }
     }
 
+    inner class MonthViewContainer(view: View) : ViewContainer(view) {
+        val legendLayout: LinearLayout = view.legendLayout
+    }
+
+    inner class CVDayBinder : DayBinder<DayViewContainer> {
+        override fun create(view: View) = DayViewContainer(view)
+        override fun bind(container: DayViewContainer, day: CalendarDay) {
+            container.day = day
+            container.dateTV.text = day.date.dayOfMonth.toString()
+
+            container.topView.background = null
+            container.bottomView.background = null
+
+            if (day.owner == DayOwner.THIS_MONTH) {
+                setDateDataAndColor(container, day)
+            } else {
+                container.dateTV.setTextColorRes(R.color.cv_text_grey_light)
+                container.layout.background = null
+            }
+        }
+    }
+
     inner class DayViewContainer(view: View) : ViewContainer(view) {
         lateinit var day: CalendarDay // Will be set when this container is bound.
         private val binding = CalendarDayBinding.bind(view)
@@ -170,40 +170,39 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
         }
     }
 
-    private fun setDatDataAndColor(container: DayViewContainer, day: CalendarDay) {
+    fun setDateDataAndColor(container: DayViewContainer, day: CalendarDay) {
         container.dateTV.setTextColorRes(R.color.cv_text_grey)
         //highlighting today's date
         container.layout.setBackgroundResource(
             if (day.date != viewModel.getToday()) {
                 if (selectedDate == day.date) R.drawable.drawable_selected_bg
                 else 0
-            } else
-                R.drawable.drawable_selected_highlighted_bg
+            } else R.drawable.drawable_selected_highlighted_bg
         )
 
-        viewModel.getEvents()?.let { map ->
-            val eventsList = map[day.date]
-            eventsList?.let { listEvents ->
-                when {
-                    listEvents.count() == 1 -> {
-                        //Timber.d("Date : ${day.date} | Event found is ${listEvents[0]}")
+        viewModel.getEvents(day.date)?.let { listTodaysEvents ->
+            when {
+                listTodaysEvents.count() == 1 -> {
+                    //Timber.d("Date : ${day.date} | Event found is ${listEvents[0]}")
 
-                        setTextViewData(container.topTV, container.topView, eventsList[0])
+                    setTextViewData(container.topTV, container.topView, listTodaysEvents[0])
+                    container.bottomTV.makeGone()
+                    container.bottomView.makeGone()
+                }
+                listTodaysEvents.count() == 2 -> {
+                    container.dateTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8f)
 
-                        container.bottomTV.text = ""
-                        container.bottomTV.makeGone()
-                        container.bottomView.makeGone()
-                    }
-                    listEvents.count() == 2 -> {
-                        container.dateTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8f)
-
-                        //Timber.d("Date : ${day.date} | Events found are 1: ${listEvents[0]} 2: ${listEvents[1]}")
-                        setTextViewData(container.topTV, container.topView, eventsList[0])
-                        setTextViewData(container.bottomTV, container.bottomView, eventsList[1])
-                    }
-                    else -> {
-                        //Timber.d("Date : ${day.date} | Events found $listEvents}")
-                    }
+                    //Timber.d("Date : ${day.date} | Events found are 1: ${listEvents[0]} 2: ${listEvents[1]}")
+                    setTextViewData(container.topTV, container.topView, listTodaysEvents[0])
+                    setTextViewData(container.bottomTV, container.bottomView, listTodaysEvents[1])
+                }
+                else -> {
+                    container.topView.makeGone()
+                    container.topTV.makeGone()
+                    container.bottomTV.makeGone()
+                    container.bottomView.makeGone()
+                    Timber.tag("NoEventFound")
+                        .d("Date : ${day.date} | Events found $listTodaysEvents}")
                 }
             }
         }
@@ -229,9 +228,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
                 tv.setTypeface(Typeface.DEFAULT, Typeface.NORMAL)
                 tv.setTextColor(tv.context.getColorCompat(R.color.white))
             }
-            else -> {
-                tv.setTextColor(tv.context.getColorCompat(R.color.white))
-            }
+            else -> tv.setTextColor(tv.context.getColorCompat(R.color.white))
         }
     }
 

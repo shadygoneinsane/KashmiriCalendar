@@ -1,6 +1,8 @@
 <resources>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="elevation">8dp</item>
+    </style>
 
     <style name="TextParent" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">@color/colorTextPrimary2</item>

@@ -2,9 +2,13 @@ package koushur.kashmirievents.presentation.ui.main.calendar
 
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kizitonwose.calendarview.model.CalendarMonth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import koushir.kashmirievents.BR
 import koushir.kashmirievents.R
 import koushur.kashmirievents.data.Event
@@ -13,35 +17,30 @@ import koushur.kashmirievents.database.entity.MonthDataEntity
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
 import koushur.kashmirievents.presentation.utils.returnColor
-import koushur.kashmirievents.repository.CalendarRepository
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-class LandingViewModel(private val repository: CalendarRepository) :
-    BaseViewModel() {
-
+class LandingViewModel : BaseViewModel() {
+    private val listMonthDataEntityType = object : TypeToken<List<MonthDataEntity>>() {}.type
     val monthName = MutableLiveData<String>()
     private lateinit var specialEvents: Map<YearMonth, List<Event>>
     private lateinit var events: Map<LocalDate, List<Event>>
     private lateinit var eventsPerMonth: Map<YearMonth, List<Event>>
+    private val today = LocalDate.now()
     val prevMonthEvent = SingleLiveEvent<Void>()
     val nextMonthEvent = SingleLiveEvent<Void>()
     val selectedDayItemBinding = ItemBinding.of<Event>(BR.event, R.layout.layout_event_item)
     val selectedDayItems = ObservableArrayList<Event>()
     val specialItemBinding = ItemBinding.of<Event>(BR.event, R.layout.layout_special_event_item)
     val specialItems = ObservableArrayList<Event>()
-    private val today = LocalDate.now()
 
     fun getToday(): LocalDate = today
 
-    fun getEvents(): Map<LocalDate, List<Event>>? {
-        return if (::events.isInitialized)
-            events
-        else
-            null
+    fun getEvents(date: LocalDate): List<Event>? {
+        return if (::events.isInitialized) events[date]
+        else null
     }
 
     fun setMonthName(month: CalendarMonth) {
@@ -57,37 +56,43 @@ class LandingViewModel(private val repository: CalendarRepository) :
         nextMonthEvent.call()
     }
 
-
+    /**
+     *  For generating list<Event> from list<MonthDataEntity>
+     */
     private fun generateEvents(inputData: List<MonthDataEntity>): List<Event> {
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
         val list = mutableListOf<Event>()
         inputData.map {
-            val todayLocalDate: LocalDateTime = LocalDate.parse(it.date, formatter).atTime(0, 0)
+            val todayLocalDate: LocalDate = LocalDate.parse(it.date, formatter)
             list.add(Event(todayLocalDate, it.imp, it.events, it.imp.returnColor()))
         }
 
         return list
     }
 
-    fun fetchEventsData(jsonData: String) {
-        val myType = object : TypeToken<List<MonthDataEntity>>() {}.type
-        val data = Gson().fromJson<List<MonthDataEntity>>(jsonData, myType)
-        if (data.isNotEmpty()) {
-            events = generateEvents(data).groupBy { it.time.toLocalDate() }
-            eventsPerMonth = generateEvents(data).groupBy {
-                YearMonth.of(
-                    it.time.toLocalDate().year,
-                    it.time.toLocalDate().month
-                )
+    fun fetchEventsData(allEvents: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val data: List<MonthDataEntity> =
+                    Gson().fromJson(allEvents, listMonthDataEntityType)
+                if (data.isNotEmpty()) {
+                    events = generateEvents(data).groupBy { it.time }
+                    eventsPerMonth = generateEvents(data)
+                        .groupBy { YearMonth.of(it.time.year, it.time.month) }
+                }
             }
         }
     }
 
-    fun fetchSpecialEventsData(jsonData: String) {
-        val myType = object : TypeToken<List<MonthDataEntity>>() {}.type
-        val data = Gson().fromJson<List<MonthDataEntity>>(jsonData, myType)
-        if (data.isNotEmpty()) {
-            specialEvents = generateEvents(data).groupBy { YearMonth.from(it.time.toLocalDate()) }
+    fun fetchSpecialEventsData(specialEvents: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val data: List<MonthDataEntity> =
+                    Gson().fromJson(specialEvents, listMonthDataEntityType)
+                if (data.isNotEmpty())
+                    this@LandingViewModel.specialEvents =
+                        generateEvents(data).groupBy { YearMonth.from(it.time) }
+            }
         }
     }
 
@@ -95,7 +100,6 @@ class LandingViewModel(private val repository: CalendarRepository) :
         selectedDayItems.clear()
         selectedDayItems.addAll(events[date].orEmpty())
     }
-
 
     fun updateSpecialItemsList(yearMonth: YearMonth) {
         specialItems.clear()
@@ -106,13 +110,12 @@ class LandingViewModel(private val repository: CalendarRepository) :
                 val formatter = DateTimeFormatter.ofPattern("E, MMM dd")
                 specialItems.add(
                     Event(
-                        it.time, it.eventImp,
-                        "On ${it.time.toLocalDate().format(formatter)} - ${it.eventName} ",
-                        it.color
+                        time = it.time, eventImp = it.eventImp,
+                        eventName = "On ${it.time.format(formatter)} - ${it.eventName} ",
+                        color = it.color
                     )
                 )
             }
         }
     }
-
 }

@@ -30,7 +30,7 @@
             android:text="@{event.eventName}"
             android:textAlignment="viewStart"
             android:textColor="@color/cv_text_grey"
-            android:textSize="@dimen/dimen_16sp"
+            android:textSize="@dimen/dimen_sp16"
             tools:text="Ashtami" />
     </LinearLayout>
 </layout>

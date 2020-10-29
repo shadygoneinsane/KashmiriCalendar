@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="14dp"
+                    android:padding="@dimen/dimen_8dp"
                     app:layout_collapseMode="pin">
 
                     <ImageView
@@ -139,7 +139,7 @@
                         android:gravity="center"
                         android:text="@string/important_events_for_this_month"
                         android:textColor="@color/cv_text_grey"
-                        android:textSize="@dimen/dimen_16sp"
+                        android:textSize="@dimen/dimen_sp16"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

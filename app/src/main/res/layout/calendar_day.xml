@@ -18,7 +18,7 @@
             android:layout_margin="@dimen/dimen_2dp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimen_10sp"
+            android:textSize="@dimen/dimen_sp10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
@@ -34,7 +34,7 @@
             android:layout_marginBottom="@dimen/dimen_4dp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimen_8sp"
+            android:textSize="@dimen/dimen_sp8"
             app:layout_constraintBottom_toTopOf="@+id/dayTop"
             tools:text="Ashtami, Ram Navam" />
 
@@ -55,7 +55,7 @@
             android:layout_marginBottom="@dimen/dimen_4dp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimen_8sp"
+            android:textSize="@dimen/dimen_sp8"
             app:layout_constraintBottom_toTopOf="@+id/dayBottom"
             tools:text="Ashtami" />
 
