@@ -18,18 +18,17 @@ jobs:
           name: Create ~/keys/keystore.properies
           command: printf 'keyAlias=%s\nkeyPassword=%s\nstoreFile=%s\nstorePassword=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD ~/code/keys/release/release.jks $KEYSTORE_STORE_PASSWORD > ~/code/keys/keystore.properties
 
-      - store_artifacts:
-                path: ~/code/keys/keystore.properties
-                destination: artifact-test
-
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+
       - run:
           name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
           command: sudo chmod +x ./gradlew
+
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
+
       - save_cache:
           paths:
             - ~/.gradle
@@ -37,12 +36,15 @@ jobs:
           #- run:
           #name: Run Tests
           #command: ./gradlew lint test
+
       - run:
           name: Initial build
           command: ./gradlew clean assembleRelease --no-daemon --stacktrace
+
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: app/build/outputs/apk/
           destination: apks/
+
       - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: app/build/test-results
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
