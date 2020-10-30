@@ -40,7 +40,6 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
     private val viewModel: LandingViewModel by viewModel()
     private var selectedDate: LocalDate? = null
     val daysOfWeek = daysOfWeekFromLocale()
-    private val currentMonth: YearMonth = YearMonth.now()
 
     override fun provideViewModel(): BaseViewModel? {
         return viewModel
@@ -58,13 +57,13 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
             }
         }
 
-        viewModel.prevMonthEvent.observe(this, {
+        viewModel.getPrevMonthClickEvent().observe(this, {
             viewBinding.cvMain.findFirstVisibleMonth()?.let {
                 viewBinding.cvMain.smoothScrollToMonth(it.yearMonth.previous)
             }
         })
 
-        viewModel.nextMonthEvent.observe(this, {
+        viewModel.getNextMonthClickEvent().observe(this, {
             viewBinding.cvMain.findFirstVisibleMonth()?.let {
                 viewBinding.cvMain.smoothScrollToMonth(it.yearMonth.next)
             }
@@ -95,29 +94,11 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
             YearMonth.of(2021, Month.APRIL),
             daysOfWeek.first()
         )
-        viewBinding.cvMain.scrollToMonth(currentMonth)
-        viewModel.updateSpecialItemsList(currentMonth)
+        viewBinding.cvMain.scrollToMonth(YearMonth.now())
 
         viewBinding.cvMain.dayBinder = CVDayBinder()
 
-        viewBinding.cvMain.monthHeaderBinder =
-            object : MonthHeaderFooterBinder<MonthViewContainer> {
-                override fun create(view: View) = MonthViewContainer(view)
-                override fun bind(container: MonthViewContainer, month: CalendarMonth) {
-                    // Setup each header day text if we have not done that already.
-                    if (container.legendLayout.tag == null) {
-                        container.legendLayout.tag = month.yearMonth
-                        container.legendLayout.children.map { it as TextView }
-                            .forEachIndexed { index, tv ->
-                                tv.text = daysOfWeek[index]
-                                    .getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
-                                    .toUpperCase(Locale.ENGLISH)
-                                tv.setTextColorRes(R.color.cv_text_grey)
-                                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-                            }
-                    }
-                }
-            }
+        viewBinding.cvMain.monthHeaderBinder = CVMonthHeaderBinder()
 
         viewBinding.cvMain.monthScrollListener = { month ->
             viewModel.setMonthName(month)
@@ -128,7 +109,25 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 // Clear selection if we scroll to a new month.
                 selectedDate = null
                 viewBinding.cvMain.notifyDateChanged(it)
-                viewModel.updateList(null)
+                viewModel.updateSelectedDayItems(null)
+            }
+        }
+    }
+
+    inner class CVMonthHeaderBinder : MonthHeaderFooterBinder<MonthViewContainer> {
+        override fun create(view: View) = MonthViewContainer(view)
+        override fun bind(container: MonthViewContainer, month: CalendarMonth) {
+            // Setup each header day text if we have not done that already.
+            if (container.legendLayout.tag == null) {
+                container.legendLayout.tag = month.yearMonth
+                container.legendLayout.children.map { it as TextView }
+                    .forEachIndexed { index, tv ->
+                        tv.text = daysOfWeek[index]
+                            .getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
+                            .toUpperCase(Locale.ENGLISH)
+                        tv.setTextColorRes(R.color.cv_text_grey)
+                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                    }
             }
         }
     }
@@ -174,7 +173,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         container.dateTV.setTextColorRes(R.color.cv_text_grey)
         //highlighting today's date
         container.layout.setBackgroundResource(
-            if (day.date != viewModel.getToday()) {
+            if (day.date != LocalDate.now()) {
                 if (selectedDate == day.date) R.drawable.drawable_selected_bg
                 else 0
             } else R.drawable.drawable_selected_highlighted_bg
@@ -238,7 +237,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
             selectedDate = date
             viewBinding.cvMain.notifyDateChanged(date)
             oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
-            viewModel.updateList(date)
+            viewModel.updateSelectedDayItems(date)
         }
     }
 

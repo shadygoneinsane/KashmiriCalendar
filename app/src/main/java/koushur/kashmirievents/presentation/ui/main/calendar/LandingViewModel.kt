@@ -24,19 +24,24 @@ import java.time.format.DateTimeFormatter
 
 class LandingViewModel : BaseViewModel() {
     private val listMonthDataEntityType = object : TypeToken<List<MonthDataEntity>>() {}.type
-    val monthName = MutableLiveData<String>()
-    private lateinit var specialEvents: Map<YearMonth, List<Event>>
+    private val monthName = MutableLiveData<String>()
+
     private lateinit var events: Map<LocalDate, List<Event>>
     private lateinit var eventsPerMonth: Map<YearMonth, List<Event>>
-    private val today = LocalDate.now()
-    val prevMonthEvent = SingleLiveEvent<Void>()
-    val nextMonthEvent = SingleLiveEvent<Void>()
+
+    private val prevMonthEvent = SingleLiveEvent<Void>()
+    private val nextMonthEvent = SingleLiveEvent<Void>()
+
+    private lateinit var specialEvents: Map<YearMonth, List<Event>>
+    val specialItems = ObservableArrayList<Event>()
     val selectedDayItemBinding = ItemBinding.of<Event>(BR.event, R.layout.layout_event_item)
+
     val selectedDayItems = ObservableArrayList<Event>()
     val specialItemBinding = ItemBinding.of<Event>(BR.event, R.layout.layout_special_event_item)
-    val specialItems = ObservableArrayList<Event>()
 
-    fun getToday(): LocalDate = today
+    fun getMonthName() = monthName
+    fun getNextMonthClickEvent() = nextMonthEvent
+    fun getPrevMonthClickEvent() = prevMonthEvent
 
     fun getEvents(date: LocalDate): List<Event>? {
         return if (::events.isInitialized) events[date]
@@ -96,7 +101,7 @@ class LandingViewModel : BaseViewModel() {
         }
     }
 
-    fun updateList(date: LocalDate?) {
+    fun updateSelectedDayItems(date: LocalDate?) {
         selectedDayItems.clear()
         selectedDayItems.addAll(events[date].orEmpty())
     }
