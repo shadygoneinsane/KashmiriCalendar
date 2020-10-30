@@ -15,8 +15,8 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import koushir.kashmirievents.R
 import koushur.kashmirievents.data.Importance
-import org.threeten.bp.DayOfWeek
-import org.threeten.bp.temporal.WeekFields
+import java.time.DayOfWeek
+import java.time.temporal.WeekFields
 import java.util.*
 
 
@@ -42,7 +42,7 @@ internal fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean 
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
 
-internal inline fun Boolean?.orFalse(): Boolean = this ?: false
+internal fun Boolean?.orFalse(): Boolean = this ?: false
 
 internal fun Context.getDrawableCompat(@DrawableRes drawable: Int) =
     ContextCompat.getDrawable(this, drawable)

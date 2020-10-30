@@ -12,9 +12,8 @@ import androidx.fragment.app.Fragment
 import koushir.kashmirievents.R
 
 
-abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
+abstract class BaseFragment<VB : ViewDataBinding>(private val layoutId: Int) : Fragment() {
     abstract fun provideViewModel(): BaseViewModel?
-    abstract fun layoutId(): Int
 
     protected lateinit var viewBinding: VB
     private var baseViewModel: BaseViewModel? = null
@@ -29,7 +28,7 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(layoutId(), container, false)
+        val view = inflater.inflate(layoutId, container, false)
         viewBinding = DataBindingUtil.bind(view)!!
         viewBinding.lifecycleOwner = this
         return view

@@ -3,9 +3,9 @@
     <dimen name="dimen_1dp">1dp</dimen>
     <dimen name="dimen_2dp">2dp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
+    <dimen name="dimen_6dp">6dp</dimen>
     <dimen name="dimen_8dp">8dp</dimen>
-    <dimen name="dimen_14sp">14sp</dimen>
-    <dimen name="dimen_16sp">16sp</dimen>
+    <dimen name="dimen_16dp">16dp</dimen>
     <dimen name="dimen_24dp">24dp</dimen>
     <dimen name="dimen_32dp">32dp</dimen>
     <dimen name="dimen_48dp">48dp</dimen>
@@ -16,8 +16,18 @@
     <dimen name="placeholderImageDimen">60dp</dimen>
     <dimen name="placeholderTextHeight">8dp</dimen>
     <dimen name="padding_10">10dp</dimen>
-    <dimen name="dimen_15sp">15sp</dimen>
-    <dimen name="dimen_6dp">6dp</dimen>
-    <dimen name="dimen_8sp">8sp</dimen>
-    <dimen name="dimen_10sp">10sp</dimen>
+
+    <dimen name="dimen_sp8">8sp</dimen>
+    <dimen name="dimen_sp10">10sp</dimen>
+    <dimen name="dimen_sp11">11sp</dimen>
+    <dimen name="dimen_sp12">12sp</dimen>
+    <dimen name="dimen_sp13">13sp</dimen>
+    <dimen name="dimen_sp14">14sp</dimen>
+    <dimen name="dimen_sp15">15sp</dimen>
+    <dimen name="dimen_sp16">16sp</dimen>
+    <dimen name="dimen_sp18">18sp</dimen>
+    <dimen name="dimen_sp19">19sp</dimen>
+    <dimen name="dimen_sp20">20sp</dimen>
+    <dimen name="dimen_sp28">28sp</dimen>
+    <dimen name="dimen_sp44">44sp</dimen>
 </resources>

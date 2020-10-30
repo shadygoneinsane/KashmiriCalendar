@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="koushur.kashmirievents.presentation.ui.main.LandingViewModel" />
+            type="koushur.kashmirievents.presentation.ui.main.calendar.LandingViewModel" />
 
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -19,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/cv_page_bg_color"
+            android:background="@color/dark_desaturated_violet"
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical">
@@ -28,14 +28,16 @@
                 android:id="@+id/exOneAppBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/cv_toolbar_color"
-                android:theme="@style/AppTheme.AppBarOverlay">
+                android:background="@color/dark_saturated_violet"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:liftOnScroll="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:padding="@dimen/dimen_8dp"
+                    app:layout_collapseMode="pin">
 
                     <ImageView
                         android:id="@+id/previousMonthImage"
@@ -43,12 +45,13 @@
                         android:layout_height="36dp"
                         android:layout_marginEnd="22dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/cd_left_navigation"
                         android:onClick="@{() -> viewModel.leftClickEvent()}"
-                        android:tint="@color/cv_text_grey"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_chevron_left" />
+                        app:srcCompat="@drawable/ic_chevron_left"
+                        app:tint="@color/cv_text_grey" />
 
                     <TextView
                         android:id="@+id/monthYearTV"
@@ -69,13 +72,13 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/cd_right_navigation"
                         android:onClick="@{() -> viewModel.rightClickEvent()}"
-                        android:tint="@color/cv_text_grey"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_chevron_right" />
-
+                        app:srcCompat="@drawable/ic_chevron_right"
+                        app:tint="@color/cv_text_grey" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -85,7 +88,7 @@
                 android:orientation="vertical">
 
                 <com.kizitonwose.calendarview.CalendarView
-                    android:id="@+id/exFiveCalendar"
+                    android:id="@+id/cv_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cv_dayViewResource="@layout/calendar_day"
@@ -98,8 +101,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="14dp">
+                    android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_highlight_events"
@@ -107,13 +109,16 @@
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
                         android:orientation="vertical"
-                        app:itemBinding="@{viewModel.itemBinding}"
-                        app:items="@{viewModel.items}"
+                        android:padding="8dp"
+                        app:itemBinding="@{viewModel.selectedDayItemBinding}"
+                        app:items="@{viewModel.selectedDayItems}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0" />
+                        app:layout_constraintVertical_bias="0"
+                        tools:itemCount="4"
+                        tools:listitem="@layout/layout_event_item" />
 
                     <View
                         android:id="@+id/separator_1"
@@ -134,7 +139,7 @@
                         android:gravity="center"
                         android:text="@string/important_events_for_this_month"
                         android:textColor="@color/cv_text_grey"
-                        android:textSize="@dimen/dimen_16sp"
+                        android:textSize="@dimen/dimen_sp16"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -147,6 +152,7 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="@dimen/dimen_2dp"
                         android:background="@color/blue_grey_700"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toTopOf="@+id/rv_major_events"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -159,6 +165,7 @@
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
                         android:orientation="vertical"
+                        android:padding="8dp"
                         app:itemBinding="@{viewModel.specialItemBinding}"
                         app:items="@{viewModel.specialItems}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -166,9 +173,11 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_title_major"
-                        app:layout_constraintVertical_bias="0" />
+                        app:layout_constraintVertical_bias="0"
+                        tools:itemCount="4"
+                        tools:listitem="@layout/layout_special_event_item" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>
