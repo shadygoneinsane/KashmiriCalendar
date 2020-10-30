@@ -10,6 +10,7 @@ import java.time.LocalDate
  *
  * Author: Vikesh Dass
  * Created on: 18-04-2020
+ * Email : vikeshdass@gmail.com
  */
 data class Event(
     val time: LocalDate,

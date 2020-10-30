@@ -1,7 +1,6 @@
 package koushur.kashmirievents.presentation.ui.main.calendar
 
 import android.app.Activity
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
@@ -22,12 +21,13 @@ import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.CalendarDayBinding
 import koushir.kashmirievents.databinding.FragmentLandingBinding
 import koushur.kashmirievents.data.Event
-import koushur.kashmirievents.data.Importance
 import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.base.BaseViewModel
-import koushur.kashmirievents.presentation.utils.*
+import koushur.kashmirievents.presentation.utils.AppConstants
+import koushur.kashmirievents.presentation.utils.daysOfWeekFromLocale
+import koushur.kashmirievents.presentation.utils.setDateDataAndColor
+import koushur.kashmirievents.presentation.utils.setTextColorRes
 import org.koin.android.viewmodel.ext.android.viewModel
-import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import java.time.LocalDate
@@ -68,6 +68,12 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 viewBinding.cvMain.smoothScrollToMonth(it.yearMonth.next)
             }
         })
+
+        viewModel.getEventsLiveData().observe(this, {
+            val mapDateEvents = viewModel.setEventsData(it)
+
+            setUpCalendar(mapDateEvents)
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,22 +94,20 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 resources.getDimensionPixelSize((R.dimen.dimen_4dp))
             )
         )
+    }
 
+    private fun setUpCalendar(mapDateEvents: Map<LocalDate, List<Event>>) {
         viewBinding.cvMain.setup(
             YearMonth.of(2020, Month.MARCH),
             YearMonth.of(2021, Month.APRIL),
             daysOfWeek.first()
         )
-        viewBinding.cvMain.scrollToMonth(YearMonth.now())
 
-        viewBinding.cvMain.dayBinder = CVDayBinder()
-
+        viewBinding.cvMain.dayBinder = CVDayBinder(mapDateEvents)
         viewBinding.cvMain.monthHeaderBinder = CVMonthHeaderBinder()
 
         viewBinding.cvMain.monthScrollListener = { month ->
-            viewModel.setMonthName(month)
-
-            viewModel.updateSpecialItemsList(month.yearMonth)
+            viewModel.updateSpecialItemsList(month)
 
             selectedDate?.let {
                 // Clear selection if we scroll to a new month.
@@ -112,6 +116,8 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 viewModel.updateSelectedDayItems(null)
             }
         }
+
+        viewBinding.cvMain.scrollToMonth(YearMonth.now())
     }
 
     inner class CVMonthHeaderBinder : MonthHeaderFooterBinder<MonthViewContainer> {
@@ -136,8 +142,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         val legendLayout: LinearLayout = view.legendLayout
     }
 
-    inner class CVDayBinder : DayBinder<DayViewContainer> {
-        override fun create(view: View) = DayViewContainer(view)
+    inner class CVDayBinder(private val mapDateEvents: Map<LocalDate, List<Event>>) :
+        DayBinder<DayViewContainer> {
+        override fun create(view: View) = DayViewContainer(view, mapDateEvents)
         override fun bind(container: DayViewContainer, day: CalendarDay) {
             container.day = day
             container.dateTV.text = day.date.dayOfMonth.toString()
@@ -146,7 +153,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
             container.bottomView.background = null
 
             if (day.owner == DayOwner.THIS_MONTH) {
-                setDateDataAndColor(container, day)
+                setDateDataAndColor(selectedDate, mapDateEvents[day.date], container, day)
             } else {
                 container.dateTV.setTextColorRes(R.color.cv_text_grey_light)
                 container.layout.background = null
@@ -154,7 +161,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         }
     }
 
-    inner class DayViewContainer(view: View) : ViewContainer(view) {
+    inner class DayViewContainer(
+        view: View, private val mapDateEvents: Map<LocalDate, List<Event>>
+    ) : ViewContainer(view) {
         lateinit var day: CalendarDay // Will be set when this container is bound.
         private val binding = CalendarDayBinding.bind(view)
         val dateTV: TextView = binding.dateText
@@ -165,79 +174,17 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         val bottomTV: TextView = binding.dayBottomText
 
         init {
-            view.setOnClickListener { selectDate(day.date) }
+            view.setOnClickListener { selectDate(day.date, mapDateEvents) }
         }
     }
 
-    fun setDateDataAndColor(container: DayViewContainer, day: CalendarDay) {
-        container.dateTV.setTextColorRes(R.color.cv_text_grey)
-        //highlighting today's date
-        container.layout.setBackgroundResource(
-            if (day.date != LocalDate.now()) {
-                if (selectedDate == day.date) R.drawable.drawable_selected_bg
-                else 0
-            } else R.drawable.drawable_selected_highlighted_bg
-        )
-
-        viewModel.getEvents(day.date)?.let { listTodaysEvents ->
-            when {
-                listTodaysEvents.count() == 1 -> {
-                    //Timber.d("Date : ${day.date} | Event found is ${listEvents[0]}")
-
-                    setTextViewData(container.topTV, container.topView, listTodaysEvents[0])
-                    container.bottomTV.makeGone()
-                    container.bottomView.makeGone()
-                }
-                listTodaysEvents.count() == 2 -> {
-                    container.dateTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8f)
-
-                    //Timber.d("Date : ${day.date} | Events found are 1: ${listEvents[0]} 2: ${listEvents[1]}")
-                    setTextViewData(container.topTV, container.topView, listTodaysEvents[0])
-                    setTextViewData(container.bottomTV, container.bottomView, listTodaysEvents[1])
-                }
-                else -> {
-                    container.topView.makeGone()
-                    container.topTV.makeGone()
-                    container.bottomTV.makeGone()
-                    container.bottomView.makeGone()
-                    Timber.tag("NoEventFound")
-                        .d("Date : ${day.date} | Events found $listTodaysEvents}")
-                }
-            }
-        }
-    }
-
-    private fun setTextViewData(tv: TextView, decorView: View, event: Event) {
-        tv.text = event.eventName
-        decorView.setBackgroundColor(tv.context.getColorCompat(event.color))
-
-        tv.makeVisible()
-        decorView.makeVisible()
-
-        when (event.eventImp) {
-            Importance.high -> {
-                tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD)
-                tv.setTextColor(tv.context.getColorCompat(R.color.red_800))
-            }
-            Importance.med -> {
-                tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD)
-                tv.setTextColor(tv.context.getColorCompat(R.color.white))
-            }
-            Importance.low -> {
-                tv.setTypeface(Typeface.DEFAULT, Typeface.NORMAL)
-                tv.setTextColor(tv.context.getColorCompat(R.color.white))
-            }
-            else -> tv.setTextColor(tv.context.getColorCompat(R.color.white))
-        }
-    }
-
-    private fun selectDate(date: LocalDate) {
+    private fun selectDate(date: LocalDate, mapDateEvents: Map<LocalDate, List<Event>>) {
         if (selectedDate != date) {
             val oldDate = selectedDate
             selectedDate = date
             viewBinding.cvMain.notifyDateChanged(date)
             oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
-            viewModel.updateSelectedDayItems(date)
+            viewModel.updateSelectedDayItems(mapDateEvents[date])
         }
     }
 

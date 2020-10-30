@@ -26,8 +26,8 @@ class LandingViewModel : BaseViewModel() {
     private val listMonthDataEntityType = object : TypeToken<List<MonthDataEntity>>() {}.type
     private val monthName = MutableLiveData<String>()
 
-    private lateinit var events: Map<LocalDate, List<Event>>
-    private lateinit var eventsPerMonth: Map<YearMonth, List<Event>>
+    private var eventsLiveData = MutableLiveData<List<Event>>(listOf())
+    private var eventsPerMonth: Map<YearMonth, List<Event>> = emptyMap()
 
     private val prevMonthEvent = SingleLiveEvent<Void>()
     private val nextMonthEvent = SingleLiveEvent<Void>()
@@ -40,13 +40,9 @@ class LandingViewModel : BaseViewModel() {
     val specialItemBinding = ItemBinding.of<Event>(BR.event, R.layout.layout_special_event_item)
 
     fun getMonthName() = monthName
+    fun getEventsLiveData() = eventsLiveData
     fun getNextMonthClickEvent() = nextMonthEvent
     fun getPrevMonthClickEvent() = prevMonthEvent
-
-    fun getEvents(date: LocalDate): List<Event>? {
-        return if (::events.isInitialized) events[date]
-        else null
-    }
 
     fun setMonthName(month: CalendarMonth) {
         val monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM")
@@ -80,13 +76,16 @@ class LandingViewModel : BaseViewModel() {
             withContext(Dispatchers.IO) {
                 val data: List<MonthDataEntity> =
                     Gson().fromJson(allEvents, listMonthDataEntityType)
-                if (data.isNotEmpty()) {
-                    events = generateEvents(data).groupBy { it.time }
-                    eventsPerMonth = generateEvents(data)
-                        .groupBy { YearMonth.of(it.time.year, it.time.month) }
-                }
+                eventsLiveData.postValue(generateEvents(data))
             }
         }
+    }
+
+    fun setEventsData(data: List<Event>): Map<LocalDate, List<Event>> {
+        return if (data.isNotEmpty()) {
+            eventsPerMonth = data.groupBy { YearMonth.of(it.time.year, it.time.month) }
+            data.groupBy { it.time }
+        } else emptyMap()
     }
 
     fun fetchSpecialEventsData(specialEvents: String) {
@@ -101,12 +100,14 @@ class LandingViewModel : BaseViewModel() {
         }
     }
 
-    fun updateSelectedDayItems(date: LocalDate?) {
+    fun updateSelectedDayItems(events: List<Event>?) {
         selectedDayItems.clear()
-        selectedDayItems.addAll(events[date].orEmpty())
+        selectedDayItems.addAll(events.orEmpty())
     }
 
-    fun updateSpecialItemsList(yearMonth: YearMonth) {
+    fun updateSpecialItemsList(month: CalendarMonth) {
+        setMonthName(month)
+        val yearMonth = month.yearMonth
         specialItems.clear()
         specialItems.addAll(specialEvents[yearMonth].orEmpty())
 

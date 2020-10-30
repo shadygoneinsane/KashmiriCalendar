@@ -9,6 +9,7 @@ import koushur.kashmirievents.database.entity.MonthDataEntity
  *
  * Author: Vikesh Dass
  * Created on: 30-03-2020
+ * Email : vikeshdass@gmail.com
  */
 @Dao
 interface MonthDataDao {
