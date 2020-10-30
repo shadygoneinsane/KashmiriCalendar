@@ -1,7 +1,7 @@
 # KashmiriCalendar
 A Calender for all Kashmiri Events displayed with individual events
 
-## Implementation [![<shadygoneinsane>](https://circleci.com/github/shadygoneinsane/KashmiriCalendar.svg?style=svg)](<https://app.circleci.com/pipelines/github/shadygoneinsane/KashmiriCalendar>)
+# ## Implementation [![shadygoneinsane](https://circleci.com/github/shadygoneinsane/KashmiriCalendar.svg?style=svg)](<https://app.circleci.com/pipelines/github/shadygoneinsane/KashmiriCalendar>)
 
 Repository is written in `Kotlin` and is based on `MVVM(ViewModel, LiveData)`
 Dependency Injection is implemented using `Dagger2`
