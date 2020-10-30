@@ -37,8 +37,10 @@ jobs:
           #command: ./gradlew lint test
 
       - run:
-          name: Initial build
-          command: ./gradlew clean assembleRelease --no-daemon --stacktrace
+          name: Generate build
+          command: |
+          ./gradlew clean assembleRelease --no-daemon --stacktrace
+          ./gradlew clean bundleRelease --no-daemon --stacktrace
 
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: app/build/outputs/apk/
