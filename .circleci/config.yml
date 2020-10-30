@@ -36,7 +36,10 @@ jobs:
           name: Generate bundle build
           command: ./gradlew clean bundleRelease --no-daemon --stacktrace
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-          path: app/build/outputs/apk/
-          destination: apks/
+          path: app/build/outputs/bundle/
+          destination: aab/
+      - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: app/build/outputs/mapping/
+          destination: txt/
       - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: app/build/test-results
