@@ -21,8 +21,8 @@ android {
         applicationId "koshur.kashmirievents"
         minSdkVersion 22
         targetSdkVersion project.android_sdk_version
-        versionCode 5
-        versionName "1.0.03"
+        versionCode 6
+        versionName "1.0.04"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField STRING, BASE_URL, base_address
