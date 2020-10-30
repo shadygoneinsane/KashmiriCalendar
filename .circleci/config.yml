@@ -12,7 +12,7 @@ jobs:
 
       - run:
           name: Create release.jks
-          command: openssl aes-256-cbc -d -pbkdf2 -iter 100000 -in ~/code/keys/release/KashmiriEvents.jks.encrypted -k "$RELEASE_ENCRYPT_SECRET_KEY" -md md5 >> ~/code/keys/release/release.jks
+          command: openssl aes-256-cbc -d -pbkdf2 -iter 100000 -in ~/code/keys/release/KashmiriEvents.jks.encrypted -k "$RELEASE_ENCRYPT_SECRET_KEY" >> ~/code/keys/release/release.jks
 
       - run:
           name: Create ~/keys/keystore.properies
