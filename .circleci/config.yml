@@ -8,44 +8,35 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-
       - run:
           name: Create release.jks
           command: openssl aes-256-cbc -d -pbkdf2 -iter 100000 -in ~/code/keys/release/KashmiriEvents.jks.encrypted -k "$RELEASE_ENCRYPT_SECRET_KEY" >> ~/code/keys/release/release.jks
-
       - run:
           name: Create keystore.properies
           command: printf 'keyAlias=%s\nkeyPassword=%s\nstoreFile=%s\nstorePassword=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD ~/code/keys/release/release.jks $KEYSTORE_STORE_PASSWORD > ~/code/keys/keystore.properties
-
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-
       - run:
           name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
           command: sudo chmod +x ./gradlew
-
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
-
       - save_cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-          #- run:
-          #name: Run Tests
-          #command: ./gradlew lint test
-
       - run:
-          name: Generate build
-          command: |
-          ./gradlew clean assembleRelease --no-daemon --stacktrace
-          ./gradlew clean bundleRelease --no-daemon --stacktrace
-
+          name: Generate apk build
+          command: ./gradlew clean assembleRelease --no-daemon --stacktrace
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: app/build/outputs/apk/
           destination: apks/
-
+      - run:
+          name: Generate bundle build
+          command: ./gradlew clean bundleRelease --no-daemon --stacktrace
+      - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: app/build/outputs/apk/
+          destination: apks/
       - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: app/build/test-results
-      # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
