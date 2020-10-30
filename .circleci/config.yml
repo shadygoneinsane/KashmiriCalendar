@@ -8,14 +8,13 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-      - run: echo "Build process is started"
 
       - run:
           name: Create release.jks
           command: openssl aes-256-cbc -d -pbkdf2 -iter 100000 -in ~/code/keys/release/KashmiriEvents.jks.encrypted -k "$RELEASE_ENCRYPT_SECRET_KEY" >> ~/code/keys/release/release.jks
 
       - run:
-          name: Create ~/keys/keystore.properies
+          name: Create keystore.properies
           command: printf 'keyAlias=%s\nkeyPassword=%s\nstoreFile=%s\nstorePassword=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD ~/code/keys/release/release.jks $KEYSTORE_STORE_PASSWORD > ~/code/keys/keystore.properties
 
       - restore_cache:
