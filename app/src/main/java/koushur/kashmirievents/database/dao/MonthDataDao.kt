@@ -2,7 +2,6 @@ package koushur.kashmirievents.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import io.reactivex.Single
 import koushur.kashmirievents.database.entity.MonthDataEntity
 
 /**
@@ -10,10 +9,10 @@ import koushur.kashmirievents.database.entity.MonthDataEntity
  *
  * Author: Vikesh Dass
  * Created on: 30-03-2020
+ * Email : vikeshdass@gmail.com
  */
 @Dao
 interface MonthDataDao {
     @Query("SELECT * FROM monthData")
-    fun fetchData(): Single<List<MonthDataEntity>>
-
+    suspend fun fetchData(): List<MonthDataEntity>
 }

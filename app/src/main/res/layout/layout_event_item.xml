@@ -4,10 +4,6 @@
     <data>
 
         <variable
-            name="clickListener"
-            type="koushur.kashmirievents.interfaces.OnOptionClickListener" />
-
-        <variable
             name="event"
             type="koushur.kashmirievents.data.Event" />
     </data>
@@ -31,7 +27,7 @@
             android:gravity="center"
             android:text="@{event.eventName}"
             android:textColor="@color/cv_text_grey"
-            android:textSize="@dimen/dimen_16sp"
+            android:textSize="@dimen/dimen_sp16"
             tools:text="Ashtami" />
     </LinearLayout>
 </layout>

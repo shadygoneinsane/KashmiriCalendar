@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/selected"
+        android:drawable="@drawable/ic_calendar_regular"
+        android:state_checked="true" />
+
+    <item
+        android:id="@+id/unselected"
+        android:drawable="@drawable/ic_calendar_regular" />
+
+    <transition
+        android:drawable="@drawable/ic_calendar_regular"
+        android:fromId="@+id/unselected"
+        android:toId="@+id/selected" />
+
+    <transition
+        android:drawable="@drawable/ic_calendar_solid"
+        android:fromId="@+id/selected"
+        android:toId="@+id/unselected" />
+</animated-selector>

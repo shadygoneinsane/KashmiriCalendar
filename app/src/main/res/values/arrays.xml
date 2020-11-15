@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="aarti_array">
+        <item>Sri GaneshJi Aarti</item>
+        <item>Ambey Mata Aarti</item>
+        <item>Durga Mata Aarti</item>
+        <item>Sri Hanuman Aarti</item>
+        <item>Sri Jagdish Aarti</item>
+        <item>Sri Krishna Aarti</item>
+        <item>Lakshmi Mata Aarti</item>
+        <item>Saibaba Aarti</item>
+        <item>Santoshi Mata Aarti</item>
+        <item>Saraswati Mata Aarti</item>
+        <item>ShivJi Aarti</item>
+        <item>Mata Vaishnodevi Aarti</item>
+    </array>
+</resources>

@@ -2,7 +2,7 @@ package koushur.kashmirievents.data
 
 import androidx.annotation.ColorRes
 import androidx.annotation.IntDef
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 
 /**
@@ -10,9 +10,10 @@ import java.time.LocalDateTime
  *
  * Author: Vikesh Dass
  * Created on: 18-04-2020
+ * Email : vikeshdass@gmail.com
  */
 data class Event(
-    val time: LocalDateTime,
+    val time: LocalDate,
     @Importance val eventImp: Int,
     val eventName: String,
     @ColorRes val color: Int

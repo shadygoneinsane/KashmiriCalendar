@@ -8,5 +8,6 @@
 .DS_Store
 /build
 /captures
-/keys/
+/keys/keystore.properties
+/keys/release/KashmiriEvents.jks
 /app/release/
