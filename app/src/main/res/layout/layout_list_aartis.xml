@@ -8,27 +8,33 @@
 
         <variable
             name="aarti"
-            type="koushur.kashmirievents.presentation.ui.main.featured.FeaturedViewModel.Aarti" />
+            type="koushur.kashmirievents.data.Aarti" />
 
+        <variable
+            name="clickListener"
+            type="koushur.kashmirievents.interfaces.OnOptionClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_desaturated_violet"
+        android:onClick="@{() -> clickListener.onOptionClick(aarti)}"
         android:padding="@dimen/dimen_4dp">
 
         <TextView
             android:id="@+id/tv_article_title"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:lineSpacingExtra="1dp"
-            android:text="@{aarti.aartiString}"
+            android:text="@{aarti.titleEnglish + '/' +  aarti.titleHindi}"
             android:textAlignment="center"
-            android:textSize="@dimen/dimen_sp19"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_sp18"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/item_ganeshaarti" />
+            tools:text="Sri GaneshJi Aarti / श्री हनुमान चालीस" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

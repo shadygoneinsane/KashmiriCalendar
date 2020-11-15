@@ -28,6 +28,10 @@
     <dimen name="dimen_sp18">18sp</dimen>
     <dimen name="dimen_sp19">19sp</dimen>
     <dimen name="dimen_sp20">20sp</dimen>
+    <dimen name="dimen_sp24">24sp</dimen>
     <dimen name="dimen_sp28">28sp</dimen>
     <dimen name="dimen_sp44">44sp</dimen>
+
+    <dimen name="inset_height">@dimen/dimen_8dp</dimen>
+    <dimen name="divider_height">@dimen/dimen_1dp</dimen>
 </resources>

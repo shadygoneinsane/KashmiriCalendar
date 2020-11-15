@@ -40,40 +40,16 @@
                 app:srcCompat="@drawable/ic_om" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tv_count_publishing"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/dark_saturated_violet"
-            app:tabIndicatorHeight="@dimen/dimen_2dp"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextAppearance="@style/customTabStyle" />
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:itemBinding="@{viewModel.aartiItemBinding}"
-                app:items="@{viewModel.aartiItems}" />
-        </androidx.core.widget.NestedScrollView>
-
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_aartis"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:visibility="gone"
+            android:visibility="visible"
             app:itemBinding="@{viewModel.aartiItemBinding}"
             app:items="@{viewModel.aartiItems}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/layout_item_aarti" />
+            tools:listitem="@layout/layout_list_aartis" />
     </LinearLayout>
 </layout>

@@ -4,10 +4,6 @@
     <data>
 
         <variable
-            name="clickListener"
-            type="koushur.kashmirievents.interfaces.OnOptionClickListener" />
-
-        <variable
             name="event"
             type="koushur.kashmirievents.data.Event" />
     </data>

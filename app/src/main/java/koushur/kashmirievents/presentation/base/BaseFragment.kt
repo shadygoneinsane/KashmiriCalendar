@@ -34,10 +34,6 @@ abstract class BaseFragment<VB : ViewDataBinding>(private val layoutId: Int) : F
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     /**
      * Method to observer loading
      */

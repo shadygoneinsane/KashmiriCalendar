@@ -1,25 +1,22 @@
 package koushur.kashmirievents.presentation.ui.main
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.ActivityMainBinding
+import koushur.kashmirievents.presentation.base.BaseActivity
 import koushur.kashmirievents.presentation.ui.main.calendar.LandingFragment
 import koushur.kashmirievents.presentation.ui.main.featured.FeaturedFragment
 
-class ActivityMain : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class ActivityMain : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val landingFragment = LandingFragment()
     private val featuredFragment = FeaturedFragment()
     private var activeFragment: Fragment = landingFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setUpFragmentManager()
-        binding.bottomNav.setOnNavigationItemSelectedListener { item ->
+        viewBinding.bottomNav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.landing -> launchFragment(landingFragment)
                 R.id.featured -> launchFragment(featuredFragment)
