@@ -3,15 +3,34 @@ package koushur.kashmirievents.presentation.ui.main.featured
 import android.content.Context
 import androidx.databinding.ObservableArrayList
 import koushir.kashmirievents.BR
+import koushir.kashmirievents.BuildConfig
 import koushir.kashmirievents.R
 import koushur.kashmirievents.data.Aarti
 import koushur.kashmirievents.interfaces.OnOptionClickListener
+import koushur.kashmirievents.network.remote.RemoteConfigManager
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
+import koushur.kashmirievents.presentation.utils.AppConstants
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 
-class FeaturedViewModel(private val context: Context) : BaseViewModel() {
+class FeaturedViewModel(
+    private val context: Context,
+    val remoteConfigManager: RemoteConfigManager
+) : BaseViewModel() {
     val clickListener = SingleLiveEvent<Aarti>()
+    val videoClickListener = SingleLiveEvent<Void>()
+
+    private val youtubeApiKey: String? = BuildConfig.API_KEY
+    fun getYoutubeApiKey(): String? {
+        return youtubeApiKey
+    }
+
+    private val videoId: String? =
+        remoteConfigManager.getVideoId(AppConstants.ID_VIDEO_SUKH_TA_SAMPADA)
+
+    fun getVideoId() = videoId
+
+    private val channelId: String? = remoteConfigManager.getChannelId()
 
     val aartiItems = ObservableArrayList<Any>()
     val aartiItemBinding: OnItemBindClass<Any> = OnItemBindClass<Any>()
@@ -22,6 +41,16 @@ class FeaturedViewModel(private val context: Context) : BaseViewModel() {
                 .bindExtra(BR.clickListener, object : OnOptionClickListener<Aarti> {
                     override fun onOptionClick(option: Aarti) {
                         clickListener.value = option
+                    }
+                })
+        }
+        .map(String::class.java) { itemBinding, _, _ ->
+            itemBinding
+                .clearExtras()
+                .set(BR.videoName, R.layout.layout_list_video)
+                .bindExtra(BR.clickListener, object : OnOptionClickListener<String> {
+                    override fun onOptionClick(option: String) {
+                        videoClickListener.call()
                     }
                 })
         }
@@ -111,5 +140,6 @@ class FeaturedViewModel(private val context: Context) : BaseViewModel() {
                 context.getString(R.string.item_santoshimataaarti)
             )
         )
+        aartiItems.add("SUKH TA SAMPADA")
     }
 }

@@ -1,4 +1,4 @@
-package koushur.kashmirievents.presentation.ui.main.aartiactivity
+package koushur.kashmirievents.presentation.ui.main.aarti
 
 import android.os.Bundle
 import koushir.kashmirievents.R

@@ -7,11 +7,13 @@ apply plugin: 'com.google.gms.google-services'
 def STRING = "String"
 def BASE_URL = "BASE_URL"
 def APP_ID = "APP_ID"
+def API_KEY = "API_KEY"
 
 Properties props = new Properties()
 props.load(new FileInputStream(file("gradle.properties")))
 def base_address = props.getProperty("base_url").toString()
 def app_id = props.getProperty("app_id").toString()
+def project_api_key = props.getProperty("project_api_key").toString()
 
 android {
     compileSdkVersion project.android_sdk_version
@@ -27,6 +29,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField STRING, BASE_URL, base_address
         buildConfigField STRING, APP_ID, app_id
+        buildConfigField STRING, API_KEY, project_api_key
     }
 
     signingConfigs {
@@ -72,11 +75,16 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+
+    configurations.all {
+        resolutionStrategy {
+            exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //implementation files('libs/your jar file.jar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -90,6 +98,7 @@ dependencies {
 
     /*Room */
     implementation "androidx.room:room-runtime:$roomVersion"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
 
@@ -100,8 +109,9 @@ dependencies {
     }
 
     //firebase
-    implementation 'com.google.firebase:firebase-analytics:18.0.0'
-    implementation "com.google.firebase:firebase-config:$firebase_remote_config"
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation "com.google.firebase:firebase-config-ktx"
 
     // calendar view used in app
     implementation "com.github.kizitonwose:CalendarView:0.4.5"
@@ -129,10 +139,6 @@ dependencies {
     // Timber for Logging
     implementation "com.jakewharton.timber:timber:$timber_version"
 
-    // video player
-    implementation ('com.google.apis:google-api-services-youtube:v3-rev20200618-1.30.9'){
-        exclude group:'com.google.guava'
-    }
     // for Junit tests
     testImplementation 'junit:junit:4.13.1'
 }

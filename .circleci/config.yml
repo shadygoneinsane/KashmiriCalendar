@@ -14,6 +14,9 @@ jobs:
       - run:
           name: Create keystore.properies
           command: printf 'keyAlias=%s\nkeyPassword=%s\nstoreFile=%s\nstorePassword=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD ~/code/keys/release/release.jks $KEYSTORE_STORE_PASSWORD > ~/code/keys/keystore.properties
+      - run:
+          name: Create gradle.properies
+          command: printf 'base_url=%s\napp_id=%s\nproject_api_key=%s\n=%s' $BASE_URL $APP_ID $PROJECT_API_KEY > ~/code/app/gradle.properties
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
