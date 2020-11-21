@@ -16,7 +16,7 @@ jobs:
           command: printf 'keyAlias=%s\nkeyPassword=%s\nstoreFile=%s\nstorePassword=%s' $KEYSTORE_KEY_ALIAS $KEYSTORE_KEY_PASSWORD ~/code/keys/release/release.jks $KEYSTORE_STORE_PASSWORD > ~/code/keys/keystore.properties
       - run:
           name: Create gradle.properties
-          command: printf 'base_url=%s\napp_id=%s\nproject_api_key=%s\n=%s' ${BASE_URL} ${APP_ID} ${PROJECT_API_KEY} > ~/code/app/gradle.properties
+          command: printf 'base_url="%s"\napp_id="%s"\nproject_api_key="%s"' ${BASE_URL} ${APP_ID} ${PROJECT_API_KEY} > ~/code/app/gradle.properties
       - store_artifacts:
           path: ~/code/app/gradle.properties
           destination: artifact-test
