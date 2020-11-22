@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="aarti"
-            type="koushur.kashmirievents.data.AartiData" />
+            name="videoData"
+            type="koushur.kashmirievents.data.VideoData" />
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/video_box"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dark_saturated_violet">
+        android:background="@drawable/ic_ideal_background">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -51,32 +51,31 @@
                     android:layout_marginTop="@dimen/dimen_2dp"
                     android:layout_marginBottom="@dimen/dimen_2dp"
                     android:lineSpacingExtra="@dimen/dimen_2dp"
-                    android:text="@{aarti.titleHindi}"
-                    android:textSize="@dimen/dimen_sp24"
-                    tools:text="@string/title_ambeymataaarti" />
+                    android:text="@{videoData.title}"
+                    android:textSize="@dimen/dimen_sp22"
+                    tools:text="@string/leela_ba_majey" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.core.widget.NestedScrollView
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/youtube_player_web_view"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/dimen_4dp"
-            android:padding="@dimen/dimen_4dp"
+            android:layout_height="wrap_content"
+            app:autoPlay="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
+            app:layout_constraintTop_toTopOf="parent"
+            app:showFullScreenButton="true"
+            app:videoId="Dbz0whY1hTU" />
 
-            <TextView
-                android:id="@+id/tv_article_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lineSpacingExtra="1dp"
-                android:text="@{aarti.aartiString}"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dimen_sp19"
-                tools:text="@string/item_ganeshaarti" />
-        </androidx.core.widget.NestedScrollView>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

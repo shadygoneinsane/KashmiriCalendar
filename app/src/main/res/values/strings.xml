@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name_release">Koushir Calendar</string>
     <string name="app_name_debug">Koushir Cal dubug</string>
 
@@ -76,4 +76,12 @@
     <string name="item_shivaarti">\n ॐ जय शिव ओंकारा, स्वामी जय शिव ओंकारा। \n ब्रह्मा, विष्णु, सदाशिव, अर्द्धांगी धारा॥ \n ॐ जय शिव ओंकारा॥ \n एकानन चतुरानन पञ्चानन राजे। \n हंसासन गरूड़ासन वृषवाहन साजे॥ \n ॐ जय शिव ओंकारा॥ \n दो भुज चार चतुर्भुज दसभुज अति सोहे। \n त्रिगुण रूप निरखते त्रिभुवन जन मोहे॥ \n ॐ जय शिव ओंकारा॥ \n अक्षमाला वनमाला मुण्डमाला धारी। \n त्रिपुरारी कंसारी कर माला धारी॥ \n ॐ जय शिव ओंकारा॥ \n श्वेताम्बर पीताम्बर बाघम्बर अंगे। \n सनकादिक गरुणादिक भूतादिक संगे॥ \n ॐ जय शिव ओंकारा॥ \n कर के मध्य कमण्डलु चक्र त्रिशूलधारी। \n सुखकारी दुखहारी जगपालन कारी॥ \n ॐ जय शिव ओंकारा॥ \n ब्रह्मा विष्णु सदाशिव जानत अविवेका। \n मधु-कैटभ दो‌उ मारे, सुर भयहीन करे॥ \n ॐ जय शिव ओंकारा॥ \n ब्रहमाणी रुद्राणी तुम कमला रानी। \n प्रणवाक्षर में शोभित ये तीनों एका॥ \n ॐ जय शिव ओंकारा॥ \n लक्ष्मी व सावित्री पार्वती संगा। \n पार्वती अर्द्धांगी, शिवलहरी गंगा॥ \n ॐ जय शिव ओंकारा॥ \n पर्वत सोहैं पार्वती, शंकर कैलासा। \n भांग धतूर का भोजन, भस्मी में वासा॥ \n ॐ जय शिव ओंकारा॥ \n जटा में गंग बहत है, गल मुण्डन माला। \n शेष नाग लिपटावत, ओढ़त मृगछाला॥ \n ॐ जय शिव ओंकारा॥ \n काशी में विराजे विश्वनाथ, नन्दी ब्रह्मचारी। \n नित उठ दर्शन पावत, महिमा अति भारी॥ \n ॐ जय शिव ओंकारा॥ \n त्रिगुणस्वामी जी की आरति जो कोइ नर गावे। \n कहत शिवानन्द स्वामी, मनवान्छित फल पावे॥ \n ॐ जय शिव ओंकारा॥ \n</string>
 
     <string name="ic_om">om</string>
+
+    <!-- Videos -->
+    <string name="leela_sukh_ta_sampada">Sukh Ta Sampada (leela video)</string>
+    <string name="leela_ba_majey">Ba Majey Keh Ne Zanay (leela video)</string>
+    <string name="leela_maaj_sharikay">Maaj Sharikay Kar Daya (leela video)</string>
+
+    <string name="youtube_currently_installed">YouTube version installed on this device: <xliff:g id="youtube_version">%1$s</xliff:g>.</string>
+    <string name="youtube_not_installed">YouTube is not installed on this device.</string>
 </resources>

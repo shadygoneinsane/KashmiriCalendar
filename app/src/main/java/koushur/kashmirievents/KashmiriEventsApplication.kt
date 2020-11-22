@@ -3,10 +3,7 @@ package koushur.kashmirievents
 import android.app.Application
 import android.content.Context
 import koushir.kashmirievents.BuildConfig
-import koushur.kashmirievents.di.module.application.DbModule
-import koushur.kashmirievents.di.module.application.remoteRepositoryModule
-import koushur.kashmirievents.di.module.application.retrofitModule
-import koushur.kashmirievents.di.module.application.viewModelModule
+import koushur.kashmirievents.di.module.application.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.KoinComponent
@@ -14,9 +11,9 @@ import org.koin.core.context.startKoin
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-class BaseApplication : Application(), KoinComponent {
+class KashmiriEventsApplication : Application(), KoinComponent {
     companion object {
-        private lateinit var instance: BaseApplication
+        private lateinit var instance: KashmiriEventsApplication
         fun applicationContext(): Context {
             return instance.applicationContext
         }
@@ -32,8 +29,8 @@ class BaseApplication : Application(), KoinComponent {
 
         startKoin {
             androidLogger()
-            androidContext(this@BaseApplication)
-            modules(DbModule, remoteRepositoryModule, retrofitModule, viewModelModule)
+            androidContext(this@KashmiriEventsApplication)
+            modules(mainModule, dbModule, remoteRepositoryModule, retrofitModule, viewModelModule)
         }
     }
 }

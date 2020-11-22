@@ -3,15 +3,14 @@ package koushur.kashmirievents.data
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-
 /**
- * Aarti Data class
+ * Video Data class
+ *
  * Created by: Vikesh Dass
- * Created on: 15-11-2020
+ * Created on: 22-11-2020
  */
 @Parcelize
-data class Aarti(
-    val titleEnglish: String,
-    val titleHindi: String,
-    val aartiString: String
+data class VideoData(
+    val title: String,
+    val videoId: String,
 ) : Parcelable

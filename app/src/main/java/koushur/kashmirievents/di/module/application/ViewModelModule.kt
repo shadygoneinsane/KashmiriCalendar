@@ -8,5 +8,5 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { LandingViewModel() }
-    viewModel { FeaturedViewModel(context = androidContext()) }
+    viewModel { FeaturedViewModel(context = androidContext(), remoteConfigManager = get()) }
 }

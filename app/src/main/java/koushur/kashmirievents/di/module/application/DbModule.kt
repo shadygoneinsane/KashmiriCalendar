@@ -9,7 +9,7 @@ import org.koin.dsl.module
  * Created by Vikesh Dass
  * Email : vikeshdass@gmail.com
  */
-val DbModule = module {
+val dbModule = module {
     single { Room.databaseBuilder(androidContext(), AppDb::class.java, "calendarData.db").build() }
     single { get<AppDb>().monthDataDao() }
 }
