@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="videoName"
-            type="String" />
+            name="videoData"
+            type="koushur.kashmirievents.data.VideoData" />
 
         <variable
             name="clickListener"
@@ -19,22 +19,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/dark_desaturated_violet"
-        android:onClick="@{() -> clickListener.onOptionClick(videoName)}"
+        android:onClick="@{() -> clickListener.onOptionClick(videoData)}"
         android:padding="@dimen/dimen_4dp">
+
+        <ImageView
+            android:id="@+id/ic_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_youtube" />
 
         <TextView
             android:id="@+id/tv_article_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8dp"
             android:lineSpacingExtra="1dp"
-            android:text="@{videoName}"
-            android:textAlignment="center"
+            android:text="@{videoData.title}"
+            android:textAlignment="textStart"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimen_sp18"
+            android:textSize="@dimen/dimen_sp19"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ic_type"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="SUKH TA SAMPADA" />
+            tools:text="@string/leela_sukh_ta_sampada" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

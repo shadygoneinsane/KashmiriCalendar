@@ -10,10 +10,10 @@ import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayer.*
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.ActivityYoutubeLayoutBinding
+import koushur.kashmirievents.data.VideoData
 import koushur.kashmirievents.presentation.utils.AppConstants
 import koushur.kashmirievents.presentation.utils.toast
 import timber.log.Timber
-
 
 /**
  * A [YouTubePlayerActivity] for playing videos from Youtube
@@ -24,13 +24,15 @@ import timber.log.Timber
  */
 class YouTubePlayerActivity : YouTubeBaseActivity(), OnInitializedListener {
     private var player: YouTubePlayer? = null
-    private var videoId: String? = null
+    private var videoData: VideoData? = null
     private var playerStateChangeListener: MyPlayerStateChangeListener? = null
     private lateinit var viewBinding: ActivityYoutubeLayoutBinding
+
     override fun onCreate(p0: Bundle?) {
         super.onCreate(p0)
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_youtube_layout)
-        videoId = intent.getStringExtra(AppConstants.VIDEO_ID)
+        videoData = intent.getParcelableExtra(AppConstants.YOUTUBE_VIDEO_ID)
+        viewBinding.videoData = videoData
 
         intent.getStringExtra(AppConstants.YOUTUBE_API_KEY)?.let {
             viewBinding.youtubeView.initialize(it, this)
@@ -42,7 +44,7 @@ class YouTubePlayerActivity : YouTubeBaseActivity(), OnInitializedListener {
     override fun onInitializationSuccess(p0: Provider?, player: YouTubePlayer?, p2: Boolean) {
         this.player = player
         viewBinding.progressBar.visibility = View.GONE
-        player?.cueVideo(videoId)
+        videoData?.videoId?.let { player?.cueVideo(it) }
         player?.setPlayerStyle(PlayerStyle.DEFAULT)
 
         player?.setPlayerStateChangeListener(playerStateChangeListener)

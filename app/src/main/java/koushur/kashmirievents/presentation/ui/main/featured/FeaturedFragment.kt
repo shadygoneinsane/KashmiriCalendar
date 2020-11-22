@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.youtube.player.YouTubeIntents
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.FragmentFeaturedBinding
+import koushur.kashmirievents.data.VideoData
 import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.ui.main.aarti.AartiActivity
@@ -14,7 +15,6 @@ import koushur.kashmirievents.presentation.ui.main.calendar.InsetDivider
 import koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerActivity
 import koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerWebViewActivity
 import koushur.kashmirievents.presentation.utils.AppConstants
-import koushur.kashmirievents.presentation.utils.toast
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -34,18 +34,17 @@ class FeaturedFragment : BaseFragment<FragmentFeaturedBinding>(R.layout.fragment
         super.onCreate(savedInstanceState)
         viewModel.clickListener.observe(this, {
             val intent = Intent(activity, AartiActivity::class.java)
-            intent.putExtra("aartiString", it)
+            intent.putExtra(AppConstants.AARTI_STRING, it)
             startActivity(intent)
         })
 
-        viewModel.videoClickListener.observe(this, {
+        viewModel.videoClickListener.observe(this, { videoData ->
             YouTubeIntents.getInstalledYouTubeVersionName(context)?.let { version ->
                 String.format(getString(R.string.youtube_currently_installed), version)
-                    .toast(context)
-                openYoutubeActivity()
+                openYoutubeActivity(videoData)
             } ?: run {
-                getString(R.string.youtube_not_installed).toast(context)
-                openYoutubeWebViewActivity()
+                getString(R.string.youtube_not_installed)
+                openYoutubeWebViewActivity(videoData)
             }
         })
     }
@@ -63,27 +62,18 @@ class FeaturedFragment : BaseFragment<FragmentFeaturedBinding>(R.layout.fragment
         )
     }
 
-    private fun openYoutubeActivity() {
+    private fun openYoutubeActivity(videoData: VideoData) {
         val intent = Intent(activity, YouTubePlayerActivity::class.java)
-        val bundle = Bundle().apply {
-            putString(AppConstants.YOUTUBE_API_KEY, viewModel.getYoutubeApiKey())
-            putString(AppConstants.VIDEO_ID, viewModel.getVideoId())
-        }
-
-        startActivity(intent.apply {
-            putExtras(bundle)
-        })
+        startActivity(intent.apply { putExtras(getVideoBundle(videoData)) })
     }
 
-    private fun openYoutubeWebViewActivity() {
+    private fun openYoutubeWebViewActivity(videoData: VideoData) {
         val intent = Intent(activity, YouTubePlayerWebViewActivity::class.java)
-        val bundle = Bundle().apply {
-            putString(AppConstants.YOUTUBE_API_KEY, viewModel.getYoutubeApiKey())
-            putString(AppConstants.VIDEO_ID, viewModel.getVideoId())
-        }
+        startActivity(intent.apply { putExtras(getVideoBundle(videoData)) })
+    }
 
-        startActivity(intent.apply {
-            putExtras(bundle)
-        })
+    private fun getVideoBundle(videoData: VideoData): Bundle = Bundle().apply {
+        putString(AppConstants.YOUTUBE_API_KEY, viewModel.getYoutubeApiKey())
+        putParcelable(AppConstants.YOUTUBE_VIDEO_ID, videoData)
     }
 }

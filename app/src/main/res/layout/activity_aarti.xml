@@ -7,7 +7,7 @@
 
         <variable
             name="aarti"
-            type="koushur.kashmirievents.data.Aarti" />
+            type="koushur.kashmirievents.data.AartiData" />
 
     </data>
 

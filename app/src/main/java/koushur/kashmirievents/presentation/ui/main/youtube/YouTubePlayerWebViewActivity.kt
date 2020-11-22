@@ -7,6 +7,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstan
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.ActivityYoutubeWebViewLayoutBinding
+import koushur.kashmirievents.data.VideoData
 import koushur.kashmirievents.presentation.base.BaseActivity
 import koushur.kashmirievents.presentation.utils.AppConstants
 import koushur.kashmirievents.presentation.utils.toast
@@ -20,21 +21,22 @@ import koushur.kashmirievents.presentation.utils.toast
  */
 class YouTubePlayerWebViewActivity :
     BaseActivity<ActivityYoutubeWebViewLayoutBinding>(R.layout.activity_youtube_web_view_layout) {
+    private var videoData: VideoData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycle.addObserver(viewBinding.youtubePlayerWebView)
-        intent.getStringExtra(AppConstants.YOUTUBE_API_KEY)?.let {
-            viewBinding.progressBar.visibility = View.VISIBLE
-        }
 
-        viewBinding.youtubePlayerWebView.visibility = View.VISIBLE
+        videoData = intent.getParcelableExtra(AppConstants.YOUTUBE_VIDEO_ID)
+
+        viewBinding.videoData = videoData
+        lifecycle.addObserver(viewBinding.youtubePlayerWebView)
+        viewBinding.progressBar.visibility = View.VISIBLE
         viewBinding.youtubePlayerWebView.addYouTubePlayerListener(object :
             AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer) {
                 super.onReady(youTubePlayer)
                 viewBinding.progressBar.visibility = View.GONE
-                intent.getStringExtra(AppConstants.VIDEO_ID)?.let { videoId ->
+                videoData?.videoId?.let { videoId ->
                     youTubePlayer.loadVideo(videoId, 0f)
                 }
             }
@@ -45,14 +47,7 @@ class YouTubePlayerWebViewActivity :
             ) {
                 super.onError(youTubePlayer, error)
                 viewBinding.progressBar.visibility = View.GONE
-                when (error) {
-                    PlayerConstants.PlayerError.UNKNOWN -> {
-                        "Unknown error".toast(baseContext, Toast.LENGTH_LONG)
-                    }
-                    else -> {
-                        "Unknown error".toast(baseContext, Toast.LENGTH_LONG)
-                    }
-                }
+                "Unknown error".toast(baseContext, Toast.LENGTH_LONG)
             }
         })
     }

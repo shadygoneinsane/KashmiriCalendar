@@ -27,6 +27,4 @@ class RemoteConfigManager {
     private fun fetchAndActivate() = firebaseRemoteConfig.fetchAndActivate()
 
     fun getVideoId(videoId: String) = firebaseRemoteConfig.getString(videoId)
-
-    fun getChannelId() = firebaseRemoteConfig.getString(AppConstants.KEY_ID_CHANNEL)
 }

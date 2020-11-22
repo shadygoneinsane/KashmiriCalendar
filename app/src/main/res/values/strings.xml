@@ -77,6 +77,11 @@
 
     <string name="ic_om">om</string>
 
+    <!-- Videos -->
+    <string name="leela_sukh_ta_sampada">Sukh Ta Sampada (leela video)</string>
+    <string name="leela_ba_majey">Ba Majey Keh Ne Zanay (leela video)</string>
+    <string name="leela_maaj_sharikay">Maaj Sharikay Kar Daya (leela video)</string>
+
     <string name="youtube_currently_installed">YouTube version installed on this device: <xliff:g id="youtube_version">%1$s</xliff:g>.</string>
     <string name="youtube_not_installed">YouTube is not installed on this device.</string>
 </resources>
