@@ -8,16 +8,18 @@
         android:layout_height="match_parent"
         android:background="@drawable/ic_ideal_background">
 
-        <com.google.android.youtube.player.YouTubePlayerView
-            android:id="@+id/youtube_view"
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/youtube_player_web_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minWidth="110dp"
-            android:minHeight="200dp"
+            android:visibility="gone"
+            app:autoPlay="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:showFullScreenButton="true"
+            app:videoId="S0Q4gqBUs7c" />
 
         <ProgressBar
             android:id="@+id/progressBar"

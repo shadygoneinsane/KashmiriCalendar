@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.google.android.youtube.player.YouTubeIntents
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.FragmentFeaturedBinding
 import koushur.kashmirievents.presentation.base.BaseFragment
@@ -11,7 +12,9 @@ import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.ui.main.aarti.AartiActivity
 import koushur.kashmirievents.presentation.ui.main.calendar.InsetDivider
 import koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerActivity
+import koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerWebViewActivity
 import koushur.kashmirievents.presentation.utils.AppConstants
+import koushur.kashmirievents.presentation.utils.toast
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -36,15 +39,14 @@ class FeaturedFragment : BaseFragment<FragmentFeaturedBinding>(R.layout.fragment
         })
 
         viewModel.videoClickListener.observe(this, {
-            val intent = Intent(activity, YouTubePlayerActivity::class.java)
-            val bundle = Bundle().apply {
-                putString(AppConstants.YOUTUBE_API_KEY, viewModel.getYoutubeApiKey())
-                putString(AppConstants.VIDEO_ID, viewModel.getVideoId())
+            YouTubeIntents.getInstalledYouTubeVersionName(context)?.let { version ->
+                String.format(getString(R.string.youtube_currently_installed), version)
+                    .toast(context)
+                openYoutubeActivity()
+            } ?: run {
+                getString(R.string.youtube_not_installed).toast(context)
+                openYoutubeWebViewActivity()
             }
-
-            startActivity(intent.apply {
-                putExtras(bundle)
-            })
         })
     }
 
@@ -59,5 +61,29 @@ class FeaturedFragment : BaseFragment<FragmentFeaturedBinding>(R.layout.fragment
                 ContextCompat.getColor(viewBinding.listAartis.context, R.color.green_200)
             )
         )
+    }
+
+    private fun openYoutubeActivity() {
+        val intent = Intent(activity, YouTubePlayerActivity::class.java)
+        val bundle = Bundle().apply {
+            putString(AppConstants.YOUTUBE_API_KEY, viewModel.getYoutubeApiKey())
+            putString(AppConstants.VIDEO_ID, viewModel.getVideoId())
+        }
+
+        startActivity(intent.apply {
+            putExtras(bundle)
+        })
+    }
+
+    private fun openYoutubeWebViewActivity() {
+        val intent = Intent(activity, YouTubePlayerWebViewActivity::class.java)
+        val bundle = Bundle().apply {
+            putString(AppConstants.YOUTUBE_API_KEY, viewModel.getYoutubeApiKey())
+            putString(AppConstants.VIDEO_ID, viewModel.getVideoId())
+        }
+
+        startActivity(intent.apply {
+            putExtras(bundle)
+        })
     }
 }

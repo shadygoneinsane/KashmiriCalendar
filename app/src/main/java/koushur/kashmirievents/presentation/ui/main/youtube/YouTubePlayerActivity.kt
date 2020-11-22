@@ -3,14 +3,17 @@ package koushur.kashmirievents.presentation.ui.main.youtube
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayer.*
-import kotlinx.android.synthetic.main.activity_youtube_layout.*
 import koushir.kashmirievents.R
+import koushir.kashmirievents.databinding.ActivityYoutubeLayoutBinding
 import koushur.kashmirievents.presentation.utils.AppConstants
+import koushur.kashmirievents.presentation.utils.toast
 import timber.log.Timber
+
 
 /**
  * A [YouTubePlayerActivity] for playing videos from Youtube
@@ -23,74 +26,32 @@ class YouTubePlayerActivity : YouTubeBaseActivity(), OnInitializedListener {
     private var player: YouTubePlayer? = null
     private var videoId: String? = null
     private var playerStateChangeListener: MyPlayerStateChangeListener? = null
-    private var playbackEventListener: MyPlaybackEventListener? = null
-
+    private lateinit var viewBinding: ActivityYoutubeLayoutBinding
     override fun onCreate(p0: Bundle?) {
         super.onCreate(p0)
-        setContentView(R.layout.activity_youtube_layout)
-
+        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_youtube_layout)
         videoId = intent.getStringExtra(AppConstants.VIDEO_ID)
 
         intent.getStringExtra(AppConstants.YOUTUBE_API_KEY)?.let {
-            youtube_view.initialize(it, this)
-            progressBar.visibility = View.VISIBLE
+            viewBinding.youtubeView.initialize(it, this)
+            viewBinding.progressBar.visibility = View.VISIBLE
             playerStateChangeListener = MyPlayerStateChangeListener()
-            playbackEventListener = MyPlaybackEventListener()
         }
     }
 
-    override fun onInitializationSuccess(
-        p0: YouTubePlayer.Provider?,
-        player: YouTubePlayer?,
-        p2: Boolean
-    ) {
+    override fun onInitializationSuccess(p0: Provider?, player: YouTubePlayer?, p2: Boolean) {
         this.player = player
-        progressBar.visibility = View.GONE
+        viewBinding.progressBar.visibility = View.GONE
         player?.cueVideo(videoId)
         player?.setPlayerStyle(PlayerStyle.DEFAULT)
 
         player?.setPlayerStateChangeListener(playerStateChangeListener)
-        player?.setPlaybackEventListener(playbackEventListener)
     }
 
-    override fun onInitializationFailure(
-        p0: YouTubePlayer.Provider?,
-        p1: YouTubeInitializationResult?
-    ) {
+    override fun onInitializationFailure(p0: Provider?, p1: YouTubeInitializationResult?) {
         val errorMessage: String = p1.toString()
-        Toast.makeText(baseContext, errorMessage, Toast.LENGTH_LONG).show()
-    }
-
-    inner class MyPlaybackEventListener : PlaybackEventListener {
-        var playbackState = "NOT_PLAYING"
-        var bufferingState = ""
-        override fun onPlaying() {
-            playbackState = "PLAYING"
-
-            Timber.d("\tPLAYING ")
-        }
-
-        override fun onBuffering(isBuffering: Boolean) {
-            bufferingState = if (isBuffering) "(BUFFERING)" else ""
-
-            Timber.d(if (isBuffering) "BUFFERING " else "NOT BUFFERING ")
-        }
-
-        override fun onStopped() {
-            playbackState = "STOPPED"
-
-            Timber.d("\tSTOPPED")
-        }
-
-        override fun onPaused() {
-            playbackState = "PAUSED"
-
-            Timber.d("\tPAUSED ")
-        }
-
-        override fun onSeekTo(endPositionMillis: Int) {
-
-        }
+        viewBinding.progressBar.visibility = View.GONE
+        errorMessage.toast(baseContext, Toast.LENGTH_LONG)
     }
 
     inner class MyPlayerStateChangeListener : PlayerStateChangeListener {

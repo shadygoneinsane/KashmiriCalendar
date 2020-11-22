@@ -28,7 +28,11 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerWebViewActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" />
 
         <meta-data

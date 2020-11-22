@@ -139,6 +139,9 @@ dependencies {
     // Timber for Logging
     implementation "com.jakewharton.timber:timber:$timber_version"
 
+    //youtube player
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+
     // for Junit tests
     testImplementation 'junit:junit:4.13.1'
 }

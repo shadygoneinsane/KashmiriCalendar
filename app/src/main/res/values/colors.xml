@@ -12,6 +12,8 @@
 
     <color name="statusBarColor">#333333</color>
 
+    <color name="ideal_background">#1E252F</color>
+
     <!--Calendar-->
     <color name="dark_desaturated_violet">#3A284C</color>
     <color name="dark_saturated_violet">#433254</color>
