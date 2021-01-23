@@ -2,7 +2,9 @@
 A Calender for all Kashmiri Events displayed with individual events
 <Br>
 [![shadygoneinsane](https://circleci.com/gh/shadygoneinsane/KashmiriCalendar.svg?style=svg)](https://app.circleci.com/pipelines/gh/shadygoneinsane/KashmiriCalendar)
-
+<a href="https://play.google.com/store/apps/details?id=koshur.kashmirievents">
+<img alt="Get it on Google Play" src="http://steverichey.github.io/google-play-badge-svg/img/en_get.svg" />
+</a>
 ### Implementation
 
 Repository is written in `Kotlin` and is based on `MVVM(ViewModel, LiveData)`
@@ -36,5 +38,6 @@ Collections to RecyclerViews binding using  `BindingCollectionAdapter`
 [glide]: https://github.com/bumptech/glide
 [bindingcollectionadapter]: https://github.com/evant/binding-collection-adapter
 [calendarview]: https://github.com/kizitonwose/CalendarView
+[playstorelink]:https://play.google.com/store/apps/details?id=koshur.kashmirievents
 
 
