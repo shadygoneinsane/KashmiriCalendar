@@ -13,7 +13,7 @@ import java.time.LocalDate
  * Email : vikeshdass@gmail.com
  */
 data class Event(
-    val time: LocalDate,
+    val localDate: LocalDate,
     @Importance val eventImp: Int,
     val eventName: String,
     @ColorRes val color: Int

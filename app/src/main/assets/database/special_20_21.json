@@ -1,58 +1,114 @@
 [
   {
     "date": "01-03-2020",
-    "events": "Panchak starts on 21st and ends on 26th of this month,\nChaitra Krishna Paksha starts from 10th to 24th of this month,\nChaitra Shukla Paksha starts from 25th of this month to 8th April."
+    "events": "Panchak starts on 21st and ends on 26th of this month"
+  },
+  {
+    "date": "01-03-2020",
+    "events": "Chaitra Krishna Paksha starts from 10th to 24th of this month,\nChaitra Shukla Paksha starts from 25th of this month to 8th April."
   },
   {
     "date": "01-04-2020",
-    "events": "Panchak starts on 17th and ends on 22th of this month,\nVaisaakh Krishna Paksha starts from 9th and ends on 23th of this month,\nVaisaakh Shukla Paksha starts from 24th of this month and ends on 7th May."
+    "events": "Panchak starts on 17th and ends on 22th of this month"
+  },
+  {
+    "date": "01-04-2020",
+    "events": "Vaisaakh Krishna Paksha starts from 9th and ends on 23th of this month,\nVaisaakh Shukla Paksha starts from 24th of this month and ends on 7th May."
   },
   {
     "date": "01-05-2020",
-    "events": "Panchak starts on 14th and ends on 19th of this month,\nZyeth Krishna Paksha starts from 8th and ends on 22nd of this month,\nZyeth Shukla Paksha starts from 23th of this month to 5th June."
+    "events": "Panchak starts on 14th and ends on 19th of this month"
+  },
+  {
+    "date": "01-05-2020",
+    "events": "Zyeth Krishna Paksha starts from 8th and ends on 22nd of this month,\nZyeth Shukla Paksha starts from 23th of this month to 5th June."
   },
   {
     "date": "01-06-2020",
-    "events": "Panchak starts on 10th and ends on 15th of this month,\nAashaad Krishna Paksha starts from 6th to 21st,\nAashaad shukla Paksha starts from 22th of this month to 5th of July."
+    "events": "Panchak starts on 10th and ends on 15th of this month"
+  },
+  {
+    "date": "01-06-2020",
+    "events": "Aashaad Krishna Paksha starts from 6th to 21st,\nAashaad shukla Paksha starts from 22th of this month to 5th of July."
   },
   {
     "date": "01-07-2020",
-    "events": "Panchak starts on 8th and ends on 13th of this month,\nShravan Krishna Paksha starts from 6th and ends on 20th,\nShravan Shukla Paksha starts from 21th of this month to 3rd of August."
+    "events": "Panchak starts on 8th and ends on 13th of this month"
+  },
+  {
+    "date": "01-07-2020",
+    "events": "Shravan Krishna Paksha starts from 6th and ends on 20th,\nShravan Shukla Paksha starts from 21th of this month to 3rd of August."
   },
   {
     "date": "01-08-2020",
-    "events": "Panchak starts on 4th and ends on 9th of this month,\nPunn Saath lies on 22th, 23th, 26th of this month and 1st of September,\nBhadra Krishna Paksha starts from 4th to 19th,\nBhadra Shukla Paksha starts from 20th of this month to 2nd of September."
+    "events": "Panchak starts on 4th and ends on 9th of this month"
+  },
+  {
+    "date": "01-08-2020",
+    "events": "Punn Saath lies on 22th, 23th, 26th of this month and 1st of September,\nBhadra Krishna Paksha starts from 4th to 19th,\nBhadra Shukla Paksha starts from 20th of this month to 2nd of September."
   },
   {
     "date": "01-09-2020",
-    "events": "Panchak starts on 1st and ends on 6th of this month,\nAgain Panchak starts on 28th of this month and ends on 3rd October,\nAshwin Krishna Paksha starts from 3rd to 17th,\nAdik-Ashwin Shukla Paksha starts from 18th of this month and ends on 1st of October,\nPunn Saath lies on 1st of this month."
+    "events": "Panchak starts on 1st and ends on 6th of this month,\nAgain Panchak starts on 28th of this month and ends on 3rd October"
+  },
+  {
+    "date": "01-09-2020",
+    "events": "Ashwin Krishna Paksha starts from 3rd to 17th,\nAdik-Ashwin Shukla Paksha starts from 18th of this month and ends on 1st of October,\nPunn Saath lies on 1st of this month."
   },
   {
     "date": "01-10-2020",
-    "events": "Panchak starts on 25th and ends on 30th of this month,\nAdik-Ashwin Krishna Paksha starts from 2nd to 16th, \nAshwin Shukla Paksha starts from 17th of this month and ends on Oct 31th."
+    "events": "Panchak starts on 25th and ends on 30th of this month"
+  },
+  {
+    "date": "01-10-2020",
+    "events": "Adik-Ashwin Krishna Paksha starts from 2nd to 16th, \nAshwin Shukla Paksha starts from 17th of this month and ends on Oct 31th."
   },
   {
     "date": "01-11-2020",
-    "events": "Panchak Starts on 21st and ends on 26th of this month,\nKartik Krishna Paksha starts from 1st and ends on 15th of this month, \nKartik Shukla Paksha starts from 16th and ends on 30th of this month."
+    "events": "Panchak Starts on 21st and ends on 26th of this month"
+  },
+  {
+    "date": "01-11-2020",
+    "events": "Kartik Krishna Paksha starts from 1st and ends on 15th of this month, \nKartik Shukla Paksha starts from 16th and ends on 30th of this month."
   },
   {
     "date": "01-12-2020",
-    "events": "Panchak Starts on 19th and ends on 23rd of this month,\nPoh Krishna Paksha starts from 1st and ends on 14th of this month,\nPoh Shukla Paksha starts from 15th and ends on 30th of this month."
+    "events": "Panchak Starts on 19th and ends on 23rd of this month"
+  },
+  {
+    "date": "01-12-2020",
+    "events": "Maagh Krishna Paksha starts from 1st and ends on 14th of this month,\nMaagh Shukla Paksha starts from 15th and ends on 30th of this month."
   },
   {
     "date": "01-01-2021",
-    "events": "Panchak Starts on 15th and ends on 20th of this month, \nMaag Krishna Paksha starts from 31st and ends on 13th of this month,\nMaag Shukla Paksha starts from 14th and ends on 28th of this month,\nPhalgun Krishna Paksha starts from 29th of this month and ends on 11th of February."
+    "events": "Panchak Starts on 15th and ends on 20th of this month"
+  },
+  {
+    "date": "01-01-2021",
+    "events": "Poh Krishna Paksha starts from 31st of Dec and ends on 13th of this month,\nPoh Shukla Paksha starts from 14th and ends on 28th of this month."
   },
   {
     "date": "01-02-2021",
-    "events": "Panchak Starts on 11th and ends on 16th of this month, \nPhalgun Shukla Paksha from 12th and ends on 27th of this month,\nChaitra Krishna Paksha starts from 28th of this month and ends on 13th of March."
+    "events": "Panchak Starts on 11th and ends on 16th of this month"
+  },
+  {
+    "date": "01-02-2021",
+    "events": "Maagh Krishna Paksha starts from 29th January and ends on 11th of this month,\nMaagh Shukla Paksha starts from 12th and ends on 27th of this month."
   },
   {
     "date": "01-03-2021",
-    "events": "Panchak Starts on 11th and ends on 15th of this month,\nChaitra Shukla Paksha starts from 14th and ends on 28th of this month.\nVaisaakh Krishna Paksha starts from 29th of this month and ends on 12th of April"
+    "events": "Panchak Starts on 11th and ends on 15th of this month"
+  },
+  {
+    "date": "01-03-2021",
+    "events": "Phalgun Krishna Paksha starts from 28th February and ends on 13th of this month,\nPhalgun Shukla Paksha from 14th and ends on 28th of this month."
   },
   {
     "date": "01-04-2021",
-    "events": "Panchak Starts on 7th and ends on 12th of this month,\nVaisaakh Shukla Paksha starts from 13th and ends on 27th of this month."
+    "events": "Panchak Starts on 7th and ends on 12th of this month"
+  },
+  {
+    "date": "01-04-2021",
+    "events": "Chaitra Krishna Paksha starts from 29th March and ends on 12th of this month,\nChaitra Shukla Paksha starts from 13th April and ends on 27th of this month."
   }
 ]

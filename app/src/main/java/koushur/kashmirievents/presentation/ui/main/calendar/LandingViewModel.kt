@@ -83,8 +83,8 @@ class LandingViewModel : BaseViewModel() {
 
     fun setEventsData(data: List<Event>): Map<LocalDate, List<Event>> {
         return if (data.isNotEmpty()) {
-            eventsPerMonth = data.groupBy { YearMonth.of(it.time.year, it.time.month) }
-            data.groupBy { it.time }
+            eventsPerMonth = data.groupBy { YearMonth.of(it.localDate.year, it.localDate.month) }
+            data.groupBy { it.localDate }
         } else emptyMap()
     }
 
@@ -95,7 +95,7 @@ class LandingViewModel : BaseViewModel() {
                     Gson().fromJson(specialEvents, listMonthDataEntityType)
                 if (data.isNotEmpty())
                     this@LandingViewModel.specialEvents =
-                        generateEvents(data).groupBy { YearMonth.from(it.time) }
+                        generateEvents(data).groupBy { YearMonth.from(it.localDate) }
             }
         }
     }
@@ -116,8 +116,8 @@ class LandingViewModel : BaseViewModel() {
                 val formatter = DateTimeFormatter.ofPattern("E, MMM dd")
                 specialItems.add(
                     Event(
-                        time = it.time, eventImp = it.eventImp,
-                        eventName = "On ${it.time.format(formatter)} - ${it.eventName} ",
+                        localDate = it.localDate, eventImp = it.eventImp,
+                        eventName = "On ${it.localDate.format(formatter)} - ${it.eventName} ",
                         color = it.color
                     )
                 )
