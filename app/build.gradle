@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 def STRING = "String"
 def BASE_URL = "BASE_URL"
@@ -23,8 +24,8 @@ android {
         applicationId "koshur.kashmirievents"
         minSdkVersion 22
         targetSdkVersion project.android_sdk_version
-        versionCode 7
-        versionName "1.0.05"
+        versionCode 8
+        versionName "1.0.06"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField STRING, BASE_URL, base_address
@@ -67,8 +68,8 @@ android {
         jvmTarget = "1.8"
     }
 
-    dataBinding {
-        enabled true
+    buildFeatures {
+        dataBinding = true
     }
 
     lintOptions {
@@ -112,6 +113,8 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation "com.google.firebase:firebase-config-ktx"
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation "com.google.firebase:firebase-crashlytics-ktx"
 
     // calendar view used in app
     implementation "com.github.kizitonwose:CalendarView:0.4.5"
