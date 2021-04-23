@@ -125,8 +125,11 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         viewBinding.cvMain.dayBinder = CVDayBinder(mapDateEvents)
         viewBinding.cvMain.monthHeaderBinder = CVMonthHeaderBinder()
 
+        //to update list with current months items as default when calendar is setup
+        viewModel.updateSpecialItemsList(YearMonth.now())
+
         viewBinding.cvMain.monthScrollListener = { month ->
-            viewModel.updateSpecialItemsList(month)
+            viewModel.updateSpecialItemsList(month.yearMonth)
 
             selectedDate?.let {
                 // Clear selection if we scroll to a new month.

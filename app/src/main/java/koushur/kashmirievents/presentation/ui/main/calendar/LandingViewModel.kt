@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.kizitonwose.calendarview.model.CalendarMonth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -44,10 +43,10 @@ class LandingViewModel : BaseViewModel() {
     fun getNextMonthClickEvent() = nextMonthEvent
     fun getPrevMonthClickEvent() = prevMonthEvent
 
-    private fun setMonthName(month: CalendarMonth) {
+    private fun setMonthName(yearMonth: YearMonth) {
         val monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM")
         monthNameLiveData.value =
-            "${monthTitleFormatter.format(month.yearMonth)} ${month.yearMonth.year}"
+            "${monthTitleFormatter.format(yearMonth)} ${yearMonth.year}"
     }
 
     fun leftClickEvent() {
@@ -109,9 +108,8 @@ class LandingViewModel : BaseViewModel() {
         selectedDayItems.addAll(events.orEmpty())
     }
 
-    fun updateSpecialItemsList(month: CalendarMonth) {
-        setMonthName(month)
-        val yearMonth = month.yearMonth
+    fun updateSpecialItemsList(yearMonth: YearMonth) {
+        setMonthName(yearMonth)
         specialItems.clear()
         specialItems.addAll(specialEventsMap[yearMonth].orEmpty())
 
