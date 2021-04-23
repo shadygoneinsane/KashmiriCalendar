@@ -8,8 +8,11 @@ package koushur.kashmirievents.presentation.utils
  * Email : vikeshdass@gmail.com
  */
 object AppConstants {
-    const val dbEvents = "database/20_21.json"
-    const val dbSpecialEvents = "database/special_20_21.json"
+    const val dbEvents_20_21 = "database/20_21.json"
+    const val dbSpecialEvents_20_21 = "database/special_20_21.json"
+
+    const val dbEvents_21_22 = "database/21_22.json"
+    const val dbSpecialEvents_21_22 = "database/special_21_22.json"
 
     const val YOUTUBE_API_KEY = "YOUTUBE_API_KEY"
     const val YOUTUBE_VIDEO_ID = "YOUTUBE_VIDEO_ID"
