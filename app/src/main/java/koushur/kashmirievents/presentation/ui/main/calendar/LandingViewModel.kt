@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.kizitonwose.calendarview.model.CalendarMonth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,29 +23,30 @@ import java.time.format.DateTimeFormatter
 
 class LandingViewModel : BaseViewModel() {
     private val listMonthDataEntityType = object : TypeToken<List<MonthDataEntity>>() {}.type
-    private val monthName = MutableLiveData<String>()
+    private val monthNameLiveData = MutableLiveData<String>()
 
-    private var eventsLiveData = MutableLiveData<List<Event>>(listOf())
-    private var eventsPerMonth: Map<YearMonth, List<Event>> = emptyMap()
+    private var eventsLiveDataLiveData = MutableLiveData<MutableList<Event>>(mutableListOf())
+    private var eventsPerMonthMap: Map<YearMonth, List<Event>> = emptyMap()
 
     private val prevMonthEvent = SingleLiveEvent<Void>()
     private val nextMonthEvent = SingleLiveEvent<Void>()
 
-    private lateinit var specialEvents: Map<YearMonth, List<Event>>
+    private val specialEventsMap: MutableMap<YearMonth, List<Event>> = mutableMapOf()
     val specialItems = ObservableArrayList<Event>()
     val selectedDayItemBinding = ItemBinding.of<Event>(BR.event, R.layout.layout_event_item)
 
     val selectedDayItems = ObservableArrayList<Event>()
     val specialItemBinding = ItemBinding.of<Event>(BR.event, R.layout.layout_special_event_item)
 
-    fun getMonthName() = monthName
-    fun getEventsLiveData() = eventsLiveData
+    fun getMonthName() = monthNameLiveData
+    fun getEventsLiveData() = eventsLiveDataLiveData
     fun getNextMonthClickEvent() = nextMonthEvent
     fun getPrevMonthClickEvent() = prevMonthEvent
 
-    fun setMonthName(month: CalendarMonth) {
+    private fun setMonthName(yearMonth: YearMonth) {
         val monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM")
-        monthName.value = "${monthTitleFormatter.format(month.yearMonth)} ${month.yearMonth.year}"
+        monthNameLiveData.value =
+            "${monthTitleFormatter.format(yearMonth)} ${yearMonth.year}"
     }
 
     fun leftClickEvent() {
@@ -71,19 +71,21 @@ class LandingViewModel : BaseViewModel() {
         return list
     }
 
-    fun fetchEventsData(allEvents: String) {
+    fun fetchEventsData(allEvents: String, eventsLiveData: MutableLiveData<MutableList<Event>>) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val data: List<MonthDataEntity> =
                     Gson().fromJson(allEvents, listMonthDataEntityType)
-                eventsLiveData.postValue(generateEvents(data))
+                val list: MutableList<Event>? = eventsLiveData.value
+                list?.addAll(generateEvents(data))
+                eventsLiveData.postValue(list)
             }
         }
     }
 
     fun setEventsData(data: List<Event>): Map<LocalDate, List<Event>> {
         return if (data.isNotEmpty()) {
-            eventsPerMonth = data.groupBy { YearMonth.of(it.localDate.year, it.localDate.month) }
+            eventsPerMonthMap = data.groupBy { YearMonth.of(it.localDate.year, it.localDate.month) }
             data.groupBy { it.localDate }
         } else emptyMap()
     }
@@ -94,8 +96,9 @@ class LandingViewModel : BaseViewModel() {
                 val data: List<MonthDataEntity> =
                     Gson().fromJson(specialEvents, listMonthDataEntityType)
                 if (data.isNotEmpty())
-                    this@LandingViewModel.specialEvents =
+                    this@LandingViewModel.specialEventsMap.putAll(
                         generateEvents(data).groupBy { YearMonth.from(it.localDate) }
+                    )
             }
         }
     }
@@ -105,13 +108,12 @@ class LandingViewModel : BaseViewModel() {
         selectedDayItems.addAll(events.orEmpty())
     }
 
-    fun updateSpecialItemsList(month: CalendarMonth) {
-        setMonthName(month)
-        val yearMonth = month.yearMonth
+    fun updateSpecialItemsList(yearMonth: YearMonth) {
+        setMonthName(yearMonth)
         specialItems.clear()
-        specialItems.addAll(specialEvents[yearMonth].orEmpty())
+        specialItems.addAll(specialEventsMap[yearMonth].orEmpty())
 
-        eventsPerMonth[yearMonth].orEmpty().map {
+        eventsPerMonthMap[yearMonth].orEmpty().map {
             if (it.eventImp == Importance.med || it.eventImp == Importance.high) {
                 val formatter = DateTimeFormatter.ofPattern("E, MMM dd")
                 specialItems.add(

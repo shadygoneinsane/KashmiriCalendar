@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.children
+import androidx.lifecycle.lifecycleScope
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -16,6 +17,7 @@ import com.kizitonwose.calendarview.ui.ViewContainer
 import com.kizitonwose.calendarview.utils.next
 import com.kizitonwose.calendarview.utils.previous
 import kotlinx.android.synthetic.main.layout_cv_day_legend.view.*
+import kotlinx.coroutines.launch
 import koushir.kashmirievents.BR
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.CalendarDayBinding
@@ -41,21 +43,12 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
     private var selectedDate: LocalDate? = null
     val daysOfWeek = daysOfWeekFromLocale()
 
-    override fun provideViewModel(): BaseViewModel? {
+    override fun provideViewModel(): BaseViewModel {
         return viewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        activity?.let {
-            loadJSONFromAsset(it, AppConstants.dbEvents)?.let { allEvents ->
-                viewModel.fetchEventsData(allEvents)
-            }
-            loadJSONFromAsset(it, AppConstants.dbSpecialEvents)?.let { specialEvents ->
-                viewModel.fetchSpecialEventsData(specialEvents)
-            }
-        }
 
         viewModel.getPrevMonthClickEvent().observe(this, {
             viewBinding.cvMain.findFirstVisibleMonth()?.let {
@@ -81,6 +74,16 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         viewBinding.setVariable(BR.viewModel, viewModel)
         viewBinding.executePendingBindings()
 
+        //setup calendar
+        viewBinding.cvMain.setup(
+            YearMonth.of(2020, Month.MARCH),
+            YearMonth.of(2022, Month.APRIL),
+            daysOfWeek.first()
+        )
+
+        //fetch data from assets
+        loadDataFromAssets()
+
         viewBinding.rvHighlightEvents.addItemDecoration(
             ItemDivider(
                 resources.getDimensionPixelSize(R.dimen.dimen_4dp),
@@ -96,18 +99,37 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         )
     }
 
-    private fun setUpCalendar(mapDateEvents: Map<LocalDate, List<Event>>) {
-        viewBinding.cvMain.setup(
-            YearMonth.of(2020, Month.MARCH),
-            YearMonth.of(2021, Month.APRIL),
-            daysOfWeek.first()
-        )
+    private fun loadDataFromAssets() {
+        activity?.let {
+            lifecycleScope.launch {
+                loadJSONFromAsset(it, AppConstants.dbEvents_20_21)?.let { allEvents ->
+                    viewModel.fetchEventsData(allEvents, viewModel.getEventsLiveData())
+                }
 
+                loadJSONFromAsset(it, AppConstants.dbEvents_21_22)?.let { allEvents ->
+                    viewModel.fetchEventsData(allEvents, viewModel.getEventsLiveData())
+                }
+
+                loadJSONFromAsset(it, AppConstants.dbSpecialEvents_20_21)?.let { specialEvents ->
+                    viewModel.fetchSpecialEventsData(specialEvents)
+                }
+
+                loadJSONFromAsset(it, AppConstants.dbSpecialEvents_21_22)?.let { specialEvents ->
+                    viewModel.fetchSpecialEventsData(specialEvents)
+                }
+            }
+        }
+    }
+
+    private fun setUpCalendar(mapDateEvents: Map<LocalDate, List<Event>>) {
         viewBinding.cvMain.dayBinder = CVDayBinder(mapDateEvents)
         viewBinding.cvMain.monthHeaderBinder = CVMonthHeaderBinder()
 
+        //to update list with current months items as default when calendar is setup
+        viewModel.updateSpecialItemsList(YearMonth.now())
+
         viewBinding.cvMain.monthScrollListener = { month ->
-            viewModel.updateSpecialItemsList(month)
+            viewModel.updateSpecialItemsList(month.yearMonth)
 
             selectedDate?.let {
                 // Clear selection if we scroll to a new month.
