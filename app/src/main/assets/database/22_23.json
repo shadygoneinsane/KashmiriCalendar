@@ -1153,5 +1153,303 @@
   {
     "date": "31-12-2022",
     "events": "Navum"
+  },
+  {
+    "date": "01-01-2023",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "02-01-2023",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "03-01-2023",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "04-01-2023",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "05-01-2023",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "06-01-2023",
+    "events": "Poornima",
+    "imp": "1"
+  },
+  {
+    "date": "07-01-2023",
+    "events": "Okdoh"
+  },
+  {
+    "date": "08-01-2023",
+    "events": "Dwitya"
+  },
+  {
+    "date": "09-01-2023",
+    "events": "Dwitya"
+  },
+  {
+    "date": "10-01-2023",
+    "events": "Tritya"
+  },
+  {
+    "date": "11-01-2023",
+    "events": "Choram"
+  },
+  {
+    "date": "12-01-2023",
+    "events": "Paancham"
+  },
+  {
+    "date": "13-01-2023",
+    "events": "Shishthi"
+  },
+  {
+    "date": "14-01-2023",
+    "events": "Sahib Saptami",
+    "imp": "2"
+  },
+  {
+    "date": "14-01-2023",
+    "events": "Satam"
+  },
+  {
+    "date": "15-01-2023",
+    "events": "Ashtami"
+  },
+  {
+    "date": "16-01-2023",
+    "events": "Navum"
+  },
+  {
+    "date": "17-01-2023",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "18-01-2023",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "19-01-2023",
+    "events": "KP Exodus Day",
+    "imp": "2"
+  },
+  {
+    "date": "19-01-2023",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "20-01-2023",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "21-01-2023",
+    "events": "Amavasya",
+    "imp": "1"
+  },
+  {
+    "date": "22-01-2023",
+    "events": "Okdoh"
+  },
+  {
+    "date": "23-01-2023",
+    "events": "Dwitya"
+  },
+  {
+    "date": "24-01-2023",
+    "events": "Gauri Tritya"
+  },
+  {
+    "date": "25-01-2023",
+    "events": "Choram"
+  },
+  {
+    "date": "26-01-2023",
+    "events": "Basant Panchmi"
+  },
+  {
+    "date": "26-01-2023",
+    "events": "Paancham"
+  },
+  {
+    "date": "27-01-2023",
+    "events": "Shishthi"
+  },
+  {
+    "date": "28-01-2023",
+    "events": "Surya Saptami",
+    "imp": "2"
+  },
+  {
+    "date": "28-01-2023",
+    "events": "Satam"
+  },
+  {
+    "date": "29-01-2023",
+    "events": "Ashtami",
+    "imp": "1"
+  },
+  {
+    "date": "30-01-2023",
+    "events": "Navum"
+  },
+  {
+    "date": "31-01-2023",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "01-02-2023",
+    "events": "Bhimsen\nEkadashi",
+    "imp": "1"
+  },
+  {
+    "date": "02-02-2023",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "03-02-2023",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "04-02-2023",
+    "events": "Yachne’ Chodah",
+    "imp": "2"
+  },
+  {
+    "date": "04-02-2023",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "05-02-2023",
+    "events": "Maagh/\nKawPunim",
+    "imp": "2"
+  },
+  {
+    "date": "05-02-2023",
+    "events": "Poornima",
+    "imp": "1"
+  },
+  {
+    "date": "06-02-2023",
+    "events": "Hure’ Okdoh",
+    "imp": "1"
+  },
+  {
+    "date": "07-02-2023",
+    "events": "Dwitya"
+  },
+  {
+    "date": "08-02-2023",
+    "events": "Tritya"
+  },
+  {
+    "date": "09-02-2023",
+    "events": "Choram"
+  },
+  {
+    "date": "10-02-2023",
+    "events": "Choram"
+  },
+  {
+    "date": "11-02-2023",
+    "events": "Paancham"
+  },
+  {
+    "date": "12-02-2023",
+    "events": "Shishthi"
+  },
+  {
+    "date": "13-02-2023",
+    "events": "Satam"
+  },
+  {
+    "date": "14-02-2023",
+    "events": "Hure’ Aetham",
+    "imp": "2"
+  },
+  {
+    "date": "14-02-2023",
+    "events": "Ashtami"
+  },
+  {
+    "date": "15-02-2023",
+    "events": "Navum"
+  },
+  {
+    "date": "16-02-2023",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "17-02-2023",
+    "events": "Waagur-Baah",
+    "imp": "2"
+  },
+  {
+    "date": "17-02-2023",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "18-02-2023",
+    "events": "Maha Shivratri",
+    "imp": "2"
+  },
+  {
+    "date": "18-02-2023",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "19-02-2023",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "20-02-2023",
+    "events": "Doonye’ Maavus",
+    "imp": "2"
+  },
+  {
+    "date": "20-02-2023",
+    "events": "Amavasya",
+    "imp": "1"
+  },
+  {
+    "date": "21-02-2023",
+    "events": "Okdoh"
+  },
+  {
+    "date": "22-02-2023",
+    "events": "Tritya"
+  },
+  {
+    "date": "23-02-2023",
+    "events": "Choram"
+  },
+  {
+    "date": "24-02-2023",
+    "events": "Paancham"
+  },
+  {
+    "date": "25-02-2023",
+    "events": "Shishthi"
+  },
+  {
+    "date": "26-02-2023",
+    "events": "Satam"
+  },
+  {
+    "date": "27-02-2023",
+    "events": "Teel-Aetham",
+    "imp": "2"
+  },
+  {
+    "date": "27-02-2023",
+    "events": "Ashtami",
+    "imp": "1"
+  },
+  {
+    "date": "28-02-2023",
+    "events": "Navum"
   }
 ]
