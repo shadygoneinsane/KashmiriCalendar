@@ -27,7 +27,7 @@ allprojects {
         // DEPENDENCIES VERSIONS
         retrofit_version = '2.9.0'
         okhttp_Logging_Version = '4.9.0'
-        lifecycleVersion = '2.4.0-alpha01'
+        lifecycleVersion = '2.4.0-alpha02'
         data_binding_compiler_version = '3.1.4'
         timber_version = '4.7.1'
         roomVersion = '2.2.6'
@@ -35,6 +35,8 @@ allprojects {
 
         //Koin
         koin_version = "2.2.0-alpha-1"
+
+        mockito_version = '2.15.0'
 
         KEYSTORE_STORE_FILE = rootProject.file(keystoreProperties['storeFile'])
         KEYSTORE_STORE_PASSWORD = keystoreProperties['storePassword']

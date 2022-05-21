@@ -1,0 +1,568 @@
+[
+  {
+    "date": "01-05-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "02-05-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "03-05-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "04-05-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "05-05-2022",
+    "events": "Choram"
+  },
+  {
+    "date": "06-05-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "07-05-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "08-05-2022",
+    "events": "Satam",
+    "imp": "0"
+  },
+  {
+    "date": "09-05-2022",
+    "events": "Ashtami",
+    "imp": "1"
+  },
+  {
+    "date": "10-05-2022",
+    "events": "Navum",
+    "imp": "0"
+  },
+  {
+    "date": "11-05-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "12-05-2022",
+    "events": "Ekadashi",
+    "imp": "0"
+  },
+  {
+    "date": "13-05-2022",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "14-05-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "15-05-2022",
+    "events": "Ganesh\nChaturdashi",
+    "imp": "2"
+  },
+  {
+    "date": "16-05-2022",
+    "events": "Poornima",
+    "imp": "1"
+  },
+  {
+    "date": "17-05-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "18-05-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "19-05-2022",
+    "events": "Choram"
+  },
+  {
+    "date": "20-05-2022",
+    "events": "Jyestha Devi Yagya",
+    "imp": "2"
+  },
+  {
+    "date": "20-05-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "21-05-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "22-05-2022",
+    "events": "Satam"
+  },
+  {
+    "date": "23-05-2022",
+    "events": "Ashtami"
+  },
+  {
+    "date": "24-05-2022",
+    "events": "Navum"
+  },
+  {
+    "date": "25-05-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "26-05-2022",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "27-05-2022",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "28-05-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "29-05-2022",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "30-05-2022",
+    "events": "Amavasya",
+    "imp": "1"
+  },
+  {
+    "date": "31-05-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "01-06-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "02-06-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "03-06-2022",
+    "events": "Choram"
+  },
+  {
+    "date": "04-06-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "05-06-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "06-06-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "07-06-2022",
+    "events": "Satam"
+  },
+  {
+    "date": "08-06-2022",
+    "events": "Zyeth\nAshtami",
+    "imp": "1"
+  },
+  {
+    "date": "08-06-2022",
+    "events": "Mata Kheer Bhawani Yatra",
+    "imp": "2"
+  },
+  {
+    "date": "09-06-2022",
+    "events": "Navum"
+  },
+  {
+    "date": "10-06-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "11-06-2022",
+    "events": "Nirzala\nEkadashi"
+  },
+  {
+    "date": "12-06-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "13-06-2022",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "14-06-2022",
+    "events": "Mata Roop Bhawani Prakash Utsav",
+    "imp": "2"
+  },
+  {
+    "date": "14-06-2022",
+    "events": "Poornima",
+    "imp": "1"
+  },
+  {
+    "date": "15-06-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "16-06-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "17-06-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "18-06-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "19-06-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "20-06-2022",
+    "events": "Satam"
+  },
+  {
+    "date": "21-06-2022",
+    "events": "Ashtami"
+  },
+  {
+    "date": "22-06-2022",
+    "events": "Navum"
+  },
+  {
+    "date": "23-06-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "24-06-2022",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "25-06-2022",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "26-06-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "27-06-2022",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "28-06-2022",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "29-06-2022",
+    "events": "Amavasya",
+    "imp": "1"
+  },
+  {
+    "date": "30-06-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "01-07-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "02-07-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "03-07-2022",
+    "events": "Choram"
+  },
+  {
+    "date": "04-07-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "05-07-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "06-07-2022",
+    "events": "Haar Satam",
+    "imp": "1"
+  },
+  {
+    "date": "07-07-2022",
+    "events": "Haar Ashtami",
+    "imp": "1"
+  },
+  {
+    "date": "08-07-2022",
+    "events": "Sharika Jayanti",
+    "imp": "2"
+  },
+  {
+    "date": "08-07-2022",
+    "events": "Haar Navum",
+    "imp": "1"
+  },
+  {
+    "date": "09-07-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "10-07-2022",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "11-07-2022",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "12-07-2022",
+    "events": "Jwala Chaturdashi",
+    "imp": "2"
+  },
+  {
+    "date": "12-07-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "13-07-2022",
+    "events": "Guru Poornima",
+    "imp": "1"
+  },
+  {
+    "date": "14-07-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "15-07-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "16-07-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "17-07-2022",
+    "events": "Choram"
+  },
+  {
+    "date": "18-07-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "19-07-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "20-07-2022",
+    "events": "Satam"
+  },
+  {
+    "date": "21-07-2022",
+    "events": "Ashtami"
+  },
+  {
+    "date": "22-07-2022",
+    "events": "Navum"
+  },
+  {
+    "date": "23-07-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "24-07-2022",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "25-07-2022",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "26-07-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "27-07-2022",
+    "events": "Chaturdashi",
+    "imp": "0"
+  },
+  {
+    "date": "28-07-2022",
+    "events": "Amavasya",
+    "imp": "1"
+  },
+  {
+    "date": "29-07-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "30-07-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "31-07-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "01-08-2022",
+    "events": "Choram"
+  },
+  {
+    "date": "02-08-2022",
+    "events": "Naag Panchami",
+    "imp": "1"
+  },
+  {
+    "date": "02-08-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "03-08-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "04-08-2022",
+    "events": "Satam"
+  },
+  {
+    "date": "05-08-2022",
+    "events": "Ashtami"
+  },
+  {
+    "date": "06-08-2022",
+    "events": "Navum"
+  },
+  {
+    "date": "07-08-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "08-08-2022",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "09-08-2022",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "10-08-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "11-08-2022",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "12-08-2022",
+    "events": "Raksha Bandhan",
+    "imp": "2"
+  },
+  {
+    "date": "12-08-2022",
+    "events": "Shravan Poornima",
+    "imp": "1"
+  },
+  {
+    "date": "13-08-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "14-08-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "15-08-2022",
+    "events": "Choram"
+  },
+  {
+    "date": "16-08-2022",
+    "events": "Chandan Shishthi",
+    "imp": "2"
+  },
+  {
+    "date": "16-08-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "17-08-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "18-08-2022",
+    "events": "Zaram Satam",
+    "imp": "2"
+  },
+  {
+    "date": "18-08-2022",
+    "events": "Satam"
+  },
+  {
+    "date": "19-08-2022",
+    "events": "Janam Ashtami",
+    "imp": "2"
+  },
+  {
+    "date": "19-08-2022",
+    "events": "Ashtami"
+  },
+  {
+    "date": "20-08-2022",
+    "events": "Navum"
+  },
+  {
+    "date": "21-08-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "22-08-2022",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "23-08-2022",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "24-08-2022",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "25-08-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "26-08-2022",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "27-08-2022",
+    "events": "Amavasya",
+    "imp": "1"
+  },
+  {
+    "date": "28-08-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "29-08-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "30-08-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "31-08-2022",
+    "events": "Punn Saath",
+    "imp": "2"
+  },
+  {
+    "date": "31-08-2022",
+    "events": "Vinayak Choram",
+    "imp": "1"
+  }
+]
