@@ -893,5 +893,265 @@
   {
     "date": "31-10-2022",
     "events": "Satam"
+  },
+  {
+    "date": "01-11-2022",
+    "events": "Gopala Ashtami",
+    "imp": "1"
+  },
+  {
+    "date": "02-11-2022",
+    "events": "Navum"
+  },
+  {
+    "date": "03-11-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "04-11-2022",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "05-11-2022",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "06-11-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "07-11-2022",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "08-11-2022",
+    "events": "Kartik Poornima",
+    "imp": "1"
+  },
+  {
+    "date": "09-11-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "10-11-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "11-11-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "12-11-2022",
+    "events": "Choram"
+  },
+  {
+    "date": "13-11-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "14-11-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "15-11-2022",
+    "events": "Satam"
+  },
+  {
+    "date": "16-11-2022",
+    "events": "Ashtami"
+  },
+  {
+    "date": "17-11-2022",
+    "events": "Ashtami"
+  },
+  {
+    "date": "18-11-2022",
+    "events": "Navum"
+  },
+  {
+    "date": "19-11-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "20-11-2022",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "21-11-2022",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "22-11-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "23-11-2022",
+    "events": "Amavasya",
+    "imp": "1"
+  },
+  {
+    "date": "24-11-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "25-11-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "26-11-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "27-11-2022",
+    "events": "Choram"
+  },
+  {
+    "date": "28-11-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "29-11-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "30-11-2022",
+    "events": "Satam"
+  },
+  {
+    "date": "01-12-2022",
+    "events": "Ashtami"
+  },
+  {
+    "date": "02-12-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "03-12-2022",
+    "events": "Geeta Jayanti",
+    "imp": "2"
+  },
+  {
+    "date": "03-12-2022",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "04-12-2022",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "05-12-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "06-12-2022",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "07-12-2022",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "08-12-2022",
+    "events": "Poornima",
+    "imp": "1"
+  },
+  {
+    "date": "09-12-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "10-12-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "11-12-2022",
+    "events": "Tritya"
+  },
+  {
+    "date": "12-12-2022",
+    "events": "Choram"
+  },
+  {
+    "date": "13-12-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "14-12-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "15-12-2022",
+    "events": "Satam"
+  },
+  {
+    "date": "16-12-2022",
+    "events": "Ashtami"
+  },
+  {
+    "date": "17-12-2022",
+    "events": "Navum"
+  },
+  {
+    "date": "18-12-2022",
+    "events": "Dhashmi"
+  },
+  {
+    "date": "19-12-2022",
+    "events": "Ekadashi"
+  },
+  {
+    "date": "20-12-2022",
+    "events": "Dwadashi"
+  },
+  {
+    "date": "21-12-2022",
+    "events": "Triyodashi"
+  },
+  {
+    "date": "22-12-2022",
+    "events": "Kheche’ Maavus",
+    "imp": "2"
+  },
+  {
+    "date": "22-12-2022",
+    "events": "Chaturdashi"
+  },
+  {
+    "date": "23-12-2022",
+    "events": "Amavasya",
+    "imp": "1"
+  },
+  {
+    "date": "24-12-2022",
+    "events": "Okdoh"
+  },
+  {
+    "date": "25-12-2022",
+    "events": "Dwitya"
+  },
+  {
+    "date": "26-12-2022",
+    "events": "Choram"
+  },
+  {
+    "date": "27-12-2022",
+    "events": "Paancham"
+  },
+  {
+    "date": "28-12-2022",
+    "events": "Shishthi"
+  },
+  {
+    "date": "29-12-2022",
+    "events": "Satam"
+  },
+  {
+    "date": "30-12-2022",
+    "events": "Ashtami",
+    "imp": "1"
+  },
+  {
+    "date": "31-12-2022",
+    "events": "Navum"
   }
 ]
