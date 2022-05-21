@@ -24,8 +24,8 @@ android {
         applicationId "koshur.kashmirievents"
         minSdkVersion 22
         targetSdkVersion project.android_sdk_version
-        versionCode 11
-        versionName "1.1.00"
+        versionCode 12
+        versionName "1.1.01"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField STRING, BASE_URL, base_address
@@ -101,7 +101,6 @@ dependencies {
 
     /*Room */
     implementation "androidx.room:room-runtime:$roomVersion"
-    implementation 'androidx.appcompat:appcompat:1.2.0'
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
 
@@ -119,7 +118,7 @@ dependencies {
     implementation "com.google.firebase:firebase-crashlytics-ktx"
 
     // calendar view used in app
-    implementation "com.github.kizitonwose:CalendarView:0.4.5"
+    implementation "com.github.kizitonwose:CalendarView:1.0.4"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
     implementation "org.koin:koin-core:$koin_version"
