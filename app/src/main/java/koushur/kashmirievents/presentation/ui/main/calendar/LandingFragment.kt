@@ -50,23 +50,23 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.getPrevMonthClickEvent().observe(this, {
+        viewModel.getPrevMonthClickEvent().observe(this) {
             viewBinding.cvMain.findFirstVisibleMonth()?.let {
                 viewBinding.cvMain.smoothScrollToMonth(it.yearMonth.previous)
             }
-        })
+        }
 
-        viewModel.getNextMonthClickEvent().observe(this, {
+        viewModel.getNextMonthClickEvent().observe(this) {
             viewBinding.cvMain.findFirstVisibleMonth()?.let {
                 viewBinding.cvMain.smoothScrollToMonth(it.yearMonth.next)
             }
-        })
+        }
 
-        viewModel.getEventsLiveData().observe(this, {
+        viewModel.getEventsLiveData().observe(this) {
             val mapDateEvents = viewModel.setEventsData(it)
 
             setUpCalendar(mapDateEvents)
-        })
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,7 +77,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         //setup calendar
         viewBinding.cvMain.setup(
             YearMonth.of(2020, Month.MARCH),
-            YearMonth.of(2022, Month.APRIL),
+            YearMonth.of(2023, Month.MARCH),
             daysOfWeek.first()
         )
 
@@ -110,11 +110,19 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                     viewModel.fetchEventsData(allEvents, viewModel.getEventsLiveData())
                 }
 
+                loadJSONFromAsset(it, AppConstants.dbEvents_22_23)?.let { allEvents ->
+                    viewModel.fetchEventsData(allEvents, viewModel.getEventsLiveData())
+                }
+
                 loadJSONFromAsset(it, AppConstants.dbSpecialEvents_20_21)?.let { specialEvents ->
                     viewModel.fetchSpecialEventsData(specialEvents)
                 }
 
                 loadJSONFromAsset(it, AppConstants.dbSpecialEvents_21_22)?.let { specialEvents ->
+                    viewModel.fetchSpecialEventsData(specialEvents)
+                }
+
+                loadJSONFromAsset(it, AppConstants.dbSpecialEvents_22_23)?.let { specialEvents ->
                     viewModel.fetchSpecialEventsData(specialEvents)
                 }
             }
