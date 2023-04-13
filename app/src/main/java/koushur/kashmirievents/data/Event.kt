@@ -19,7 +19,7 @@ data class Event(
     @ColorRes val color: Int
 )
 
-@IntDef(Importance.high, Importance.low)
+@IntDef(Importance.high, Importance.med, Importance.low)
 annotation class Importance {
     companion object {
         //red bold

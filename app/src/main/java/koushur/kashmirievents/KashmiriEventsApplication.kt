@@ -6,12 +6,11 @@ import koushir.kashmirievents.BuildConfig
 import koushur.kashmirievents.di.module.application.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-class KashmiriEventsApplication : Application(), KoinComponent {
+class KashmiriEventsApplication : Application() {
     companion object {
         private lateinit var instance: KashmiriEventsApplication
         fun applicationContext(): Context {
