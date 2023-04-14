@@ -15,7 +15,7 @@ import koushur.kashmirievents.presentation.ui.main.calendar.InsetDivider
 import koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerActivity
 import koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerWebViewActivity
 import koushur.kashmirievents.presentation.utils.AppConstants
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A [BaseFragment] for showing featured items in a list
@@ -32,13 +32,13 @@ class FeaturedFragment : BaseFragment<FragmentFeaturedBinding>(R.layout.fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.clickListener.observe(this, {
+        viewModel.clickListener.observe(this) {
             val intent = Intent(activity, AartiActivity::class.java)
             intent.putExtra(AppConstants.AARTI_STRING, it)
             startActivity(intent)
-        })
+        }
 
-        viewModel.videoClickListener.observe(this, { videoData ->
+        viewModel.videoClickListener.observe(this) { videoData ->
             YouTubeIntents.getInstalledYouTubeVersionName(context)?.let { version ->
                 String.format(getString(R.string.youtube_currently_installed), version)
                 openYoutubeActivity(videoData)
@@ -46,7 +46,7 @@ class FeaturedFragment : BaseFragment<FragmentFeaturedBinding>(R.layout.fragment
                 getString(R.string.youtube_not_installed)
                 openYoutubeWebViewActivity(videoData)
             }
-        })
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

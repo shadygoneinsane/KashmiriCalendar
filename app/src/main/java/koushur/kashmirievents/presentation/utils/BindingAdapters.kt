@@ -27,7 +27,7 @@ fun setImportance(view: LinearLayout, @Importance imp: Int?) {
     )
 }
 
-@BindingAdapter("app:isVisible")
+@BindingAdapter("isVisible")
 fun showHide(view: View, isVisible: Boolean?) {
     view.visibility = if (isVisible != null && isVisible) View.VISIBLE else View.GONE
 }

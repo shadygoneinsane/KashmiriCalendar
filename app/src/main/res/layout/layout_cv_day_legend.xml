@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/legendLayout"
+    android:id="@+id/legend_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/dark_saturated_violet"
@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/cv_text_grey"
         tools:text="SUN" />
 
     <TextView
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/cv_text_grey"
         tools:text="MON" />
 
     <TextView
@@ -32,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/cv_text_grey"
         tools:text="TUE" />
 
     <TextView
@@ -40,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/cv_text_grey"
         tools:text="WED" />
 
     <TextView
@@ -48,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/cv_text_grey"
         tools:text="THU" />
 
     <TextView
@@ -56,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/cv_text_grey"
         tools:text="FRI" />
 
     <TextView
@@ -64,6 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/cv_text_grey"
         tools:text="SAT" />
 
 </LinearLayout>
