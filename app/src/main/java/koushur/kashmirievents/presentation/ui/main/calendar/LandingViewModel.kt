@@ -28,8 +28,8 @@ class LandingViewModel : BaseViewModel() {
     private var eventsLiveDataLiveData = MutableLiveData<MutableList<Event>>(mutableListOf())
     private var eventsPerMonthMap: Map<YearMonth, List<Event>> = emptyMap()
 
-    private val prevMonthEvent = SingleLiveEvent<Void>()
-    private val nextMonthEvent = SingleLiveEvent<Void>()
+    private val prevMonthEvent = SingleLiveEvent<Void?>()
+    private val nextMonthEvent = SingleLiveEvent<Void?>()
 
     private val specialEventsMap: MutableMap<YearMonth, List<Event>> = mutableMapOf()
     val specialItems = ObservableArrayList<Event>()
@@ -60,12 +60,14 @@ class LandingViewModel : BaseViewModel() {
     /**
      *  For generating list<Event> from list<MonthDataEntity>
      */
-    private fun generateEvents(inputData: List<MonthDataEntity>): List<Event> {
+    private fun generateEvents(inputData: List<MonthDataEntity?>): List<Event> {
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
         val list = mutableListOf<Event>()
         inputData.map {
-            val todayLocalDate: LocalDate = LocalDate.parse(it.date, formatter)
-            list.add(Event(todayLocalDate, it.imp, it.events, it.imp.returnColor()))
+            it?.let {
+                val todayLocalDate: LocalDate = LocalDate.parse(it.date, formatter)
+                list.add(Event(todayLocalDate, it.imp, it.events, it.imp.returnColor()))
+            } ?: println("Null item is : $it")
         }
 
         return list

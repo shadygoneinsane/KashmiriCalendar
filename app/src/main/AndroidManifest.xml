@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="koushir.kashmirievents">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,6 +13,7 @@
 
         <activity
             android:name="koushur.kashmirievents.presentation.ui.main.ActivityMain"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -24,14 +24,17 @@
         </activity>
         <activity
             android:name="koushur.kashmirievents.presentation.ui.main.aarti.AartiActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.Fullscreen"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerWebViewActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" />
 

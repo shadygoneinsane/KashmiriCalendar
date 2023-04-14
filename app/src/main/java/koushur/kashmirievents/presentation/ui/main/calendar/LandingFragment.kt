@@ -8,19 +8,15 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
-import com.kizitonwose.calendarview.model.CalendarDay
-import com.kizitonwose.calendarview.model.CalendarMonth
-import com.kizitonwose.calendarview.model.DayOwner
-import com.kizitonwose.calendarview.ui.DayBinder
-import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
-import com.kizitonwose.calendarview.ui.ViewContainer
-import com.kizitonwose.calendarview.utils.next
-import com.kizitonwose.calendarview.utils.previous
-import kotlinx.android.synthetic.main.layout_cv_day_legend.view.*
+import com.kizitonwose.calendar.core.*
+import com.kizitonwose.calendar.view.MonthDayBinder
+import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
+import com.kizitonwose.calendar.view.ViewContainer
 import kotlinx.coroutines.launch
 import koushir.kashmirievents.BR
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.CalendarDayBinding
+import koushir.kashmirievents.databinding.CalendarHeaderBinding
 import koushir.kashmirievents.databinding.FragmentLandingBinding
 import koushur.kashmirievents.data.Event
 import koushur.kashmirievents.presentation.base.BaseFragment
@@ -29,7 +25,7 @@ import koushur.kashmirievents.presentation.utils.AppConstants
 import koushur.kashmirievents.presentation.utils.daysOfWeekFromLocale
 import koushur.kashmirievents.presentation.utils.setDateDataAndColor
 import koushur.kashmirievents.presentation.utils.setTextColorRes
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
 import java.io.InputStream
 import java.time.LocalDate
@@ -52,13 +48,13 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
         viewModel.getPrevMonthClickEvent().observe(this) {
             viewBinding.cvMain.findFirstVisibleMonth()?.let {
-                viewBinding.cvMain.smoothScrollToMonth(it.yearMonth.previous)
+                viewBinding.cvMain.smoothScrollToMonth(it.yearMonth.previousMonth)
             }
         }
 
         viewModel.getNextMonthClickEvent().observe(this) {
             viewBinding.cvMain.findFirstVisibleMonth()?.let {
-                viewBinding.cvMain.smoothScrollToMonth(it.yearMonth.next)
+                viewBinding.cvMain.smoothScrollToMonth(it.yearMonth.nextMonth)
             }
         }
 
@@ -76,8 +72,8 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
         //setup calendar
         viewBinding.cvMain.setup(
-            YearMonth.of(2020, Month.MARCH),
-            YearMonth.of(2023, Month.MARCH),
+            YearMonth.of(2022, Month.MARCH),
+            YearMonth.of(2023, Month.JUNE),
             daysOfWeek.first()
         )
 
@@ -102,27 +98,35 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
     private fun loadDataFromAssets() {
         activity?.let {
             lifecycleScope.launch {
-                loadJSONFromAsset(it, AppConstants.dbEvents_20_21)?.let { allEvents ->
+                /*loadJSONFromAsset(it, AppConstants.dbEvents_20_21)?.let { allEvents ->
                     viewModel.fetchEventsData(allEvents, viewModel.getEventsLiveData())
                 }
 
                 loadJSONFromAsset(it, AppConstants.dbEvents_21_22)?.let { allEvents ->
                     viewModel.fetchEventsData(allEvents, viewModel.getEventsLiveData())
-                }
+                }*/
 
                 loadJSONFromAsset(it, AppConstants.dbEvents_22_23)?.let { allEvents ->
                     viewModel.fetchEventsData(allEvents, viewModel.getEventsLiveData())
                 }
 
-                loadJSONFromAsset(it, AppConstants.dbSpecialEvents_20_21)?.let { specialEvents ->
+                loadJSONFromAsset(it, AppConstants.dbEvents_23_24)?.let { allEvents ->
+                    viewModel.fetchEventsData(allEvents, viewModel.getEventsLiveData())
+                }
+
+                /*loadJSONFromAsset(it, AppConstants.dbSpecialEvents_20_21)?.let { specialEvents ->
                     viewModel.fetchSpecialEventsData(specialEvents)
                 }
 
                 loadJSONFromAsset(it, AppConstants.dbSpecialEvents_21_22)?.let { specialEvents ->
                     viewModel.fetchSpecialEventsData(specialEvents)
-                }
+                }*/
 
                 loadJSONFromAsset(it, AppConstants.dbSpecialEvents_22_23)?.let { specialEvents ->
+                    viewModel.fetchSpecialEventsData(specialEvents)
+                }
+
+                loadJSONFromAsset(it, AppConstants.dbSpecialEvents_23_24)?.let { specialEvents ->
                     viewModel.fetchSpecialEventsData(specialEvents)
                 }
             }
@@ -131,7 +135,24 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
     private fun setUpCalendar(mapDateEvents: Map<LocalDate, List<Event>>) {
         viewBinding.cvMain.dayBinder = CVDayBinder(mapDateEvents)
-        viewBinding.cvMain.monthHeaderBinder = CVMonthHeaderBinder()
+        viewBinding.cvMain.monthHeaderBinder =
+            object : MonthHeaderFooterBinder<MonthViewContainer> {
+                override fun create(view: View) = MonthViewContainer(view)
+                override fun bind(container: MonthViewContainer, data: CalendarMonth) {
+                    // Setup each header day text if we have not done that already.
+                    if (container.legendLayout.tag == null) {
+                        container.legendLayout.tag = data.yearMonth
+                        container.legendLayout.children.map { it as TextView }
+                            .forEachIndexed { index, tv ->
+                                tv.text = daysOfWeek[index]
+                                    .getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
+                                    .uppercase(Locale.ENGLISH)
+                                tv.setTextColorRes(R.color.cv_text_grey)
+                                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                            }
+                    }
+                }
+            }
 
         //to update list with current months items as default when calendar is setup
         viewModel.updateSpecialItemsList(YearMonth.now())
@@ -150,40 +171,22 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         viewBinding.cvMain.scrollToMonth(YearMonth.now())
     }
 
-    inner class CVMonthHeaderBinder : MonthHeaderFooterBinder<MonthViewContainer> {
-        override fun create(view: View) = MonthViewContainer(view)
-        override fun bind(container: MonthViewContainer, month: CalendarMonth) {
-            // Setup each header day text if we have not done that already.
-            if (container.legendLayout.tag == null) {
-                container.legendLayout.tag = month.yearMonth
-                container.legendLayout.children.map { it as TextView }
-                    .forEachIndexed { index, tv ->
-                        tv.text = daysOfWeek[index]
-                            .getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
-                            .toUpperCase(Locale.ENGLISH)
-                        tv.setTextColorRes(R.color.cv_text_grey)
-                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-                    }
-            }
-        }
-    }
-
     inner class MonthViewContainer(view: View) : ViewContainer(view) {
-        val legendLayout: LinearLayout = view.legendLayout
+        val legendLayout: LinearLayout = CalendarHeaderBinding.bind(view).legendLayout.root
     }
 
     inner class CVDayBinder(private val mapDateEvents: Map<LocalDate, List<Event>>) :
-        DayBinder<DayViewContainer> {
+        MonthDayBinder<DayViewContainer> {
         override fun create(view: View) = DayViewContainer(view, mapDateEvents)
-        override fun bind(container: DayViewContainer, day: CalendarDay) {
-            container.day = day
-            container.dateTV.text = day.date.dayOfMonth.toString()
+        override fun bind(container: DayViewContainer, data: CalendarDay) {
+            container.day = data
+            container.dateTV.text = data.date.dayOfMonth.toString()
 
             container.topView.background = null
             container.bottomView.background = null
 
-            if (day.owner == DayOwner.THIS_MONTH) {
-                setDateDataAndColor(selectedDate, mapDateEvents[day.date], container, day)
+            if (data.position == DayPosition.MonthDate) {
+                setDateDataAndColor(selectedDate, mapDateEvents[data.date], container, data)
             } else {
                 container.dateTV.setTextColorRes(R.color.cv_text_grey_light)
                 container.layout.background = null
