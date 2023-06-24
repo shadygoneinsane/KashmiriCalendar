@@ -1,4 +1,4 @@
-package koushur.kashmirievents.presentation.utils
+package koushur.kashmirievents.utility
 
 
 /**
@@ -8,16 +8,10 @@ package koushur.kashmirievents.presentation.utils
  * Email : vikeshdass@gmail.com
  */
 object AppConstants {
-    const val dbEvents_20_21 = "database/20_21.json"
-    const val dbSpecialEvents_20_21 = "database/special_20_21.json"
-
-    const val dbEvents_21_22 = "database/21_22.json"
-    const val dbSpecialEvents_21_22 = "database/special_21_22.json"
-
-    const val dbEvents_22_23 = "database/22_23.json"
-    const val dbSpecialEvents_22_23 = "database/special_22_23.json"
-
-    const val dbEvents_23_24 = "database/23_24.json"
+    const val dbDayEvents_22_23 = "database/22_23.json"
+    const val dbDayEvents_23_24 = "database/23_24.json"
+    const val dbMonthEvents_23_24 = "database/months_23_24.json"
+    const val dbMonthEvents_22_23 = "database/months_22_23.json"
     const val dbSpecialEvents_23_24 = "database/special_23_24.json"
 
     const val YOUTUBE_API_KEY = "YOUTUBE_API_KEY"

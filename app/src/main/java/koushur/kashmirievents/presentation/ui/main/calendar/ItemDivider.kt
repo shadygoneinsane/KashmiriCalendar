@@ -2,7 +2,6 @@ package koushur.kashmirievents.presentation.ui.main.calendar
 
 import android.graphics.Rect
 import android.view.View
-import androidx.annotation.ColorInt
 import androidx.annotation.Px
 import androidx.recyclerview.widget.RecyclerView
 
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class ItemDivider(
     @Px private val verticalSpace: Int,
-    @ColorInt private val horizontalSpace: Int
+    @Px private val horizontalSpace: Int
 ) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
@@ -27,6 +26,8 @@ class ItemDivider(
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
+        outRect.left = horizontalSpace
+        outRect.right = horizontalSpace
         outRect.top = verticalSpace / 2
         if (parent.getChildAdapterPosition(view) < state.itemCount - 1)
             outRect.bottom = verticalSpace / 2

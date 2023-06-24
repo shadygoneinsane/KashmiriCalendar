@@ -1,4 +1,4 @@
-package koushur.kashmirievents.data
+package koushur.kashmirievents.database.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

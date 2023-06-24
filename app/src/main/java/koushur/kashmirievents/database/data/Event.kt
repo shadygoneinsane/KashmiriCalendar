@@ -1,4 +1,4 @@
-package koushur.kashmirievents.data
+package koushur.kashmirievents.database.data
 
 import androidx.annotation.ColorRes
 import androidx.annotation.IntDef
@@ -12,12 +12,22 @@ import java.time.LocalDate
  * Created on: 18-04-2020
  * Email : vikeshdass@gmail.com
  */
-data class Event(
+open class Event(
     val localDate: LocalDate,
-    @Importance val eventImp: Int,
     val eventName: String,
+    @Importance val eventImp: Int,
     @ColorRes val color: Int
 )
+
+data class MonthEvent(
+    val indexOfMonth: Int = -1, val startDate: LocalDate, val endDate: LocalDate,
+    val monthName: String, @Importance val imp: Int, @ColorRes val monthColor: Int
+) : Event(startDate, eventImp = imp, eventName = monthName, color = monthColor)
+
+data class DayEvent(
+    val indexOfDay: Int = -1, val date: LocalDate, val dayName: String,
+    @Importance val imp: Int, @ColorRes val dayColor: Int
+) : Event(date, eventImp = imp, eventName = dayName, color = dayColor)
 
 @IntDef(Importance.high, Importance.med, Importance.low)
 annotation class Importance {

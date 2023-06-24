@@ -10,7 +10,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/parentEventName"
+        android:id="@+id/parent_event_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_2dp"
@@ -18,16 +18,17 @@
         app:setColor="@{event.color}"
         tools:background="@color/cv_item_view_bg_color">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/eventName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_6dp"
+            android:layout_marginHorizontal="@dimen/dimen_6dp"
+            android:layout_marginVertical="@dimen/dimen_2dp"
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:text="@{event.eventName}"
             android:textColor="@color/cv_text_grey"
-            android:textSize="@dimen/dimen_sp18"
+            android:textSize="@dimen/dimen_sp17"
             tools:text="Ashtami" />
     </LinearLayout>
 </layout>

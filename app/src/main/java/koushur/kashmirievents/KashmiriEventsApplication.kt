@@ -3,7 +3,11 @@ package koushur.kashmirievents
 import android.app.Application
 import android.content.Context
 import koushir.kashmirievents.BuildConfig
-import koushur.kashmirievents.di.module.application.*
+import koushur.kashmirievents.di.module.application.dbModule
+import koushur.kashmirievents.di.module.application.mainModule
+import koushur.kashmirievents.di.module.application.remoteRepositoryModule
+import koushur.kashmirievents.di.module.application.retrofitModule
+import koushur.kashmirievents.di.module.application.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

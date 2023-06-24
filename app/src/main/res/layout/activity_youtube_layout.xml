@@ -5,7 +5,7 @@
 
         <variable
             name="videoData"
-            type="koushur.kashmirievents.data.VideoData" />
+            type="koushur.kashmirievents.database.data.VideoData" />
 
     </data>
 
@@ -43,7 +43,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_om" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title_aarti"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -6,7 +6,6 @@ package koushur.kashmirievents.utility
  * Created by: Vikesh Dass
  * Created on: 23-01-2021
  * Email : vikeshdass@gmail.com
- * Company : Adventovate
  */
 object Constants {
 
@@ -15,4 +14,8 @@ object Constants {
     const val FIREBASE_CHANNEL_ID = "KOUSHUR_CALENDAR_FIREBASE"
     const val FIREBASE_CHANNEL_NAME = "Calendar Notifications"
 
+    const val LOGS_FOLDER = "/CalendarLogs"
+    const val LOG_FILE = "CALENDAR_LOGS.txt"
+    const val DEBUG_LOG_FILE = "DEBUG_CALENDAR_LOGS.txt"
+    const val EXCEPTION = "KOUSHUR_EXCEPTION"
 }

@@ -7,19 +7,20 @@
         android:id="@+id/exFiveDayLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="1dp"
+        android:layout_margin="@dimen/dimen_1dp"
         android:background="@color/cv_item_view_bg_color">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
-            android:layout_margin="@dimen/dimen_2dp"
+            android:layout_marginVertical="@dimen/dimen_2dp"
+            android:layout_marginEnd="@dimen/dimen_4dp"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="@dimen/dimen_sp10"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/dayTopText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,28 +28,30 @@
             app:layout_constraintVertical_bias="0"
             tools:text="24" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dayTopText"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen_4dp"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="@dimen/dimen_sp8"
             app:layout_constraintBottom_toTopOf="@+id/dayTop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="Ashtami, Ram Navam" />
 
         <View
             android:id="@+id/dayTop"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/dimen_1dp"
             android:layout_gravity="bottom"
             android:layout_marginHorizontal="@dimen/dimen_2dp"
             android:layout_marginBottom="@dimen/dimen_4dp"
             android:background="@color/blue_grey_700"
             app:layout_constraintBottom_toTopOf="@+id/dayBottomText" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dayBottomText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,7 +65,7 @@
         <View
             android:id="@+id/dayBottom"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/dimen_1dp"
             android:layout_gravity="bottom"
             android:layout_marginHorizontal="@dimen/dimen_2dp"
             android:layout_marginBottom="@dimen/dimen_4dp"

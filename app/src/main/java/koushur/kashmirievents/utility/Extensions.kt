@@ -1,4 +1,4 @@
-package koushur.kashmirievents.presentation.utils
+package koushur.kashmirievents.utility
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
@@ -14,10 +14,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import koushir.kashmirievents.R
-import koushur.kashmirievents.data.Importance
-import java.time.DayOfWeek
-import java.time.temporal.WeekFields
-import java.util.*
+import koushur.kashmirievents.database.data.Importance
 
 
 fun View.makeVisible() {
@@ -51,18 +48,6 @@ internal fun Context.getColorCompat(@ColorRes color: Int) = ContextCompat.getCol
 
 internal fun TextView.setTextColorRes(@ColorRes color: Int) =
     setTextColor(context.getColorCompat(color))
-
-fun daysOfWeekFromLocale(): Array<DayOfWeek> {
-    val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
-    var daysOfWeek = DayOfWeek.values()
-    // Order `daysOfWeek` array so that firstDayOfWeek is at index 0.
-    if (firstDayOfWeek != DayOfWeek.MONDAY) {
-        val rhs = daysOfWeek.sliceArray(firstDayOfWeek.ordinal..daysOfWeek.indices.last)
-        val lhs = daysOfWeek.sliceArray(0 until firstDayOfWeek.ordinal)
-        daysOfWeek = rhs + lhs
-    }
-    return daysOfWeek
-}
 
 fun GradientDrawable.setCornerRadius(
     topLeft: Float = 0F,

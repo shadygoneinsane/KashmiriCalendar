@@ -5,13 +5,13 @@ import androidx.databinding.ObservableArrayList
 import koushir.kashmirievents.BR
 import koushir.kashmirievents.BuildConfig
 import koushir.kashmirievents.R
-import koushur.kashmirievents.data.AartiData
-import koushur.kashmirievents.data.VideoData
+import koushur.kashmirievents.database.data.AartiData
+import koushur.kashmirievents.database.data.VideoData
 import koushur.kashmirievents.interfaces.OnOptionClickListener
 import koushur.kashmirievents.network.remote.RemoteConfigManager
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
-import koushur.kashmirievents.presentation.utils.AppConstants
+import koushur.kashmirievents.utility.AppConstants
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 
 class FeaturedViewModel(

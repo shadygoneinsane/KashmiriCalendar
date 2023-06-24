@@ -6,7 +6,7 @@
     <application
         android:name="koushur.kashmirievents.KashmiriEventsApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_chinar"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.MyApp">
@@ -34,7 +34,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerWebViewActivity"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" />
 

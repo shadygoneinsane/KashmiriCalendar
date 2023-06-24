@@ -1,15 +1,14 @@
-package koushur.kashmirievents.presentation.utils
+package koushur.kashmirievents.utility
 
 import android.graphics.Typeface
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
-import com.kizitonwose.calendar.core.CalendarDay
+import com.kizitonwose.calendarview.model.CalendarDay
 import koushir.kashmirievents.R
-import koushur.kashmirievents.data.Event
-import koushur.kashmirievents.data.Importance
+import koushur.kashmirievents.database.data.Event
+import koushur.kashmirievents.database.data.Importance
 import koushur.kashmirievents.presentation.ui.main.calendar.LandingFragment
-import timber.log.Timber
 import java.time.LocalDate
 
 
@@ -32,14 +31,17 @@ fun setTVFontColor(tv: TextView, decorView: View, event: Event) {
             tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD)
             tv.setTextColor(tv.context.getColorCompat(R.color.red_800))
         }
+
         Importance.med -> {
             tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD)
             tv.setTextColor(tv.context.getColorCompat(R.color.white))
         }
+
         Importance.low -> {
             tv.setTypeface(Typeface.DEFAULT, Typeface.NORMAL)
             tv.setTextColor(tv.context.getColorCompat(R.color.white))
         }
+
         else -> tv.setTextColor(tv.context.getColorCompat(R.color.white))
     }
 }
@@ -64,24 +66,34 @@ fun setDateDataAndColor(
             listTodaysEvents.count() == 1 -> {
                 //Timber.d("Date : ${day.date} | Event found is ${listEvents[0]}")
 
-                setTVFontColor(container.topTV, container.topView, listTodaysEvents[0])
+                setTVFontColor(container.topTV, container.topView, listTodaysEvents.first())
                 container.bottomTV.makeGone()
                 container.bottomView.makeGone()
             }
+
             listTodaysEvents.count() == 2 -> {
-                container.dateTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8f)
+                container.dateTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 7f)
 
                 //Timber.d("Date : ${day.date} | Events found are 1: ${listEvents[0]} 2: ${listEvents[1]}")
-                setTVFontColor(container.topTV, container.topView, listTodaysEvents[0])
+                setTVFontColor(container.topTV, container.topView, listTodaysEvents.first())
                 setTVFontColor(container.bottomTV, container.bottomView, listTodaysEvents[1])
             }
+
+            listTodaysEvents.count() > 2 -> {
+                container.dateTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 7f)
+
+                //Timber.d("Date : ${day.date} | Events found are 1: ${listEvents[0]} 2: ${listEvents[1]}")
+                listTodaysEvents.sortedBy { it.eventImp }
+                setTVFontColor(container.topTV, container.topView, listTodaysEvents.first())
+                setTVFontColor(container.bottomTV, container.bottomView, listTodaysEvents[1])
+            }
+
             else -> {
                 container.topView.makeGone()
                 container.topTV.makeGone()
                 container.bottomTV.makeGone()
                 container.bottomView.makeGone()
-                Timber.tag("NoEventFound")
-                    .d("Date : ${day.date} | Events found $listTodaysEvents}")
+                log("Date : ${day.date} | Events found $listTodaysEvents}")
             }
         }
     }

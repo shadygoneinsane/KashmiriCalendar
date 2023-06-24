@@ -8,7 +8,7 @@
 
         <variable
             name="videoData"
-            type="koushur.kashmirievents.data.VideoData" />
+            type="koushur.kashmirievents.database.data.VideoData" />
 
         <variable
             name="clickListener"
@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_youtube" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_article_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
