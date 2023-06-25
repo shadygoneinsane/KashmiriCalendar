@@ -4,7 +4,7 @@ import android.graphics.Typeface
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
-import com.kizitonwose.calendarview.model.CalendarDay
+import com.kizitonwose.calendar.core.CalendarDay
 import koushir.kashmirievents.R
 import koushur.kashmirievents.database.data.Event
 import koushur.kashmirievents.database.data.Importance

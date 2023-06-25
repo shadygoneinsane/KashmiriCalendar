@@ -90,16 +90,16 @@
                 android:layout_marginVertical="@dimen/dimen_2dp"
                 android:orientation="vertical">
 
-                <com.kizitonwose.calendarview.CalendarView
+                <com.kizitonwose.calendar.view.CalendarView
                     android:id="@+id/cv_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:cv_daySize="seventhWidth"
                     app:cv_dayViewResource="@layout/calendar_day"
-                    app:cv_inDateStyle="allMonths"
                     app:cv_monthHeaderResource="@layout/calendar_header"
                     app:cv_orientation="horizontal"
-                    app:cv_outDateStyle="none"
-                    app:cv_scrollMode="paged" />
+                    app:cv_outDateStyle="endOfRow"
+                    app:cv_scrollPaged="true" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

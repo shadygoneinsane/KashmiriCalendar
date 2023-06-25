@@ -119,7 +119,7 @@ class LandingViewModel : BaseViewModel() {
                     map.putAll(listOfMonthEvents.groupBy { YearMonth.from(it.startDate) } as MutableMap)
                     map.putAll(listOfMonthEvents.groupBy { YearMonth.from(it.endDate) } as MutableMap)
 
-                    log("List Of month events : $listOfMonthEvents")
+                    //log("List Of month events : $listOfMonthEvents")
                     monthEventsMap.putAll(map)
                 }
             }
