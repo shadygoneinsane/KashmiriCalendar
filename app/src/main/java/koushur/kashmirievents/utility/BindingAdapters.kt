@@ -1,38 +1,74 @@
 package koushur.kashmirievents.utility
 
+import android.graphics.Typeface
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RoundRectShape
 import android.view.View
-import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.databinding.BindingAdapter
 import koushir.kashmirievents.R
-import koushur.kashmirievents.database.data.Importance
 
 
 @BindingAdapter("setColor")
-fun setColor(view: LinearLayout, color: Int?) {
-    color?.let {
-        view.setBackgroundColor(view.context.getColorCompat(color))
-    } ?: view.setBackgroundColor(view.context.getColorCompat(R.color.cv_item_view_bg_color))
+fun View.setBackground(@Importance imp: Int?) {
+    val r = 8f
+    val shape = ShapeDrawable(RoundRectShape(floatArrayOf(r, r, r, r, r, r, r, r), null, null))
+    val color = context.getColorCompat(
+        when (imp) {
+            Importance.high -> R.color.red_800
+            Importance.med -> R.color.teal_700
+            Importance.low -> R.color.brown_700
+            else -> R.color.brown_700
+        }
+    )
+    shape.paint.color = color
+    background = shape
 }
 
 @BindingAdapter("setImportance")
-fun setImportance(view: ConstraintLayout, @Importance imp: Int?) {
+fun View.setImportance(@Importance imp: Int?) {
     val r = 8f
     val shape = ShapeDrawable(RoundRectShape(floatArrayOf(r, r, r, r, r, r, r, r), null, null))
-    val color = view.context.getColorCompat(
+    val color = context.getColorCompat(
         when (imp) {
             Importance.high -> R.color.red_800
             Importance.med -> R.color.teal_700
             Importance.low -> R.color.blue_800
-            else -> R.color.blue_800
+            else -> R.color.brown_700
         }
     )
     shape.paint.color = color
-    view.background = shape
+    background = shape
 }
 
+fun TextView.setImportance(@Importance imp: Int?) {
+    @ColorRes val color: Int
+    val typeFace: Int
+    when (imp) {
+        Importance.high -> {
+            color = R.color.red_800
+            typeFace = Typeface.BOLD
+        }
+
+        Importance.med -> {
+            color = R.color.white
+            typeFace = Typeface.BOLD
+        }
+
+        Importance.low -> {
+            color = R.color.white
+            typeFace = Typeface.NORMAL
+        }
+
+        else -> {
+            color = R.color.white
+            typeFace = Typeface.NORMAL
+        }
+    }
+    setTextColor(context.getColorCompat(color))
+    setTypeface(Typeface.DEFAULT, typeFace)
+}
 @BindingAdapter("isVisible")
 fun showHide(view: View, isVisible: Boolean?) {
     view.visibility = if (isVisible != null && isVisible) View.VISIBLE else View.GONE

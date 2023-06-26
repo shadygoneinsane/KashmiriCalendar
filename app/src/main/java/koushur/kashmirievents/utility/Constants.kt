@@ -18,4 +18,5 @@ object Constants {
     const val LOG_FILE = "CALENDAR_LOGS.txt"
     const val DEBUG_LOG_FILE = "DEBUG_CALENDAR_LOGS.txt"
     const val EXCEPTION = "KOUSHUR_EXCEPTION"
+    const val LOGGER = "KOUSHUR_LOG"
 }

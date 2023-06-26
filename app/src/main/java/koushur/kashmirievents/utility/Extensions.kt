@@ -14,7 +14,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import koushir.kashmirievents.R
-import koushur.kashmirievents.database.data.Importance
 
 
 fun View.makeVisible() {

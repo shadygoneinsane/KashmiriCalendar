@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Environment
 import koushir.kashmirievents.BuildConfig
 import koushur.kashmirievents.KashmiriEventsApplication
+import koushur.kashmirievents.utility.Constants.LOGGER
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -16,7 +17,7 @@ import java.io.PrintStream
  * Created on: 30-03-2020
  */
 fun log(text: String, writeToText: Boolean = true) {
-    Timber.tag(Constants.EXCEPTION).d(text.formatLogText())
+    Timber.tag(LOGGER).d(text.formatLogText(LOGGER))
     if (writeToText) text.formatLogText().writeLogsToTextFile()
 }
 

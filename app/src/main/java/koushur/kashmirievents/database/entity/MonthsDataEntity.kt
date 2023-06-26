@@ -3,10 +3,9 @@ package koushur.kashmirievents.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import koushur.kashmirievents.database.data.Importance
 import koushur.kashmirievents.database.data.MonthEvent
+import koushur.kashmirievents.utility.Importance
 import koushur.kashmirievents.utility.ddMMyyyyFormatter
-import koushur.kashmirievents.utility.returnColor
 import java.time.LocalDate
 
 @Entity(tableName = "monthData")
@@ -36,7 +35,7 @@ fun List<MonthsDataEntity>.map(): List<MonthEvent> {
         MonthEvent(
             indexFromList, LocalDate.parse(monthEntity.startDate, ddMMyyyyFormatter),
             LocalDate.parse(monthEntity.endDate, ddMMyyyyFormatter),
-            monthEntity.monthName, monthEntity.importance, monthEntity.importance.returnColor()
+            monthEntity.monthName, monthEntity.importance
         )
     }
 }

@@ -23,7 +23,8 @@ data class DayDataEntity(
  */
 fun List<DayDataEntity>.map(): List<DayEvent> {
     val list = this.map { dayEntity ->
-        val indexFromList = Days.daysList.indexOf(dayEntity.eventName)
+        val indexFromList =
+            Days.daysList.indexOf(Days.daysList.find { dayEntity.eventName.contains(it) } ?: "")
         DayEvent(
             indexOfDay = indexFromList,
             date = LocalDate.parse(dayEntity.date, ddMMyyyyFormatter),

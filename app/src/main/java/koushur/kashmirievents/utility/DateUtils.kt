@@ -3,6 +3,7 @@ package koushur.kashmirievents.utility
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.Locale
@@ -32,3 +33,5 @@ fun firstDayOfWeekFromLocale(): DayOfWeek = WeekFields.of(Locale.getDefault()).f
 fun String.getLocalDate(): LocalDate? = LocalDate.parse(this, ddMMyyyyFormatter)
 
 fun getCurrentDebugTime(): LocalDateTime = LocalDateTime.now()
+
+fun LocalDate.getYearMonth() = YearMonth.of(this.year, this.month)

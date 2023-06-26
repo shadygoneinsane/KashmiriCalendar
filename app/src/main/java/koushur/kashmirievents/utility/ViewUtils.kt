@@ -1,15 +1,11 @@
 package koushur.kashmirievents.utility
 
-import android.graphics.Typeface
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
-import com.kizitonwose.calendar.core.CalendarDay
-import koushir.kashmirievents.R
+import koushur.kashmirievents.database.data.DayEvent
 import koushur.kashmirievents.database.data.Event
-import koushur.kashmirievents.database.data.Importance
-import koushur.kashmirievents.presentation.ui.main.calendar.LandingFragment
-import java.time.LocalDate
+import koushur.kashmirievents.database.entity.Days
 
 
 /**
@@ -21,80 +17,62 @@ import java.time.LocalDate
  */
 fun setTVFontColor(tv: TextView, decorView: View, event: Event) {
     tv.text = event.eventName
-    decorView.setBackgroundColor(tv.context.getColorCompat(event.color))
-
     tv.makeVisible()
+    tv.setImportance(event.eventImp)
+    decorView.setBackground(event.eventImp)
     decorView.makeVisible()
-
-    when (event.eventImp) {
-        Importance.high -> {
-            tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD)
-            tv.setTextColor(tv.context.getColorCompat(R.color.red_800))
-        }
-
-        Importance.med -> {
-            tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD)
-            tv.setTextColor(tv.context.getColorCompat(R.color.white))
-        }
-
-        Importance.low -> {
-            tv.setTypeface(Typeface.DEFAULT, Typeface.NORMAL)
-            tv.setTextColor(tv.context.getColorCompat(R.color.white))
-        }
-
-        else -> tv.setTextColor(tv.context.getColorCompat(R.color.white))
+    if ((event is DayEvent) && (event.indexOfDay != -1)) {
+        if (Days.highlights.contains(Days.days[event.indexOfDay]))
+            tv.setImportance(Importance.med)
+    } else if ((event is DayEvent) && (event.indexOfDay == -1)) {
+        tv.setImportance(Importance.high)
     }
 }
 
 fun setDateDataAndColor(
-    selectedDate: LocalDate?,
     events: List<Event>?,
-    container: LandingFragment.DayViewContainer,
-    day: CalendarDay
+    topTV: TextView, topView: View,
+    bottomTV: TextView, bottomView: View,
+    dateTV: TextView
 ) {
-    container.dateTV.setTextColorRes(R.color.cv_text_grey)
-    //highlighting today's date
-    container.layout.setBackgroundResource(
-        if (day.date != LocalDate.now()) {
-            if (selectedDate == day.date) R.drawable.drawable_selected_bg
-            else 0
-        } else R.drawable.drawable_selected_highlighted_bg
-    )
-
-    events?.let { listTodaysEvents ->
+    events?.let { eventList ->
         when {
-            listTodaysEvents.count() == 1 -> {
-                //Timber.d("Date : ${day.date} | Event found is ${listEvents[0]}")
+            eventList.count() == 1 -> {
+                //log("Date : ${day.date} | Event found is ${listEvents[0]}")
 
-                setTVFontColor(container.topTV, container.topView, listTodaysEvents.first())
-                container.bottomTV.makeGone()
-                container.bottomView.makeGone()
+                setTVFontColor(topTV, topView, eventList.first())
+                bottomTV.makeGone()
+                bottomView.makeGone()
             }
 
-            listTodaysEvents.count() == 2 -> {
-                container.dateTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 7f)
+            eventList.count() == 2 -> {
+                dateTV.setTextSizeSp(7f)
 
-                //Timber.d("Date : ${day.date} | Events found are 1: ${listEvents[0]} 2: ${listEvents[1]}")
-                setTVFontColor(container.topTV, container.topView, listTodaysEvents.first())
-                setTVFontColor(container.bottomTV, container.bottomView, listTodaysEvents[1])
+                //log("Date : ${day.date} | Events found are 1: ${listEvents[0]} 2: ${listEvents[1]}")
+                setTVFontColor(topTV, topView, eventList.first())
+                setTVFontColor(bottomTV, bottomView, eventList[1])
             }
 
-            listTodaysEvents.count() > 2 -> {
-                container.dateTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 7f)
+            eventList.count() > 2 -> {
+                dateTV.setTextSizeSp(7f)
 
-                //Timber.d("Date : ${day.date} | Events found are 1: ${listEvents[0]} 2: ${listEvents[1]}")
-                listTodaysEvents.sortedBy { it.eventImp }
-                setTVFontColor(container.topTV, container.topView, listTodaysEvents.first())
-                setTVFontColor(container.bottomTV, container.bottomView, listTodaysEvents[1])
+                //log("Date : ${day.date} | Events found are 1: ${listEvents[0]} 2: ${listEvents[1]}")
+                eventList.sortedBy { it.eventImp }
+                setTVFontColor(topTV, topView, eventList.first())
+                setTVFontColor(bottomTV, bottomView, eventList[1])
             }
 
             else -> {
-                container.topView.makeGone()
-                container.topTV.makeGone()
-                container.bottomTV.makeGone()
-                container.bottomView.makeGone()
-                log("Date : ${day.date} | Events found $listTodaysEvents}")
+                topView.makeGone()
+                topTV.makeGone()
+                bottomTV.makeGone()
+                bottomView.makeGone()
+                //log("Date : ${day.date} | Events found $eventList}")
             }
         }
     }
+}
+
+fun TextView.setTextSizeSp(size: Float) {
+    setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
 }

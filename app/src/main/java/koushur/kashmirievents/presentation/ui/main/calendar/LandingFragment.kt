@@ -21,11 +21,11 @@ import koushir.kashmirievents.databinding.CalendarDayBinding
 import koushir.kashmirievents.databinding.CalendarHeaderBinding
 import koushir.kashmirievents.databinding.FragmentLandingBinding
 import koushur.kashmirievents.database.data.DayEvent
-import koushur.kashmirievents.database.data.Event
 import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.utility.AppConstants
 import koushur.kashmirievents.utility.daysOfWeek
+import koushur.kashmirievents.utility.makeGone
 import koushur.kashmirievents.utility.setDateDataAndColor
 import koushur.kashmirievents.utility.setTextColorRes
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -50,7 +50,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         super.onCreate(savedInstanceState)
 
         //fetch data from assets
-        loadDayEventsData()
+        loadEveryAvailableDayEventsData()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,10 +70,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
             }
         }
 
-        viewModel.getDayEventsLiveData().observe(viewLifecycleOwner) {
-            //When we have complete
-            val mapDateEvents = viewModel.setMonthWiseDayEventData(it)
-            loadMonthDataFromAssets()
+        viewModel.getDayEventsLiveData().observe(viewLifecycleOwner) { mapDateEvents ->
             setUpCalendar(mapDateEvents)
         }
 
@@ -99,22 +96,19 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         )
     }
 
-    private fun loadDayEventsData() {
+    private fun loadEveryAvailableDayEventsData() {
         activity?.let {
-            val dailyEvents = mutableListOf<String?>()
-            dailyEvents.add(loadJSONFromAsset(it, AppConstants.dbDayEvents_22_23))
-            dailyEvents.add(loadJSONFromAsset(it, AppConstants.dbDayEvents_23_24))
-            viewModel.fetchDaysEventsData(dailyEvents)
-        }
-    }
+            val dailyEvents = mutableListOf<String?>().apply {
+                add(loadJSONFromAsset(it, AppConstants.dbDayEvents_22_23))
+                add(loadJSONFromAsset(it, AppConstants.dbDayEvents_23_24))
+            }
 
-    private fun loadMonthDataFromAssets() {
-        activity?.let {
-            val monthlyEvents = mutableListOf<String?>()
-            monthlyEvents.add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_23_24))
+            val monthlyEvents = mutableListOf<String?>().apply {
+                add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_23_24))
+                add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_22_23))
+            }
 
-            monthlyEvents.add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_22_23))
-            viewModel.fetchMonthsEventsData(monthlyEvents)
+            viewModel.processEventsDataFromJson(dailyEvents, monthlyEvents)
         }
     }
 
@@ -122,14 +116,14 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         viewBinding.cvMain.dayBinder = CVDayBinder(mapDateEvents)
         viewBinding.cvMain.monthHeaderBinder = CVMonthHeaderBinder()
 
-        //to update list with current months items as default when calendar is setup
-        updateData(YearMonth.now())
-
         viewBinding.cvMain.monthScrollListener = { month ->
-            updateData(month.yearMonth)
+            viewModel.updateMonthlyItemsList(
+                month.yearMonth,
+                getString(R.string.special_event_placeholder)
+            )
+            viewModel.setMonthName(month.yearMonth)
 
             selectedDate?.let {
-                // Clear selection if we scroll to a new month.
                 selectedDate = null
                 viewBinding.cvMain.notifyDateChanged(it)
                 viewModel.updateSelectedDayItems(null, null)
@@ -139,9 +133,82 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         viewBinding.cvMain.scrollToMonth(YearMonth.now())
     }
 
-    private fun updateData(yearMonth: YearMonth) {
-        viewModel.updateMonthlyItemsList(yearMonth)
-        viewModel.setMonthName(yearMonth)
+    inner class CVDayBinder(private val mapDateEvents: Map<LocalDate, List<DayEvent>>) :
+        MonthDayBinder<DayViewContainer> {
+        override fun create(view: View) = DayViewContainer(view, mapDateEvents)
+        override fun bind(container: DayViewContainer, data: CalendarDay) {
+            container.onBind(data)
+        }
+    }
+
+    inner class DayViewContainer(
+        view: View, private val mapDateEvents: Map<LocalDate, List<DayEvent>>
+    ) : ViewContainer(view) {
+        lateinit var date: LocalDate // Will be set when this container is bound.
+        private val binding = CalendarDayBinding.bind(view)
+        private val dateTV: TextView = binding.dateText
+        private val layout = binding.exFiveDayLayout
+        private val topView: View = binding.dayTop
+        private val topTV: TextView = binding.dayTopText
+        private val bottomView: View = binding.dayBottom
+        private val bottomTV: TextView = binding.dayBottomText
+
+        fun onBind(data: CalendarDay) {
+            this.date = data.date
+            val eventsForTheDay: List<DayEvent>? = mapDateEvents[data.date]
+
+            view.setOnClickListener {
+                selectDate(date, eventsForTheDay)
+            }
+            dateTV.text = data.date.dayOfMonth.toString()
+
+            topView.background = null
+            bottomView.background = null
+
+            when (data.position) {
+                DayPosition.MonthDate -> {
+                    dateTV.setTextColorRes(R.color.cv_text_grey)
+                    setBackgroundDateData()
+                    setDateDataAndColor(
+                        eventsForTheDay, topTV, topView, bottomTV, bottomView, dateTV
+                    )
+                }
+
+                DayPosition.InDate, DayPosition.OutDate -> {
+                    dateTV.setTextColorRes(R.color.cv_text_grey_light)
+                    topTV.makeGone()
+                    topView.makeGone()
+                    bottomView.makeGone()
+                    bottomTV.makeGone()
+                    bottomView.makeGone()
+                    layout.background = null
+                }
+
+                else -> {
+                    dateTV.setTextColorRes(R.color.cv_text_grey_light)
+                    layout.background = null
+                }
+            }
+        }
+
+        private fun selectDate(date: LocalDate, eventsForTheDay: List<DayEvent>?) {
+            if (selectedDate != date) {
+                val oldDate = selectedDate
+                selectedDate = date
+                viewBinding.cvMain.notifyDateChanged(date)
+                oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
+                viewModel.updateSelectedDayItems(eventsForTheDay, date)
+            }
+        }
+
+        private fun setBackgroundDateData() {
+            layout.setBackgroundResource(
+                if (date != LocalDate.now()) {
+                    if (selectedDate == date) R.drawable.drawable_selected_bg
+                    else 0
+                } else R.drawable.drawable_selected_highlighted_bg
+            )
+        }
     }
 
     inner class CVMonthHeaderBinder : MonthHeaderFooterBinder<MonthViewContainer> {
@@ -163,52 +230,6 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
     inner class MonthViewContainer(view: View) : ViewContainer(view) {
         val legendLayout: LinearLayout = CalendarHeaderBinding.bind(view).legendLayout.root
-    }
-
-    inner class CVDayBinder(private val mapDateEvents: Map<LocalDate, List<Event>>) :
-        MonthDayBinder<DayViewContainer> {
-        override fun create(view: View) = DayViewContainer(view, mapDateEvents)
-        override fun bind(container: DayViewContainer, data: CalendarDay) {
-            container.day = data
-            container.dateTV.text = data.date.dayOfMonth.toString()
-
-            container.topView.background = null
-            container.bottomView.background = null
-
-            if (data.position == DayPosition.MonthDate) {
-                setDateDataAndColor(selectedDate, mapDateEvents[data.date], container, data)
-            } else {
-                container.dateTV.setTextColorRes(R.color.cv_text_grey_light)
-                container.layout.background = null
-            }
-        }
-    }
-
-    inner class DayViewContainer(
-        view: View, private val mapDateEvents: Map<LocalDate, List<Event>>
-    ) : ViewContainer(view) {
-        lateinit var day: CalendarDay // Will be set when this container is bound.
-        private val binding = CalendarDayBinding.bind(view)
-        val dateTV: TextView = binding.dateText
-        val layout = binding.exFiveDayLayout
-        val topView: View = binding.dayTop
-        val topTV: TextView = binding.dayTopText
-        val bottomView: View = binding.dayBottom
-        val bottomTV: TextView = binding.dayBottomText
-
-        init {
-            view.setOnClickListener { selectDate(day.date, mapDateEvents) }
-        }
-
-        private fun selectDate(date: LocalDate, mapDateEvents: Map<LocalDate, List<Event>>) {
-            if (selectedDate != date) {
-                val oldDate = selectedDate
-                selectedDate = date
-                viewBinding.cvMain.notifyDateChanged(date)
-                oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
-                viewModel.updateSelectedDayItems(mapDateEvents[date], date)
-            }
-        }
     }
 
     private fun loadJSONFromAsset(activity: Activity, fileName: String): String? {
