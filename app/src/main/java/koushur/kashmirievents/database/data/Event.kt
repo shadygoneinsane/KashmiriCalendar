@@ -1,6 +1,5 @@
 package koushur.kashmirievents.database.data
 
-import androidx.annotation.ColorRes
 import koushur.kashmirievents.utility.Importance
 import java.time.LocalDate
 
@@ -25,5 +24,5 @@ data class MonthEvent(
 
 data class DayEvent(
     val indexOfDay: Int = -1, val date: LocalDate, val dayName: String,
-    @Importance val imp: Int, @ColorRes val dayColor: Int
+    @Importance val imp: Int
 ) : Event(date, eventImp = imp, eventName = dayName)

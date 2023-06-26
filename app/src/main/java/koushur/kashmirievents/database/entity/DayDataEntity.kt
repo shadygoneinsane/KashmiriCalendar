@@ -3,7 +3,6 @@ package koushur.kashmirievents.database.entity
 import com.google.gson.annotations.SerializedName
 import koushur.kashmirievents.database.data.DayEvent
 import koushur.kashmirievents.utility.ddMMyyyyFormatter
-import koushur.kashmirievents.utility.returnColor
 import java.time.LocalDate
 
 data class DayDataEntity(
@@ -29,8 +28,7 @@ fun List<DayDataEntity>.map(): List<DayEvent> {
             indexOfDay = indexFromList,
             date = LocalDate.parse(dayEntity.date, ddMMyyyyFormatter),
             dayName = dayEntity.eventName,
-            imp = dayEntity.imp,
-            dayColor = dayEntity.imp.returnColor()
+            imp = dayEntity.imp
         )
     }
 

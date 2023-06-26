@@ -11,5 +11,5 @@ import org.koin.dsl.module
  */
 val dbModule = module {
     single { Room.databaseBuilder(androidContext(), AppDb::class.java, "calendarData.db").build() }
-    single { get<AppDb>().monthDataDao() }
+    single { get<AppDb>().eventDataDao() }
 }

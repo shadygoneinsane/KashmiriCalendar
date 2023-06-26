@@ -13,17 +13,23 @@ annotation class SpecialDays {
         private const val roopBhavani = "Mata Roop Bhawani Prakash Utsav"
         private const val zyethAshtami = "Zyeth Ashtami"
         private const val nirzalaEkadashi = "Nirzala Ekadashi"
+        private const val bhimsenEkadashi = "Bhimsen Ekadashi"
         private const val vaisaakhi = "Vaisaakhi"
         private const val ganeshChaturdashi = "Ganesh Chaturdashi"
+        private const val jwalaChaturdashi = "Jwala Chaturdashi"
+        private const val guruPoornima = "Guru Poornima"
 
         val specialDayEvents = mapOf(
-            "Sankranti" to sankranti,
-            "Mata Kheer Bhawani Yatra" to kheerBhawani,
-            "Mata Roop Bhawani Prakash Utsav" to roopBhavani,
-            "Zyeth Ashtami" to zyethAshtami,
-            "Nirzala Ekadashi" to nirzalaEkadashi,
-            "Vaisaakhi" to vaisaakhi,
-            "Ganesh Chaturdashi" to ganeshChaturdashi
+            sankranti to 0,
+            kheerBhawani to 1,
+            roopBhavani to 2,
+            zyethAshtami to 3,
+            nirzalaEkadashi to 4,
+            bhimsenEkadashi to 5,
+            vaisaakhi to 6,
+            ganeshChaturdashi to 7,
+            jwalaChaturdashi to 8,
+            guruPoornima to 9
         )
     }
 }

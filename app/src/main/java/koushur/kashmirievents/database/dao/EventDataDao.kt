@@ -2,7 +2,7 @@ package koushur.kashmirievents.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import koushur.kashmirievents.database.entity.MonthsDataEntity
+import koushur.kashmirievents.database.entity.SavedCalendarEntity
 
 /**
  * Dao class for Data
@@ -12,7 +12,7 @@ import koushur.kashmirievents.database.entity.MonthsDataEntity
  * Email : vikeshdass@gmail.com
  */
 @Dao
-interface MonthDataDao {
-    @Query("SELECT * FROM monthData")
-    suspend fun fetchData(): List<MonthsDataEntity>
+interface EventDataDao {
+    @Query("SELECT * FROM savedEvent")
+    suspend fun fetchData(): List<SavedCalendarEntity>
 }
