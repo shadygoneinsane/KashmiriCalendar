@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 import java.time.LocalDate
 
 @Entity(tableName = "savedEvent")
-data class SavedCalendarEntity(
-    @PrimaryKey val id: Int,
+data class SavedEventEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
 
     val selectedDate: LocalDate,
 

@@ -7,6 +7,5 @@ import org.koin.dsl.module
  * This is repository module
  */
 val remoteRepositoryModule = module {
-
     factory<CalendarRepository> { CalendarRepository(monthDataDao = get()) }
 }

@@ -14,10 +14,12 @@ import koushur.kashmirievents.database.entity.DayDataEntity
 import koushur.kashmirievents.database.entity.Days
 import koushur.kashmirievents.database.entity.Months
 import koushur.kashmirievents.database.entity.MonthsDataEntity
+import koushur.kashmirievents.database.entity.SavedEventEntity
 import koushur.kashmirievents.database.entity.map
 import koushur.kashmirievents.di.module.DispatcherProvider
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
+import koushur.kashmirievents.repository.CalendarRepository
 import koushur.kashmirievents.utility.Importance
 import koushur.kashmirievents.utility.getYearMonth
 import koushur.kashmirievents.utility.log
@@ -26,7 +28,10 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-class LandingViewModel(private val dispatcher: DispatcherProvider) : BaseViewModel() {
+class LandingViewModel(
+    private val repository: CalendarRepository,
+    private val dispatcher: DispatcherProvider
+) : BaseViewModel() {
     private val listDayDataEntityType = object : TypeToken<List<DayDataEntity>>() {}.type
     private val monthNameLiveData = MutableLiveData<String>()
     private val monthDataEntityType = object : TypeToken<List<MonthsDataEntity>>() {}.type
@@ -66,7 +71,7 @@ class LandingViewModel(private val dispatcher: DispatcherProvider) : BaseViewMod
     fun processEventsDataFromJson(
         allDaysEvents: List<String?>, allMonthsSpecialEvents: List<String?>
     ) {
-        execute(dispatcher.ioDispatcher()) {
+        execute(dispatcher.io()) {
             setMonthEventsData(allMonthsSpecialEvents)
             setDaysEventsData(allDaysEvents)
         }
@@ -156,11 +161,11 @@ class LandingViewModel(private val dispatcher: DispatcherProvider) : BaseViewMod
         listOfMonthEvents.forEach { month: MonthEvent ->
             if (month.indexOfMonth != -1) {
                 monthMap[month.indexOfMonth] = month
-                println(
+                log(
                     "Adding month with index :: ${month.indexOfMonth} and name :: ${month.monthName}" +
                             "\n dates in ${month.startDate.yearMonth} ${month.endDate.yearMonth}"
                 )
-            } else println("Not doing anything for month index -1 for month item name as ${month.monthName} ")
+            } else log("Not doing anything for month index -1 for month item name as ${month.monthName} ")
         }
     }
 
@@ -173,7 +178,16 @@ class LandingViewModel(private val dispatcher: DispatcherProvider) : BaseViewMod
         val monthName = monthMap?.monthName ?: "Not found"
         val yearMonth: YearMonth = date.yearMonth
 
-        println(
+        execute(dispatcher.io()) {
+            repository.saveEvent(
+                SavedEventEntity(
+                    selectedDate = date, monthIndex = monthIndex, monthName = monthName,
+                    dayIndex = dayIndex, dayName = dayName, eventName = "Selected Date"
+                )
+            )
+        }
+
+        log(
             "Selected date $date with yearMonth $yearMonth "
                     + "\nClicked Month Name : $monthName "
                     + "\nwhose month index would be $monthIndex "
@@ -184,7 +198,7 @@ class LandingViewModel(private val dispatcher: DispatcherProvider) : BaseViewMod
         if (monthIndex != -1)
             this.monthMap.filter { it.value.monthName == Months.monthsList[monthIndex] }
                 .forEach {
-                    println("This month repeats from ${it.value.startDate} to ${it.value.endDate}")
+                    log("This month repeats from ${it.value.startDate} to ${it.value.endDate}")
                 }
     }
 

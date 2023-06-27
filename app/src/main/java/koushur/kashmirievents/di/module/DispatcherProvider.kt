@@ -5,11 +5,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 interface DispatcherProvider {
-    fun mainDispatcher(): CoroutineDispatcher = Dispatchers.Main
+    fun main(): CoroutineDispatcher = Dispatchers.Main
 
-    fun defaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+    fun default(): CoroutineDispatcher = Dispatchers.Default
 
-    fun ioDispatcher(): CoroutineDispatcher = Dispatchers.IO
+    fun io(): CoroutineDispatcher = Dispatchers.IO
 
 }
 

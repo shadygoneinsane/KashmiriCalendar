@@ -2,17 +2,20 @@ package koushur.kashmirievents.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import koushur.kashmirievents.database.dao.EventDataDao
-import koushur.kashmirievents.database.entity.SavedCalendarEntity
+import androidx.room.TypeConverters
+import koushur.kashmirievents.database.convertor.Converters
+import koushur.kashmirievents.database.dao.CalendarEventDataDao
+import koushur.kashmirievents.database.entity.SavedEventEntity
 
 /**
  * Application Database
  */
 @Database(
-    entities = [SavedCalendarEntity::class],
-    version = 1, exportSchema = false
+    entities = [SavedEventEntity::class],
+    version = 2, exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class AppDb : RoomDatabase() {
 
-    abstract fun eventDataDao(): EventDataDao
+    abstract fun eventsDataDao(): CalendarEventDataDao
 }
