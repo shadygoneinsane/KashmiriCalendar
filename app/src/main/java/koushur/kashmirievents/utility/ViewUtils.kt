@@ -5,8 +5,6 @@ import android.view.View
 import android.widget.TextView
 import koushur.kashmirievents.database.data.DayEvent
 import koushur.kashmirievents.database.data.Event
-import koushur.kashmirievents.database.entity.Days
-import koushur.kashmirievents.database.entity.SpecialDays
 
 
 /**
@@ -22,13 +20,13 @@ fun setTVFontColor(tv: TextView, decorView: View, event: Event) {
 
     tv.text = event.eventName
     tv.makeVisible()
-    tv.setImportance(getTVFontColor(event))
+    tv.setImportance(getDayEventImportance(event))
 }
 
-fun getTVFontColor(event: Event): Int {
-    return if ((event is DayEvent) && (event.indexOfDay != -1) && (Days.highlights.contains(Days.daysList[event.indexOfDay]))) {
+fun getDayEventImportance(event: Event): Int {
+    return if ((event is DayEvent) && (event.indexOfDay != -1) && (event.ifDayEventIsHighlighted())) {
         Importance.med
-    } else if ((event is DayEvent) && (SpecialDays.specialDayEvents.keys.contains(event.eventName))) {
+    } else if ((event is DayEvent) && (event.ifDayEventIsSpecial())) {
         Importance.high
     } else {
         event.eventImp

@@ -2,7 +2,7 @@ package koushur.kashmirievents
 
 import koushur.kashmirievents.database.data.DayEvent
 import koushur.kashmirievents.utility.Importance
-import koushur.kashmirievents.utility.getTVFontColor
+import koushur.kashmirievents.utility.getDayEventImportance
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.LocalDate
@@ -20,13 +20,13 @@ class ViewUtilsTest {
 
     @Test
     fun testSetTVFontColor() {
-        val a = getTVFontColor(DayEvent(-1, LocalDate.now(), "Bhimsen Ekadashi", Importance.none))
+        val a = getDayEventImportance(DayEvent(-1, LocalDate.now(), "Bhimsen Ekadashi", Importance.none))
         assertEquals(Importance.high, a)
-        val b = getTVFontColor(DayEvent(-1, LocalDate.now(), "Bhimsen ", Importance.none))
+        val b = getDayEventImportance(DayEvent(-1, LocalDate.now(), "Bhimsen ", Importance.none))
         assertEquals(Importance.none, b)
-        val c = getTVFontColor(DayEvent(1, LocalDate.now(), "Bhimsen ", Importance.low))
+        val c = getDayEventImportance(DayEvent(1, LocalDate.now(), "Bhimsen ", Importance.low))
         assertEquals(Importance.low, c)
-        val d = getTVFontColor(DayEvent(1, LocalDate.now(), "Ekadashi", Importance.low))
+        val d = getDayEventImportance(DayEvent(1, LocalDate.now(), "Ekadashi", Importance.low))
         assertEquals(Importance.med, d)
     }
 }

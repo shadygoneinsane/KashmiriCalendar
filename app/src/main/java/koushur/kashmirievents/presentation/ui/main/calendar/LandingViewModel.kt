@@ -4,23 +4,20 @@ import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.kizitonwose.calendar.core.yearMonth
 import koushir.kashmirievents.BR
 import koushir.kashmirievents.R
 import koushur.kashmirievents.database.data.DayEvent
 import koushur.kashmirievents.database.data.Event
 import koushur.kashmirievents.database.data.MonthEvent
 import koushur.kashmirievents.database.entity.DayDataEntity
-import koushur.kashmirievents.database.entity.Days
-import koushur.kashmirievents.database.entity.Months
 import koushur.kashmirievents.database.entity.MonthsDataEntity
-import koushur.kashmirievents.database.entity.SavedEventEntity
 import koushur.kashmirievents.database.entity.map
 import koushur.kashmirievents.di.module.DispatcherProvider
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
 import koushur.kashmirievents.repository.CalendarRepository
 import koushur.kashmirievents.utility.Importance
+import koushur.kashmirievents.utility.getDayEventImportance
 import koushur.kashmirievents.utility.getYearMonth
 import koushur.kashmirievents.utility.log
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
@@ -49,9 +46,6 @@ class LandingViewModel(
      * Used to populate list of items for current month on UI
      */
     private val monthEventsMap: MutableMap<YearMonth, List<MonthEvent>> = mutableMapOf()
-
-    //creating map of month(koushur month name with start and end date vs its events during that month )
-    private val monthMap: MutableMap<Int, MonthEvent> = mutableMapOf()
 
     private val prevMonthEvent = SingleLiveEvent<Unit?>()
     private val nextMonthEvent = SingleLiveEvent<Unit?>()
@@ -92,9 +86,6 @@ class LandingViewModel(
 
         groupedByMonthMap = groupedByYearMonth
         groupedByLocalDateMap.postValue(groupedByLocalDate)
-
-        //TODO : testing search functionality
-        createMonthsDaysMap()
     }
 
     private fun setMonthEventsData(allMonthsSpecialEvents: List<String?>) {
@@ -120,9 +111,6 @@ class LandingViewModel(
     fun updateSelectedDayItems(events: List<DayEvent>?, date: LocalDate?) {
         selectedDayItems.clear()
         selectedDayItems.addAll(events.orEmpty())
-
-        //TODO : testing search functionality
-        date?.let { findYearMonthDetails(events, it) }
     }
 
     fun updateMonthlyItemsList(yearMonth: YearMonth, placeholderString: String) {
@@ -144,7 +132,8 @@ class LandingViewModel(
 
         formatter = DateTimeFormatter.ofPattern("E, MMM dd")
         groupedByMonthMap[yearMonth]?.forEach {
-            if (it.eventImp == Importance.med || it.eventImp == Importance.high) {
+            val eventImportance = getDayEventImportance(it)
+            if (eventImportance == Importance.med || eventImportance == Importance.high) {
                 monthlyItems.add(
                     Event(
                         localDate = it.localDate,
@@ -155,56 +144,6 @@ class LandingViewModel(
             }
         }
     }
-
-
-    private fun createMonthsDaysMap() {
-        listOfMonthEvents.forEach { month: MonthEvent ->
-            if (month.indexOfMonth != -1) {
-                monthMap[month.indexOfMonth] = month
-                log(
-                    "Adding month with index :: ${month.indexOfMonth} and name :: ${month.monthName}" +
-                            "\n dates in ${month.startDate.yearMonth} ${month.endDate.yearMonth}"
-                )
-            } else log("Not doing anything for month index -1 for month item name as ${month.monthName} ")
-        }
-    }
-
-    private fun findYearMonthDetails(events: List<DayEvent>?, date: LocalDate) {
-        val dayIndex = events?.find { it.indexOfDay != -1 }?.indexOfDay ?: -1
-        val dayName = Days.daysList[dayIndex]
-        val monthMap: MonthEvent? =
-            listOfMonthEvents.find { isDateWithinMonth(date, it.startDate, it.endDate) }
-        val monthIndex = monthMap?.indexOfMonth ?: -1
-        val monthName = monthMap?.monthName ?: "Not found"
-        val yearMonth: YearMonth = date.yearMonth
-
-        execute(dispatcher.io()) {
-            repository.saveEvent(
-                SavedEventEntity(
-                    selectedDate = date, monthIndex = monthIndex, monthName = monthName,
-                    dayIndex = dayIndex, dayName = dayName, eventName = "Selected Date"
-                )
-            )
-        }
-
-        log(
-            "Selected date $date with yearMonth $yearMonth "
-                    + "\nClicked Month Name : $monthName "
-                    + "\nwhose month index would be $monthIndex "
-                    + "\nfor month : $monthName"
-                    + "\nfor day $dayName"
-        )
-
-        if (monthIndex != -1)
-            this.monthMap.filter { it.value.monthName == Months.monthsList[monthIndex] }
-                .forEach {
-                    log("This month repeats from ${it.value.startDate} to ${it.value.endDate}")
-                }
-    }
-
-    private fun isDateWithinMonth(
-        date: LocalDate, startDate: LocalDate, endDate: LocalDate
-    ) = date in startDate..endDate
 
     fun getMonthName() = monthNameLiveData
     fun getDayEventsLiveData() = groupedByLocalDateMap

@@ -1,5 +1,8 @@
 package koushur.kashmirievents.utility
 
+import koushur.kashmirievents.database.data.DayEvent
+import koushur.kashmirievents.database.entity.Days
+import koushur.kashmirievents.database.entity.SpecialDays
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -34,4 +37,8 @@ fun String.getLocalDate(): LocalDate? = LocalDate.parse(this, ddMMyyyyFormatter)
 
 fun getCurrentDebugTime(): LocalDateTime = LocalDateTime.now()
 
-fun LocalDate.getYearMonth() = YearMonth.of(this.year, this.month)
+fun LocalDate.getYearMonth(): YearMonth = YearMonth.of(this.year, this.month)
+
+fun DayEvent.ifDayEventIsHighlighted() = Days.highlights.contains(Days.daysList[indexOfDay])
+
+fun DayEvent.ifDayEventIsSpecial() = SpecialDays.specialDayEvents.keys.contains(eventName)
