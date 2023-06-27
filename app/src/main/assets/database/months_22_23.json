@@ -1,0 +1,183 @@
+[
+  {
+    "startDate": "01-05-2022",
+    "endDate": "16-05-2022",
+    "monthName": "Vaishakh Shukla Paksha"
+  },
+  {
+    "startDate": "17-05-2022",
+    "endDate": "30-05-2022",
+    "monthName": "Zyeth Krishna Paksha"
+  },
+  {
+    "startDate": "22-05-2022",
+    "endDate": "26-05-2022",
+    "monthName": "Panchak",
+    "imp": "2"
+  },
+  {
+    "startDate": "31-05-2022",
+    "endDate": "14-06-2022",
+    "monthName": "Zyeth Shukla Paksha"
+  },
+  {
+    "startDate": "15-06-2022",
+    "endDate": "29-06-2022",
+    "monthName": "Aashaad Krishna Paksha"
+  },
+  {
+    "startDate": "18-06-2022",
+    "endDate": "23-06-2022",
+    "monthName": "Panchak",
+    "imp": "2"
+  },
+  {
+    "startDate": "30-06-2022",
+    "endDate": "13-06-2022",
+    "monthName": "Aashaad Shukla Paksha"
+  },
+  {
+    "startDate": "14-07-2022",
+    "endDate": "28-07-2022",
+    "monthName": "Shravan Krishna Paksha"
+  },
+  {
+    "startDate": "15-07-2022",
+    "endDate": "20-07-2022",
+    "monthName": "Panchak",
+    "imp": "2"
+  },
+  {
+    "startDate": "31-08-2022",
+    "endDate": "02-09-2022",
+    "monthName": "Punn Saath"
+  },
+  {
+    "startDate": "08-09-2022",
+    "endDate": "09-09-2022",
+    "monthName": "Punn Saath"
+  },
+  {
+    "startDate": "29-07-2022",
+    "endDate": "12-08-2022",
+    "monthName": "Shravan Shukla Paksha"
+  },
+  {
+    "startDate": "13-08-2022",
+    "endDate": "27-08-2022",
+    "monthName": "Bhadra Krishna Paksha"
+  },
+  {
+    "startDate": "12-08-2022",
+    "endDate": "16-08-2022",
+    "monthName": "Panchak",
+    "imp": "2"
+  },
+  {
+    "startDate": "28-08-2022",
+    "endDate": "10-09-2022",
+    "monthName": "Bhadra Shukla Paksha"
+  },
+  {
+    "startDate": "11-09-2022",
+    "endDate": "25-09-2022",
+    "monthName": "Ashwin Krishna Paksha"
+  },
+  {
+    "startDate": "08-09-2022",
+    "endDate": "13-09-2022",
+    "monthName": "Panchak",
+    "imp": "2"
+  },
+  {
+    "startDate": "26-09-2022",
+    "endDate": "09-10-2022",
+    "monthName": "Ashwin Shukla Paksha"
+  },
+  {
+    "startDate": "10-10-2022",
+    "endDate": "25-10-2022",
+    "monthName": "Kartik Krishna Paksha"
+  },
+  {
+    "startDate": "06-10-2022",
+    "endDate": "10-10-2022",
+    "monthName": "Panchak",
+    "imp": "2"
+  },
+  {
+    "startDate": "26-10-2022",
+    "endDate": "08-11-2022",
+    "monthName": "Kartik Shukla Paksha"
+  },
+  {
+    "startDate": "09-11-2022",
+    "endDate": "23-11-2022",
+    "monthName": "Maagh Krishna Paksha"
+  },
+  {
+    "startDate": "02-11-2022",
+    "endDate": "07-11-2022",
+    "monthName": "Panchak",
+    "imp": "2"
+  },
+  {
+    "startDate": "29-11-2022",
+    "endDate": "04-12-2022",
+    "monthName": "Panchak",
+    "imp": "2"
+  },
+  {
+    "startDate": "24-11-2022",
+    "endDate": "08-12-2022",
+    "monthName": "Maagh Shukla Paksha"
+  },
+  {
+    "startDate": "09-12-2022",
+    "endDate": "23-12-2022",
+    "monthName": "Poh Krishna Paksha"
+  },
+  {
+    "startDate": "26-12-2022",
+    "endDate": "31-12-2022",
+    "monthName": "Panchak",
+    "imp": "2"
+  },
+  {
+    "startDate": "24-12-2022",
+    "endDate": "06-01-2023",
+    "monthName": "Poh Shukla Paksha"
+  },
+  {
+    "startDate": "07-01-2023",
+    "endDate": "21-01-2023",
+    "monthName": "Maagh Krishna Paksha"
+  },
+  {
+    "startDate": "23-01-2023",
+    "endDate": "27-01-2023",
+    "monthName": "Panchak",
+    "imp": "2"
+  },
+  {
+    "startDate": "22-01-2023",
+    "endDate": "05-02-2023",
+    "monthName": "Maagh Shukla Paksha"
+  },
+  {
+    "startDate": "06-02-2023",
+    "endDate": "20-02-2023",
+    "monthName": "Phalgun Krishna Paksha"
+  },
+  {
+    "startDate": "19-02-2023",
+    "endDate": "24-02-2023",
+    "monthName": "Panchak",
+    "imp": "2"
+  },
+  {
+    "startDate": "21-02-2023",
+    "endDate": "07-03-2023",
+    "monthName": "Phalgun Shukla Paksha"
+  }
+]

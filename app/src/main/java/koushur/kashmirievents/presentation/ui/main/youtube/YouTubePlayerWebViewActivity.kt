@@ -7,10 +7,10 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstan
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.ActivityYoutubeWebViewLayoutBinding
-import koushur.kashmirievents.data.VideoData
+import koushur.kashmirievents.database.data.VideoData
 import koushur.kashmirievents.presentation.base.BaseActivity
-import koushur.kashmirievents.presentation.utils.AppConstants
-import koushur.kashmirievents.presentation.utils.toast
+import koushur.kashmirievents.utility.AppConstants
+import koushur.kashmirievents.utility.toast
 
 /**
  * A [YouTubePlayerWebViewActivity] for playing videos from Youtube

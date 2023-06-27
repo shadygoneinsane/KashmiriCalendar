@@ -7,13 +7,17 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayer.*
+import com.google.android.youtube.player.YouTubePlayer.ErrorReason
+import com.google.android.youtube.player.YouTubePlayer.OnInitializedListener
+import com.google.android.youtube.player.YouTubePlayer.PlayerStateChangeListener
+import com.google.android.youtube.player.YouTubePlayer.PlayerStyle
+import com.google.android.youtube.player.YouTubePlayer.Provider
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.ActivityYoutubeLayoutBinding
-import koushur.kashmirievents.data.VideoData
-import koushur.kashmirievents.presentation.utils.AppConstants
-import koushur.kashmirievents.presentation.utils.toast
-import timber.log.Timber
+import koushur.kashmirievents.database.data.VideoData
+import koushur.kashmirievents.utility.AppConstants
+import koushur.kashmirievents.utility.log
+import koushur.kashmirievents.utility.toast
 
 /**
  * A [YouTubePlayerActivity] for playing videos from Youtube
@@ -61,31 +65,31 @@ class YouTubePlayerActivity : YouTubeBaseActivity(), OnInitializedListener {
         override fun onLoading() {
             playerState = "LOADING"
 
-            Timber.d(playerState)
+            log(playerState)
         }
 
         override fun onLoaded(videoId: String) {
             playerState = String.format("LOADED %s", videoId)
             player?.play()
-            Timber.d(playerState)
+            log(playerState)
         }
 
         override fun onAdStarted() {
             playerState = "AD_STARTED"
 
-            Timber.d(playerState)
+            log(playerState)
         }
 
         override fun onVideoStarted() {
             playerState = "VIDEO_STARTED"
 
-            Timber.d(playerState)
+            log(playerState)
         }
 
         override fun onVideoEnded() {
             playerState = "VIDEO_ENDED"
 
-            Timber.d(playerState)
+            log(playerState)
         }
 
         override fun onError(reason: ErrorReason) {
@@ -94,7 +98,7 @@ class YouTubePlayerActivity : YouTubeBaseActivity(), OnInitializedListener {
                 // When this error occurs the player is released and can no longer be used.
             }
 
-            Timber.d(playerState)
+            log(playerState)
         }
     }
 }

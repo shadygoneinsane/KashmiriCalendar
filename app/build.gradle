@@ -119,7 +119,7 @@ dependencies {
     implementation "com.google.firebase:firebase-crashlytics-ktx"
 
     // calendar view used in app
-    implementation "com.kizitonwose.calendar:view:2.3.0"
+    implementation "com.kizitonwose.calendar:view:2.4.0-beta01"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
 
     implementation "io.insert-koin:koin-core:$koin_version"
@@ -144,7 +144,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
 
     //youtube player
-    implementation 'com.github.PierfrancescoSoffritti.android-youtube-player:core:10.0.5'
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
 
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 

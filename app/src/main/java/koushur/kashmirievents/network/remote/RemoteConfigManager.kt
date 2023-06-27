@@ -3,7 +3,7 @@ package koushur.kashmirievents.network.remote
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import koushir.kashmirievents.R
-import koushur.kashmirievents.presentation.utils.AppConstants
+import koushur.kashmirievents.utility.AppConstants
 
 /**
  * Remote config for Firebase

@@ -7,14 +7,14 @@ import androidx.core.content.ContextCompat
 import com.google.android.youtube.player.YouTubeIntents
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.FragmentFeaturedBinding
-import koushur.kashmirievents.data.VideoData
+import koushur.kashmirievents.database.data.VideoData
 import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.ui.main.aarti.AartiActivity
 import koushur.kashmirievents.presentation.ui.main.calendar.InsetDivider
 import koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerActivity
 import koushur.kashmirievents.presentation.ui.main.youtube.YouTubePlayerWebViewActivity
-import koushur.kashmirievents.presentation.utils.AppConstants
+import koushur.kashmirievents.utility.AppConstants
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**

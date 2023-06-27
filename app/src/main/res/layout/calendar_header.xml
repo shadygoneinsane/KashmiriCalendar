@@ -6,8 +6,8 @@
     android:paddingBottom="1dp">
 
     <include
-        android:id="@+id/legend_layout"
-        layout="@layout/layout_cv_day_legend"
+        android:id="@+id/legendLayout"
+        layout="@layout/layout_calendar_day_legend_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />

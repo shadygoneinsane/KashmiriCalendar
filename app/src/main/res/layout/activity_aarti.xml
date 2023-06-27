@@ -7,7 +7,7 @@
 
         <variable
             name="aarti"
-            type="koushur.kashmirievents.data.AartiData" />
+            type="koushur.kashmirievents.database.data.AartiData" />
 
     </data>
 
@@ -43,7 +43,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_om" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title_aarti"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_article_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
