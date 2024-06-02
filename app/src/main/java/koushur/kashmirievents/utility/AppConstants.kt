@@ -10,8 +10,12 @@ package koushur.kashmirievents.utility
 object AppConstants {
     const val dbDayEvents_22_23 = "database/22_23.json"
     const val dbDayEvents_23_24 = "database/23_24.json"
+    const val dbDayEvents_24_25 = "database/24_25.json"
+
     const val dbMonthEvents_23_24 = "database/months_23_24.json"
     const val dbMonthEvents_22_23 = "database/months_22_23.json"
+    const val dbMonthEvents_24_25 = "database/months_24_25.json"
+
     const val dbSpecialEvents_23_24 = "database/special_23_24.json"
 
     const val YOUTUBE_API_KEY = "YOUTUBE_API_KEY"
