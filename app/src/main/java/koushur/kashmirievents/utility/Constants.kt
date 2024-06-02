@@ -19,4 +19,11 @@ object Constants {
     const val DEBUG_LOG_FILE = "DEBUG_CALENDAR_LOGS.txt"
     const val EXCEPTION = "KOUSHUR_EXCEPTION"
     const val LOGGER = "KOUSHUR_LOG"
+
+    //Extras
+    const val EXTRA_DATE = "DATE"
+    const val EXTRA_MONTH_INDEX = "MONTH_INDEX"
+    const val EXTRA_MONTH_NAME = "MONTH_NAME"
+    const val EXTRA_DAY_INDEX = "DAY_INDEX"
+    const val EXTRA_DAY_NAME = "DAY_NAME"
 }

@@ -20,5 +20,5 @@ interface CalendarEventDataDao {
     fun fetchEvents(): Flow<List<SavedEventEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertEvent(calEventEntity: SavedEventEntity) : Unit
+    fun insertEvent(calEventEntity: SavedEventEntity) : Long?
 }

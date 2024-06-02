@@ -1,5 +1,7 @@
 package koushur.kashmirievents.presentation.ui.main.calendar
 
+import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -10,12 +12,14 @@ import koushur.kashmirievents.database.data.DayEvent
 import koushur.kashmirievents.database.data.Event
 import koushur.kashmirievents.database.data.MonthEvent
 import koushur.kashmirievents.database.entity.DayDataEntity
+import koushur.kashmirievents.database.entity.Days
 import koushur.kashmirievents.database.entity.MonthsDataEntity
 import koushur.kashmirievents.database.entity.map
 import koushur.kashmirievents.di.module.DispatcherProvider
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
 import koushur.kashmirievents.repository.CalendarRepository
+import koushur.kashmirievents.utility.Constants
 import koushur.kashmirievents.utility.Importance
 import koushur.kashmirievents.utility.getDayEventImportance
 import koushur.kashmirievents.utility.getYearMonth
@@ -25,8 +29,7 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 class LandingViewModel(
-    private val repository: CalendarRepository,
-    private val dispatcher: DispatcherProvider
+    private val repository: CalendarRepository, private val dispatcher: DispatcherProvider
 ) : BaseViewModel() {
     private val listDayDataEntityType = object : TypeToken<List<DayDataEntity>>() {}.type
     private val monthNameLiveData = MutableLiveData<String>()
@@ -56,9 +59,7 @@ class LandingViewModel(
 
     val selectedDayItems = ObservableArrayList<Any>()
     val selectedDayItemBinding: OnItemBindClass<Any> = OnItemBindClass<Any>().map(
-        DayEvent::class.java,
-        BR.event,
-        R.layout.layout_special_event_item
+        DayEvent::class.java, BR.event, R.layout.layout_special_event_item
     ).map(Event::class.java, BR.event, R.layout.layout_special_event_item)
 
 
@@ -100,14 +101,12 @@ class LandingViewModel(
         }
         listOfMonthEvents.forEach { monthEvent ->
             val months = mutableSetOf(
-                YearMonth.from(monthEvent.startDate),
-                YearMonth.from(monthEvent.endDate)
+                YearMonth.from(monthEvent.startDate), YearMonth.from(monthEvent.endDate)
             )
             months.forEach { yearMonth ->
                 monthEventsMap.getOrPut(yearMonth) { mutableListOf() }.add(monthEvent)
             }
         }
-        //log("List of month events is :: $monthEventsMap")
     }
 
     fun updateSelectedDayItems(events: List<DayEvent>?, date: LocalDate?) {
@@ -148,6 +147,26 @@ class LandingViewModel(
             }
         }
     }
+
+    fun findYearMonthDetails(events: List<DayEvent>?, date: LocalDate): Bundle {
+        val dayIndex = events?.find { it.indexOfDay != -1 }?.indexOfDay ?: -1
+        val dayName = Days.daysList[dayIndex]
+        val monthMap: MonthEvent? =
+            listOfMonthEvents.find { isDateWithinMonth(date, it.startDate, it.endDate) }
+        val monthIndex = monthMap?.indexOfMonth ?: -1
+        val monthName = monthMap?.monthName ?: "Not found"
+        return bundleOf(
+            Constants.EXTRA_DATE to date,
+            Constants.EXTRA_MONTH_INDEX to monthIndex,
+            Constants.EXTRA_MONTH_NAME to monthName,
+            Constants.EXTRA_DAY_INDEX to dayIndex,
+            Constants.EXTRA_DAY_NAME to dayName
+        )
+    }
+
+    private fun isDateWithinMonth(
+        date: LocalDate, startDate: LocalDate, endDate: LocalDate
+    ) = date in startDate..endDate
 
     fun getMonthName() = monthNameLiveData
     fun getDayEventsLiveData() = groupedByLocalDateMap

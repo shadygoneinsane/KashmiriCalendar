@@ -6,12 +6,16 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 def STRING = "String"
+def APP_ID = "APP_ID"
+def API_KEY = "API_KEY"
 
 Properties props = new Properties()
+props.load(new FileInputStream(file("gradle.properties")))
+def app_id = props.getProperty("app_id").toString()
+def project_api_key = props.getProperty("project_api_key").toString()
 
 android {
-    compileSdkVersion project.android_sdk_version
-    buildToolsVersion '31.0.0'
+    compileSdk project.android_sdk_version
 
     defaultConfig {
         applicationId "koshur.kashmirievents"
@@ -21,6 +25,8 @@ android {
         versionName "1.4.00"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField STRING, APP_ID, app_id
+        buildConfigField STRING, API_KEY, project_api_key
     }
 
     signingConfigs {
@@ -50,12 +56,8 @@ android {
     compileOptions {
         // Flag to enable support for the new language APIs
         coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     buildFeatures {
@@ -69,7 +71,7 @@ android {
     }
     namespace 'koushir.kashmirievents'
 
-    configurations.all {
+    configurations.configureEach {
         resolutionStrategy {
             exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
         }
@@ -83,7 +85,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.10.0'
 
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
@@ -116,7 +118,7 @@ dependencies {
     implementation "io.insert-koin:koin-android:$koin_version"
 
     // android architecture component
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.3"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-core-ktx:$lifecycleVersion"
 

@@ -23,6 +23,8 @@ import koushir.kashmirievents.databinding.FragmentLandingBinding
 import koushur.kashmirievents.database.data.DayEvent
 import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.base.BaseViewModel
+import koushur.kashmirievents.presentation.navigation.Navigator
+import koushur.kashmirievents.presentation.ui.main.addevent.AddEventFragment
 import koushur.kashmirievents.utility.AppConstants
 import koushur.kashmirievents.utility.daysOfWeek
 import koushur.kashmirievents.utility.makeGone
@@ -200,6 +202,14 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 viewBinding.cvMain.notifyDateChanged(date)
                 oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
                 viewModel.updateSelectedDayItems(eventsForTheDay, date)
+            } else {
+                Navigator.navigateAdd(
+                    context = requireActivity(),
+                    args = null,
+                    fragment = AddEventFragment.newInstance(viewModel.findYearMonthDetails(eventsForTheDay, date)),
+                    container = android.R.id.content,
+                    addToBackStack = true
+                )
             }
         }
 

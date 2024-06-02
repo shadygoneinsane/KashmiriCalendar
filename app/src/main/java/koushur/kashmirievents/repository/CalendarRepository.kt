@@ -9,7 +9,7 @@ class CalendarRepository(private val monthDataDao: CalendarEventDataDao) {
         return monthDataDao.fetchEvents()
     }
 
-    fun saveEvent(calEvent: SavedEventEntity): Unit {
+    fun saveEvent(calEvent: SavedEventEntity): Long? {
         return monthDataDao.insertEvent(calEvent)
     }
 }

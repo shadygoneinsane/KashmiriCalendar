@@ -16,7 +16,7 @@ class ActivityMain : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpFragmentManager()
-        viewBinding.bottomNav.setOnNavigationItemSelectedListener { item ->
+        viewBinding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.landing -> launchFragment(landingFragment)
                 R.id.featured -> launchFragment(featuredFragment)

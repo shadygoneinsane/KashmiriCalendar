@@ -3,10 +3,9 @@
     android:id="@+id/legendLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/dark_saturated_violet"
     android:orientation="horizontal"
     android:paddingVertical="@dimen/dimen_4dp"
-    tools:ignore="HardcodedText">
+    tools:background="@color/dark_saturated_violet">
 
     <include layout="@layout/layout_calendar_day_legend_text" />
 
