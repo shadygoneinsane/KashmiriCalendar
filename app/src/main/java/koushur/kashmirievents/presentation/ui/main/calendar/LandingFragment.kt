@@ -77,7 +77,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         //setup calendar
         viewBinding.cvMain.setup(
             YearMonth.of(2022, Month.MARCH),
-            YearMonth.of(2025, Month.MARCH),
+            YearMonth.of(2025, Month.APRIL),
             daysOfWeek.first()
         )
 
