@@ -19,7 +19,6 @@ import koushur.kashmirievents.repository.CalendarRepository
 import koushur.kashmirievents.utility.Importance
 import koushur.kashmirievents.utility.getDayEventImportance
 import koushur.kashmirievents.utility.getYearMonth
-import koushur.kashmirievents.utility.log
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 import java.time.LocalDate
 import java.time.YearMonth
@@ -33,6 +32,7 @@ class LandingViewModel(
     private val monthNameLiveData = MutableLiveData<String>()
     private val monthDataEntityType = object : TypeToken<List<MonthsDataEntity>>() {}.type
     private var listOfMonthEvents = mutableListOf<MonthEvent>()
+    private val gson = Gson()
 
     /**
      * Used to store list of all events day wise, in [Event] format
@@ -45,7 +45,7 @@ class LandingViewModel(
     /**
      * Used to populate list of items for current month on UI
      */
-    private val monthEventsMap: MutableMap<YearMonth, List<MonthEvent>> = mutableMapOf()
+    private val monthEventsMap: MutableMap<YearMonth, MutableList<MonthEvent>> = mutableMapOf()
 
     private val prevMonthEvent = SingleLiveEvent<Unit?>()
     private val nextMonthEvent = SingleLiveEvent<Unit?>()
@@ -75,7 +75,7 @@ class LandingViewModel(
         val listOfAllDaysEvents = mutableListOf<DayEvent>()
         allDaysEvents.forEach { allDayData ->
             allDayData?.let {
-                val data: List<DayDataEntity> = Gson().fromJson(allDayData, listDayDataEntityType)
+                val data: List<DayDataEntity> = gson.fromJson(allDayData, listDayDataEntityType)
                 listOfAllDaysEvents.addAll(data.map())
             }
         }
@@ -89,23 +89,25 @@ class LandingViewModel(
     }
 
     private fun setMonthEventsData(allMonthsSpecialEvents: List<String?>) {
-        val mapOfSpecialMonthEvents: MutableMap<YearMonth, List<MonthEvent>> = mutableMapOf()
-        allMonthsSpecialEvents.forEach { monthData ->
-            monthData?.let {
-                val data: List<MonthsDataEntity> = Gson().fromJson(monthData, monthDataEntityType)
+        allMonthsSpecialEvents.forEach { eachSpecialMonthData ->
+            eachSpecialMonthData?.let {
+                val data: List<MonthsDataEntity> =
+                    gson.fromJson(eachSpecialMonthData, monthDataEntityType)
                 if (data.isNotEmpty()) {
-                    listOfMonthEvents =
-                        listOfMonthEvents.ifEmpty { mutableListOf() }
                     listOfMonthEvents.addAll(data.map())
                 }
-
-                mapOfSpecialMonthEvents.putAll(listOfMonthEvents.groupBy { YearMonth.from(it.startDate) } as MutableMap)
-                mapOfSpecialMonthEvents.putAll(listOfMonthEvents.groupBy { YearMonth.from(it.endDate) } as MutableMap)
             }
         }
-
-        log("List of month events is :: $listOfMonthEvents")
-        monthEventsMap.putAll(mapOfSpecialMonthEvents)
+        listOfMonthEvents.forEach { monthEvent ->
+            val months = mutableSetOf(
+                YearMonth.from(monthEvent.startDate),
+                YearMonth.from(monthEvent.endDate)
+            )
+            months.forEach { yearMonth ->
+                monthEventsMap.getOrPut(yearMonth) { mutableListOf() }.add(monthEvent)
+            }
+        }
+        //log("List of month events is :: $monthEventsMap")
     }
 
     fun updateSelectedDayItems(events: List<DayEvent>?, date: LocalDate?) {
@@ -129,6 +131,8 @@ class LandingViewModel(
                 )
             )
         }
+
+        monthlyItems.sortBy { (it as Event).localDate }
 
         formatter = DateTimeFormatter.ofPattern("E, MMM dd")
         groupedByMonthMap[yearMonth]?.forEach {
