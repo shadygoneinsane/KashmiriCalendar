@@ -27,7 +27,9 @@ jobs:
         run: mkdir -p keys/release
 
       - name: Debug ANDROID_KEYSTORE_BASE64
-        run: echo $ANDROID_KEYSTORE_BASE64 | head -c 20
+        env:
+          ENCODED_KEYSTORE: ${{ secrets.KEYSTORE }}
+        run: echo ENCODED_KEYSTORE | head -c 20
 
       - name: Decode Keystore
         env:
