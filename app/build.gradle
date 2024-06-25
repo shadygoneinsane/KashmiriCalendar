@@ -6,15 +6,8 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 def STRING = "String"
-def BASE_URL = "BASE_URL"
-def APP_ID = "APP_ID"
-def API_KEY = "API_KEY"
 
 Properties props = new Properties()
-props.load(new FileInputStream(file("gradle.properties")))
-def base_address = props.getProperty("base_url").toString()
-def app_id = props.getProperty("app_id").toString()
-def project_api_key = props.getProperty("project_api_key").toString()
 
 android {
     compileSdkVersion project.android_sdk_version
@@ -28,9 +21,6 @@ android {
         versionName "1.4.00"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField STRING, BASE_URL, base_address
-        buildConfigField STRING, APP_ID, app_id
-        buildConfigField STRING, API_KEY, project_api_key
     }
 
     signingConfigs {
