@@ -40,6 +40,12 @@ jobs:
       - name: Verify keystore file
         run: ls -l keys/release/
 
+      - name: Upload a keystore file generated
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: storefile.jks
+          path: keys/release/keystore.jks
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
