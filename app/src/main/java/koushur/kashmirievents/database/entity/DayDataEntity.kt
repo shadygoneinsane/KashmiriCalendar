@@ -2,7 +2,7 @@ package koushur.kashmirievents.database.entity
 
 import com.google.gson.annotations.SerializedName
 import koushur.kashmirievents.database.data.DayEvent
-import koushur.kashmirievents.utility.ddMMyyyyFormatter
+import koushur.kashmirievents.utility.DateUtils
 import java.time.LocalDate
 
 data class DayDataEntity(
@@ -26,7 +26,7 @@ fun List<DayDataEntity>.map(): List<DayEvent> {
             Days.daysList.indexOf(Days.daysList.find { dayEntity.eventName.contains(it) } ?: "")
         DayEvent(
             indexOfDay = indexFromList,
-            date = LocalDate.parse(dayEntity.date, ddMMyyyyFormatter),
+            date = LocalDate.parse(dayEntity.date, DateUtils.ddMMyyyyFormatter),
             dayName = dayEntity.eventName,
             imp = dayEntity.imp
         )

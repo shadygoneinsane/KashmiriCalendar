@@ -32,5 +32,12 @@
 
     <string name="special_event_placeholder">%s starts from %s and ends on %s</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="hint_event_name">Event Title</string>
+    <string name="hint_event_name">Event title</string>
+    <string name="label_save_important_dates">Save Important Dates</string>
+    <string name="label_explanation_date_tracker">Welcome to the Hindu Calendar Date Tracker! Use this feature to save important dates, such as birthdays and festivals, based on the Hindu calendar. The dates will be automatically tracked for subsequent years, even as they change in the Gregorian calendar.</string>
+    <string name="label_selected_date">Selected Date</string>
+    <string name="label_tithi">Tithi</string>
+    <string name="label_paksha">Paksha</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_save">Save</string>
 </resources>

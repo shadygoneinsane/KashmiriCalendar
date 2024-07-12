@@ -7,7 +7,6 @@ import koushur.kashmirievents.di.module.DispatcherProvider
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
 import koushur.kashmirievents.repository.CalendarRepository
-import java.time.LocalDate
 
 class AddEventViewModel(
     private val repository: CalendarRepository, private val dispatcher: DispatcherProvider
@@ -20,37 +19,17 @@ class AddEventViewModel(
 
     fun getCancelEvent() = cancelListener
 
-    fun saveEvent(
-        eventName: String,
-        date: LocalDate,
-        monthIndex: Int,
-        monthName: String?,
-        dayIndex: Int,
-        dayName: String?
-    ) {
-        if (eventName.isNotEmpty() && monthName != null && dayName != null) {
-            viewModelScope.launch(dispatcher.io()) {
-                repository.saveEvent(
-                    SavedEventEntity(
-                        selectedDate = date,
-                        monthIndex = monthIndex,
-                        monthName = monthName,
-                        dayIndex = dayIndex,
-                        dayName = dayName,
-                        eventName = eventName
-                    )
-                )?.let {
-                    viewModelScope.launch(dispatcher.main()) {
-                        saveClickListener.call()
-                    }
-                } ?: run {
-                    viewModelScope.launch(dispatcher.main()) {
-                        errorListener.call()
-                    }
+    fun saveEvent(event: SavedEventEntity) {
+        viewModelScope.launch(dispatcher.io()) {
+            repository.saveEvent(event)?.let {
+                viewModelScope.launch(dispatcher.main()) {
+                    saveClickListener.call()
+                }
+            } ?: run {
+                viewModelScope.launch(dispatcher.main()) {
+                    errorListener.call()
                 }
             }
-        } else {
-            errorListener.call()
         }
     }
 

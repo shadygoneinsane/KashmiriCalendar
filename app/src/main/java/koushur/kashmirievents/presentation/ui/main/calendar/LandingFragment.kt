@@ -29,6 +29,7 @@ import koushur.kashmirievents.utility.AppConstants
 import koushur.kashmirievents.utility.daysOfWeek
 import koushur.kashmirievents.utility.makeGone
 import koushur.kashmirievents.utility.setDateDataAndColor
+import koushur.kashmirievents.utility.setOnSingleClickListener
 import koushur.kashmirievents.utility.setTextColorRes
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
@@ -161,7 +162,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
             this.date = data.date
             val eventsForTheDay: List<DayEvent>? = mapDateEvents[data.date]
 
-            view.setOnClickListener {
+            view.setOnSingleClickListener {
                 selectDate(date, eventsForTheDay)
             }
             dateTV.text = data.date.dayOfMonth.toString()

@@ -4,17 +4,19 @@ import android.os.Bundle
 import android.view.View
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.FragmentAddEventBinding
+import koushur.kashmirievents.database.entity.SavedEventEntity
 import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.Navigator
 import koushur.kashmirievents.utility.Constants
+import koushur.kashmirievents.utility.DateUtils
 import koushur.kashmirievents.utility.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 /**
- * A [BaseFragment] for showing featured items in a list
+ * A [BaseFragment] for storing users events/festivals
  *
  * Author: Vikesh Dass
  * Created on: 29-10-2020
@@ -31,7 +33,7 @@ class AddEventFragment : BaseFragment<FragmentAddEventBinding>(R.layout.fragment
         viewBinding.viewModel = viewModel
 
         viewModel.getSaveEvent().observe(viewLifecycleOwner) {
-            "Saved".toast(requireContext())
+            Navigator.navigateToPreviousFrag(requireActivity())
         }
 
         viewModel.getErrorEvent().observe(viewLifecycleOwner) {
@@ -48,27 +50,34 @@ class AddEventFragment : BaseFragment<FragmentAddEventBinding>(R.layout.fragment
             val dayIndex: Int = args.getInt(Constants.EXTRA_DAY_INDEX)
             val dayName: String? = args.getString(Constants.EXTRA_DAY_NAME)
             val localDate: LocalDate? = args.get(Constants.EXTRA_DATE) as LocalDate?
-            val formatter = DateTimeFormatter.ofPattern("EEE, dd MMMM")
+            val formatter = DateTimeFormatter.ofPattern(DateUtils.dayMonth)
             if (localDate != null) {
-                viewBinding.tvDate.text = "Date: ${localDate.format(formatter)}" +
-                        "\nMonth: $monthName" +
-                        "\nDay: $dayName"
+                viewBinding.tvSelectedDate.text = localDate.format(formatter)
+                viewBinding.tvTithi.text = dayName
+                viewBinding.tvPaksha.text = monthName
 
                 viewBinding.saveButton.setOnClickListener {
                     val eventName = viewBinding.eventNameEdittext.editText?.text?.toString() ?: ""
-                    if (eventName.isEmpty()) return@setOnClickListener
-                    else viewModel.saveEvent(
-                        eventName, localDate, monthIndex, monthName, dayIndex, dayName
-                    )
+                    if (eventName.isNotEmpty() && monthName != null && dayName != null) {
+                        val event = SavedEventEntity(
+                            selectedDate = localDate,
+                            monthIndex = monthIndex,
+                            monthName = monthName,
+                            dayIndex = dayIndex,
+                            dayName = dayName,
+                            eventName = eventName
+                        )
+                        viewModel.saveEvent(event)
+                    } else {
+                        return@setOnClickListener
+                    }
                 }
             }
         }
     }
 
     companion object {
-        fun newInstance(
-            args: Bundle
-        ): AddEventFragment {
+        fun newInstance(args: Bundle): AddEventFragment {
             val fragment = AddEventFragment()
             fragment.arguments = args
             return fragment

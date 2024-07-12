@@ -14,36 +14,52 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorTextPrimary3">
+        android:background="@color/dark_desaturated_violet">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_add_event_title"
+            style="@style/TextAppearance.Material3.BodyLarge"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_36dp"
+            android:gravity="center"
+            android:text="@string/label_save_important_dates"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/dimen_sp18"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.05" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/label_event_hint_title"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
-            android:text="Hey there, you can save any calendar event here, and when it re-occures the next year, the app will try to show it on calendar "
+            android:text="@string/label_explanation_date_tracker"
             android:textColor="@color/grey"
             android:textSize="@dimen/dimen_sp16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
             app:layout_constraintStart_toStartOf="@+id/event_name_edittext"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.15" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_add_event_title"
+            app:layout_constraintVertical_bias="0.07" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/event_name_edittext"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dimen_36dp"
             android:hint="@string/hint_event_name"
             android:textColorHint="@color/grey"
             app:boxStrokeColor="@color/outlined_stroke_color"
             app:hintTextColor="@color/LightPrimaryColor"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tv_add_event_title"
+            app:layout_constraintStart_toStartOf="@id/tv_add_event_title"
             app:layout_constraintTop_toBottomOf="@id/label_event_hint_title"
-            app:layout_constraintVertical_bias="0.1">
+            app:layout_constraintVertical_bias="0.07">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -51,18 +67,88 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_date"
+            android:id="@+id/tv_selected_date_label"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:text="@string/label_selected_date"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guide_center"
+            app:layout_constraintStart_toStartOf="@id/event_name_edittext"
+            app:layout_constraintTop_toBottomOf="@+id/event_name_edittext"
+            app:layout_constraintVertical_bias="0.07" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_selected_date"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
+            app:layout_constraintStart_toStartOf="@id/guide_center"
+            app:layout_constraintTop_toTopOf="@+id/tv_selected_date_label"
+            tools:text="Sun, 7 Jul" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_tithi_label"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:text="@string/label_tithi"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guide_center"
+            app:layout_constraintStart_toStartOf="@id/event_name_edittext"
+            app:layout_constraintTop_toBottomOf="@+id/tv_selected_date_label"
+            app:layout_constraintVertical_bias="0.07" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_tithi"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
+            app:layout_constraintStart_toStartOf="@id/guide_center"
+            app:layout_constraintTop_toTopOf="@+id/tv_tithi_label"
+            tools:text="Satam" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_paksha_label"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/label_paksha"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_tithi_label"
+            app:layout_constraintStart_toStartOf="@id/event_name_edittext"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tithi"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_paksha"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/grey"
             android:textSize="@dimen/dimen_sp16"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
-            app:layout_constraintStart_toStartOf="@id/event_name_edittext"
-            app:layout_constraintTop_toBottomOf="@+id/event_name_edittext"
-            app:layout_constraintVertical_bias="0.1"
-            tools:text="Sun, 7 Jul" />
+            app:layout_constraintStart_toStartOf="@id/tv_tithi"
+            app:layout_constraintTop_toTopOf="@+id/tv_paksha_label"
+            tools:text="Aashad shukla paksha" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_button"
@@ -72,13 +158,13 @@
             android:layout_marginHorizontal="@dimen/padding_10"
             android:layout_weight="1"
             android:onClick="@{() -> viewModel.cancelEvent()}"
-            android:text="Cancel"
+            android:text="@string/label_cancel"
             android:textAllCaps="false"
             android:textSize="@dimen/dimen_sp16"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/save_button"
-            app:layout_constraintStart_toStartOf="@id/tv_date"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date"
+            app:layout_constraintEnd_toStartOf="@+id/guide_center"
+            app:layout_constraintStart_toStartOf="@id/tv_tithi_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_paksha"
             app:layout_constraintVertical_bias="0.9" />
 
         <com.google.android.material.button.MaterialButton
@@ -87,10 +173,10 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_10"
             android:layout_weight="1"
-            android:text="Save"
+            android:text="@string/label_save"
             android:textAllCaps="false"
-            app:layout_constraintEnd_toEndOf="@id/tv_date"
-            app:layout_constraintStart_toEndOf="@+id/cancel_button"
+            app:layout_constraintEnd_toEndOf="@id/tv_paksha"
+            app:layout_constraintStart_toStartOf="@+id/guide_center"
             app:layout_constraintTop_toTopOf="@+id/cancel_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
