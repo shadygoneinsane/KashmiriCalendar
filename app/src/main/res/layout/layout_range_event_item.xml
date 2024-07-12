@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="clickListener"
+            type="koushur.kashmirievents.interfaces.OnOptionClickListener" />
+
+        <variable
+            name="event"
+            type="koushur.kashmirievents.presentation.ui.main.calendar.uidata.UIDateRangeEvent" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parent_event_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:setImportance="@{event.eventImp}"
+        tools:background="@color/teal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/eventName"
+            style="@style/TextAppearance.Inter.Bold"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:text="@{event.eventName}"
+            android:textAlignment="viewStart"
+            android:textColor="@color/snow"
+            android:textSize="@dimen/dimen_sp17"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            tools:text="Ashtami Ashtami Ashtami" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/eventFrom"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_8dp"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:text="@{event.eventStart}"
+            android:textAlignment="viewStart"
+            android:textColor="@color/snow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/eventName"
+            app:layout_constraintTop_toBottomOf="@id/eventName"
+            tools:text="Mon, 16 July" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/eventSeparator"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_1dp"
+            android:layout_marginStart="@dimen/dimen_12dp"
+            android:background="@color/snow"
+            android:text="-"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/eventFrom"
+            app:layout_constraintStart_toEndOf="@id/eventFrom"
+            app:layout_constraintTop_toTopOf="@id/eventFrom" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/eventTo"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_12dp"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:text="@{event.eventEnd}"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="@id/eventFrom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/eventSeparator"
+            app:layout_constraintTop_toTopOf="@id/eventFrom"
+            tools:text="Mon, 16 August" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -21,7 +21,8 @@ import koushur.kashmirievents.database.entity.map
 import koushur.kashmirievents.di.module.DispatcherProvider
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
-import koushur.kashmirievents.presentation.ui.main.calendar.uidata.UIMonthEvent
+import koushur.kashmirievents.presentation.ui.main.calendar.uidata.UIDateEvent
+import koushur.kashmirievents.presentation.ui.main.calendar.uidata.UIDateRangeEvent
 import koushur.kashmirievents.repository.CalendarRepository
 import koushur.kashmirievents.utility.Constants
 import koushur.kashmirievents.utility.Importance
@@ -58,9 +59,10 @@ class LandingViewModel(
     private val nextMonthEvent = SingleLiveEvent<Unit?>()
 
     val monthlyItems = ObservableArrayList<Any>()
-    val monthlyItemBinding: OnItemBindClass<Any> = OnItemBindClass<Any>().map(
-        UIMonthEvent::class.java, BR.event, R.layout.layout_month_event_item
-    ).map(Event::class.java, BR.event, R.layout.layout_special_event_item)
+    val monthlyItemBinding: OnItemBindClass<Any> = OnItemBindClass<Any>()
+        .map(UIDateRangeEvent::class.java, BR.event, R.layout.layout_range_event_item)
+        .map(UIDateEvent::class.java, BR.event, R.layout.layout_date_event_item)
+        .map(Event::class.java, BR.event, R.layout.layout_special_event_item)
 
     val selectedDayItems = ObservableArrayList<Any>()
     val selectedDayItemBinding: OnItemBindClass<Any> = OnItemBindClass<Any>().map(
@@ -137,12 +139,12 @@ class LandingViewModel(
                 )
             )*/
             monthlyItems.add(
-                UIMonthEvent(
-                    it.localDate,
-                    it.eventImp,
-                    it.eventName,
-                    it.startDate.format(formatter),
-                    it.endDate.format(formatter)
+                UIDateRangeEvent(
+                    startDate = it.localDate,
+                    eventImportance = it.eventImp,
+                    eventTitle = it.eventName,
+                    eventStart = it.startDate.format(formatter),
+                    eventEnd = it.endDate.format(formatter)
                 )
             )
         }
@@ -154,10 +156,11 @@ class LandingViewModel(
             val eventImportance = getDayEventImportance(it)
             if (eventImportance == Importance.med || eventImportance == Importance.high) {
                 monthlyItems.add(
-                    Event(
-                        localDate = it.localDate,
-                        eventImp = it.eventImp,
-                        eventName = "On ${it.localDate.format(formatter)} - ${it.eventName} "
+                    UIDateEvent(
+                        startDate = it.localDate,
+                        eventImportance = it.eventImp,
+                        eventDate = it.localDate.format(formatter),
+                        eventTitle = it.eventName
                     )
                 )
             }
