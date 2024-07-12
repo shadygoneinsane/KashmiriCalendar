@@ -19,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/dark_desaturated_violet"
+            android:background="@color/gunmetal"
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical">
@@ -28,7 +28,7 @@
                 android:id="@+id/exOneAppBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/dark_saturated_violet"
+                android:background="@color/gunmetal"
                 android:theme="@style/AppTheme.AppBarOverlay"
                 app:liftOnScroll="true">
 
@@ -55,9 +55,9 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/monthYearTV"
+                        style="@style/TextAppearance.Inter.SemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-medium"
                         android:text="@{viewModel.monthName}"
                         android:textColor="@color/cv_text_grey"
                         android:textSize="@dimen/dimen_sp22"

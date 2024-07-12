@@ -172,7 +172,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
             when (data.position) {
                 DayPosition.MonthDate -> {
-                    dateTV.setTextColorRes(R.color.cv_text_grey)
+                    dateTV.setTextColorRes(R.color.snow)
                     setBackgroundDateData()
                     setDateDataAndColor(
                         eventsForTheDay, topTV, topView, bottomTV, bottomView, dateTV

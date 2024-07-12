@@ -28,13 +28,13 @@ fun View.setBackground(@Importance imp: Int?) {
 
 @BindingAdapter("setImportance")
 fun View.setImportance(@Importance imp: Int?) {
-    val r = 8f
+    val r = 24f
     val shape = ShapeDrawable(RoundRectShape(floatArrayOf(r, r, r, r, r, r, r, r), null, null))
     val color = context.getColorCompat(
         when (imp) {
             Importance.high -> R.color.red_800
             Importance.med -> R.color.teal_700
-            Importance.low -> R.color.blue_800
+            Importance.low -> R.color.royal_blue
             else -> R.color.brown_700
         }
     )

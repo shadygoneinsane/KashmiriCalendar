@@ -74,7 +74,7 @@
                 android:lineSpacingExtra="1dp"
                 android:text="@{aarti.aartiString}"
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="@color/snow"
                 android:textSize="@dimen/dimen_sp19"
                 tools:text="@string/item_ganeshaarti" />
         </androidx.core.widget.NestedScrollView>

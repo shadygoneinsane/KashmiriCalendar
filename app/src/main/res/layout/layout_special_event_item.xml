@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:setImportance="@{event.eventImp}"
-        tools:background="@color/cv_item_view_bg_color">
+        tools:background="@color/teal">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/eventName"
@@ -32,7 +32,7 @@
             android:gravity="start"
             android:text="@{event.eventName}"
             android:textAlignment="viewStart"
-            android:textColor="@color/cv_text_grey"
+            android:textColor="@color/snow"
             android:textSize="@dimen/dimen_sp17"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

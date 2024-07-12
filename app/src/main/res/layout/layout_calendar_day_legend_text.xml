@@ -8,4 +8,4 @@
     android:layout_weight="1"
     android:gravity="center"
     tools:text="SUN"
-    tools:textColor="@color/white" />
+    android:textColor="@color/snow" />

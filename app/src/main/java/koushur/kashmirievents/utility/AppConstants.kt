@@ -16,8 +16,6 @@ object AppConstants {
     const val dbMonthEvents_22_23 = "database/months_22_23.json"
     const val dbMonthEvents_24_25 = "database/months_24_25.json"
 
-    const val dbSpecialEvents_23_24 = "database/special_23_24.json"
-
     const val YOUTUBE_API_KEY = "YOUTUBE_API_KEY"
     const val YOUTUBE_VIDEO_ID = "YOUTUBE_VIDEO_ID"
     const val AARTI_STRING = "AARTI_STRING"

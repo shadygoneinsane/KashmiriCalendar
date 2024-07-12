@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.launch
 import koushir.kashmirievents.BR
 import koushir.kashmirievents.R
 import koushur.kashmirievents.database.data.DayEvent
@@ -14,10 +16,12 @@ import koushur.kashmirievents.database.data.MonthEvent
 import koushur.kashmirievents.database.entity.DayDataEntity
 import koushur.kashmirievents.database.entity.Days
 import koushur.kashmirievents.database.entity.MonthsDataEntity
+import koushur.kashmirievents.database.entity.SavedEventEntity
 import koushur.kashmirievents.database.entity.map
 import koushur.kashmirievents.di.module.DispatcherProvider
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
+import koushur.kashmirievents.presentation.ui.main.calendar.uidata.UIMonthEvent
 import koushur.kashmirievents.repository.CalendarRepository
 import koushur.kashmirievents.utility.Constants
 import koushur.kashmirievents.utility.Importance
@@ -54,8 +58,9 @@ class LandingViewModel(
     private val nextMonthEvent = SingleLiveEvent<Unit?>()
 
     val monthlyItems = ObservableArrayList<Any>()
-    val monthlyItemBinding: OnItemBindClass<Any> =
-        OnItemBindClass<Any>().map(Event::class.java, BR.event, R.layout.layout_special_event_item)
+    val monthlyItemBinding: OnItemBindClass<Any> = OnItemBindClass<Any>().map(
+        UIMonthEvent::class.java, BR.event, R.layout.layout_month_event_item
+    ).map(Event::class.java, BR.event, R.layout.layout_special_event_item)
 
     val selectedDayItems = ObservableArrayList<Any>()
     val selectedDayItemBinding: OnItemBindClass<Any> = OnItemBindClass<Any>().map(
@@ -66,9 +71,11 @@ class LandingViewModel(
     fun processEventsDataFromJson(
         allDaysEvents: List<String?>, allMonthsSpecialEvents: List<String?>
     ) {
-        execute(dispatcher.io()) {
-            setMonthEventsData(allMonthsSpecialEvents)
-            setDaysEventsData(allDaysEvents)
+        viewModelScope.launch(dispatcher.io()) {
+            repository.fetchAllEvents().collect { dbEvents: List<SavedEventEntity> ->
+                setMonthEventsData(allMonthsSpecialEvents)
+                setDaysEventsData(allDaysEvents)
+            }
         }
     }
 
@@ -119,7 +126,7 @@ class LandingViewModel(
         monthlyItems.clear()
 
         monthEventsMap[yearMonth]?.forEach {
-            monthlyItems.add(
+            /*monthlyItems.add(
                 Event(
                     localDate = it.localDate, eventImp = it.eventImp, eventName = String.format(
                         placeholderString,
@@ -127,6 +134,15 @@ class LandingViewModel(
                         it.startDate.format(formatter),
                         it.endDate.format(formatter)
                     )
+                )
+            )*/
+            monthlyItems.add(
+                UIMonthEvent(
+                    it.localDate,
+                    it.eventImp,
+                    it.eventName,
+                    it.startDate.format(formatter),
+                    it.endDate.format(formatter)
                 )
             )
         }

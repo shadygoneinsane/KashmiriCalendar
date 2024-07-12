@@ -5,7 +5,7 @@
     </style>
 
     <style name="TextParent" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/colorTextPrimary2</item>
+        <item name="android:textColor">@color/snow</item>
         <item name="fontFamily">@font/source_sans_pro_regular</item>
     </style>
 
@@ -29,7 +29,7 @@
     <style name="customTabStyle" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
         <item name="android:fontFamily">@font/source_sans_pro_regular</item>
-        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabSelectedTextColor">@color/snow</item>
         <item name="android:textSize">@dimen/dimen_sp15</item>
     </style>
 

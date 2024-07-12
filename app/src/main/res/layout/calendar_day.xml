@@ -8,17 +8,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/dimen_1dp"
-        android:background="@color/cv_item_view_bg_color">
+        android:background="@color/gunmetal">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dateText"
+            style="@style/TextAppearance.Inter.SemiBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
             android:layout_marginVertical="@dimen/dimen_2dp"
             android:layout_marginEnd="@dimen/dimen_4dp"
             android:gravity="center"
-            android:textColor="@color/white"
             android:textSize="@dimen/dimen_sp10"
             app:layout_constraintBottom_toTopOf="@id/dayTopText"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,11 +30,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dayTopText"
+            style="@style/TextAppearance.Inter.Medium"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen_4dp"
             android:gravity="center"
-            android:textColor="@color/white"
             android:textSize="@dimen/dimen_sp8"
             app:layout_constraintBottom_toTopOf="@+id/dayTop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,11 +53,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dayBottomText"
+            style="@style/TextAppearance.Inter.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen_4dp"
             android:gravity="center"
-            android:textColor="@color/white"
             android:textSize="@dimen/dimen_sp8"
             app:layout_constraintBottom_toTopOf="@+id/dayBottom"
             tools:text="Ashtami" />
