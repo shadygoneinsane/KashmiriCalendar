@@ -97,6 +97,22 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 resources.getDimensionPixelSize((R.dimen.dimen_4dp))
             )
         )
+
+        viewBinding.btnToday.setOnClickListener {
+            selectToday()
+        }
+
+        viewBinding.btnAdd.setOnClickListener {
+
+        }
+    }
+
+    private fun selectToday() {
+        val oldDate = selectedDate
+        selectedDate = LocalDate.now()
+        oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
+        viewModel.updateSelectedDayItems(null, null)
+        viewBinding.cvMain.smoothScrollToDay(CalendarDay(LocalDate.now(), DayPosition.MonthDate))
     }
 
     private fun loadEveryAvailableDayEventsData() {
@@ -207,7 +223,12 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 Navigator.navigateAdd(
                     context = requireActivity(),
                     args = null,
-                    fragment = AddEventFragment.newInstance(viewModel.findYearMonthDetails(eventsForTheDay, date)),
+                    fragment = AddEventFragment.newInstance(
+                        viewModel.findYearMonthDetails(
+                            eventsForTheDay,
+                            date
+                        )
+                    ),
                     container = android.R.id.content,
                     addToBackStack = true
                 )
@@ -234,7 +255,6 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                     .forEachIndexed { index, tv ->
                         tv.text =
                             daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.getDefault())
-                        tv.setTextColorRes(R.color.cv_text_grey)
                         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
                     }
             }

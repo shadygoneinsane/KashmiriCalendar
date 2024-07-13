@@ -14,18 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_2dp"
-        android:orientation="horizontal"
-        tools:background="@color/cv_item_view_bg_color">
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/eventName"
+            style="@style/TextAppearance.Inter.Medium.Body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_6dp"
             android:layout_marginVertical="@dimen/dimen_2dp"
             android:gravity="center"
             android:text="@{event.eventName}"
-            android:textColor="@color/cv_text_grey"
             android:textSize="@dimen/dimen_sp17"
             tools:text="Ashtami" />
     </LinearLayout>

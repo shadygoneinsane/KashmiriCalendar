@@ -1,42 +1,15 @@
 <resources>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="elevation">8dp</item>
-    </style>
-
-    <style name="TextParent" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/snow</item>
-        <item name="fontFamily">@font/source_sans_pro_regular</item>
-    </style>
-
-    <style name="TextSubHeader" parent="TextParent">
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="TextVSmall" parent="TextParent">
-        <item name="android:textSize">9sp</item>
-    </style>
-
-    <style name="TextSmall" parent="TextParent">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="TextESmall" parent="TextParent">
-        <item name="android:textSize">10sp</item>
-    </style>
-
-    <!--For TabLayout-->
-    <style name="customTabStyle" parent="TextAppearance.Design.Tab">
-        <item name="textAllCaps">false</item>
-        <item name="android:fontFamily">@font/source_sans_pro_regular</item>
-        <item name="tabSelectedTextColor">@color/snow</item>
-        <item name="android:textSize">@dimen/dimen_sp15</item>
+        <item name="android:elevation">8dp</item>
     </style>
 
     <style name="Widget.BottomNavigationView" parent="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
         <item name="labelVisibilityMode">selected</item>
         <item name="itemIconTint">@color/bottom_nav_item</item>
         <item name="itemTextColor">@color/bottom_nav_item</item>
+        <item name="elevation">@dimen/dimen_4dp</item>
         <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigation</item>
+        <item name="itemIconSize">@dimen/dimen_16dp</item>
     </style>
 </resources>

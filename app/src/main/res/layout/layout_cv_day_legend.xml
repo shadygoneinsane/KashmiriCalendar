@@ -4,73 +4,66 @@
     android:id="@+id/legend_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/dark_saturated_violet"
+    android:background="@color/gunmetal"
     android:gravity="center"
     android:orientation="horizontal"
     android:paddingVertical="@dimen/dimen_4dp"
     tools:ignore="HardcodedText">
 
     <TextView
-        style="@style/TextSmall"
+        style="@style/TextAppearance.Inter.SemiBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/cv_text_grey"
         tools:text="SUN" />
 
     <TextView
-        style="@style/TextSmall"
+        style="@style/TextAppearance.Inter.SemiBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/cv_text_grey"
         tools:text="MON" />
 
     <TextView
-        style="@style/TextSmall"
+        style="@style/TextAppearance.Inter.SemiBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/cv_text_grey"
         tools:text="TUE" />
 
     <TextView
-        style="@style/TextSmall"
+        style="@style/TextAppearance.Inter.SemiBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/cv_text_grey"
         tools:text="WED" />
 
     <TextView
-        style="@style/TextSmall"
+        style="@style/TextAppearance.Inter.SemiBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/cv_text_grey"
         tools:text="THU" />
 
     <TextView
-        style="@style/TextSmall"
+        style="@style/TextAppearance.Inter.SemiBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/cv_text_grey"
         tools:text="FRI" />
 
     <TextView
-        style="@style/TextSmall"
+        style="@style/TextAppearance.Inter.SemiBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/cv_text_grey"
         tools:text="SAT" />
 
 </LinearLayout>

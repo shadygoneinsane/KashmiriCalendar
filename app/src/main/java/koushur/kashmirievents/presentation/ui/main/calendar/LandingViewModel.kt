@@ -59,9 +59,11 @@ class LandingViewModel(
     private val nextMonthEvent = SingleLiveEvent<Unit?>()
 
     val monthlyItems = ObservableArrayList<Any>()
-    val monthlyItemBinding: OnItemBindClass<Any> = OnItemBindClass<Any>()
-        .map(UIDateRangeEvent::class.java, BR.event, R.layout.layout_range_event_item)
-        .map(UIDateEvent::class.java, BR.event, R.layout.layout_date_event_item)
+    val monthlyItemBinding: OnItemBindClass<Any> = OnItemBindClass<Any>().map(
+            UIDateRangeEvent::class.java,
+            BR.event,
+            R.layout.layout_range_event_item
+        ).map(UIDateEvent::class.java, BR.event, R.layout.layout_date_event_item)
         .map(Event::class.java, BR.event, R.layout.layout_special_event_item)
 
     val selectedDayItems = ObservableArrayList<Any>()
@@ -69,15 +71,12 @@ class LandingViewModel(
         DayEvent::class.java, BR.event, R.layout.layout_special_event_item
     ).map(Event::class.java, BR.event, R.layout.layout_special_event_item)
 
-
     fun processEventsDataFromJson(
         allDaysEvents: List<String?>, allMonthsSpecialEvents: List<String?>
     ) {
         viewModelScope.launch(dispatcher.io()) {
-            repository.fetchAllEvents().collect { dbEvents: List<SavedEventEntity> ->
-                setMonthEventsData(allMonthsSpecialEvents)
-                setDaysEventsData(allDaysEvents)
-            }
+            setMonthEventsData(allMonthsSpecialEvents)
+            setDaysEventsData(allDaysEvents)
         }
     }
 
@@ -128,16 +127,6 @@ class LandingViewModel(
         monthlyItems.clear()
 
         monthEventsMap[yearMonth]?.forEach {
-            /*monthlyItems.add(
-                Event(
-                    localDate = it.localDate, eventImp = it.eventImp, eventName = String.format(
-                        placeholderString,
-                        it.eventName,
-                        it.startDate.format(formatter),
-                        it.endDate.format(formatter)
-                    )
-                )
-            )*/
             monthlyItems.add(
                 UIDateRangeEvent(
                     startDate = it.localDate,
@@ -166,6 +155,15 @@ class LandingViewModel(
             }
         }
     }
+
+    fun updateSavedEvent() {
+        viewModelScope.launch(dispatcher.io()) {
+            repository.fetchAllEvents().collect { dbEvents: List<SavedEventEntity> ->
+
+            }
+        }
+    }
+
 
     fun findYearMonthDetails(events: List<DayEvent>?, date: LocalDate): Bundle {
         val dayIndex = events?.find { it.indexOfDay != -1 }?.indexOfDay ?: -1

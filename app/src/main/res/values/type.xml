@@ -3,8 +3,8 @@
 
     <style name="TextAppearance.Inter.Medium" parent="Base.TextAppearance.AppCompat">
         <item name="fontFamily">@font/inter_medium</item>
-        <item name="android:textSize">@dimen/dimen_sp15</item>
         <item name="android:textColor">@color/snow</item>
+        <item name="android:textSize">@dimen/dimen_sp15</item>
     </style>
 
     <style name="TextAppearance.Inter.Bold" parent="Base.TextAppearance.AppCompat">
@@ -26,12 +26,8 @@
         <item name="android:textSize">@dimen/dimen_sp16</item>
     </style>
 
-    <style name="TextAppearance.Caption" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="fontFamily">@font/source_sans_pro_semi_bold</item>
-    </style>
-
-    <style name="TextAppearance.BottomNavigation" parent="TextAppearance.Caption">
-        <item name="android:textAllCaps">true</item>
-        <item name="android:letterSpacing">0.08</item>
+    <style name="TextAppearance.BottomNavigation" parent="TextAppearance.Inter.SemiBold">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/dimen_sp12</item>
     </style>
 </resources>

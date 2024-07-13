@@ -16,20 +16,20 @@
         <!--colorPrimary colors map to components and elements, such as app bars and buttons. -->
         <!--colorSecondary colors are most often used as accents on components, such as FABs and -->
         <!--selection controls.-->
-        <item name="colorPrimary">@color/dark_saturated_violet</item>
+        <item name="colorPrimary">@color/gunmetal</item>
         <!--<item name="colorPrimaryVariant">@color/purple_700</item>-->
-        <item name="colorSecondary">@color/dark_desaturated_violet</item>
+        <item name="colorSecondary">@color/gunmetal</item>
         <!--<item name="colorSecondaryVariant">@color/dBlue</item>-->
         <!--colorBackground appears behind scrollable content and is used for the default window-->
         <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
         <!--and menus. colorError is used to indicate an error state for components such as-->
         <!--text fields.-->
-        <item name="android:colorBackground">@color/white</item>
-        <item name="colorSurface">@color/dark_saturated_violet</item>
+        <item name="android:colorBackground">@color/gunmetal</item>
+        <item name="colorSurface">@color/violet</item>
         <item name="colorError">@color/red_600</item>
         <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
         <!--on which they appear.-->
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/snow</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="colorOnBackground">@color/black</item>
         <item name="colorOnSurface">@color/colorTextPrimary3</item>

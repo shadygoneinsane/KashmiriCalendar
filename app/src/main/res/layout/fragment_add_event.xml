@@ -14,19 +14,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dark_desaturated_violet">
+        android:background="@color/gunmetal">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_add_event_title"
-            style="@style/TextAppearance.Material3.BodyLarge"
+            style="@style/TextAppearance.Inter.Bold"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_36dp"
             android:gravity="center"
             android:text="@string/label_save_important_dates"
-            android:textColor="@color/grey"
             android:textSize="@dimen/dimen_sp18"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,10 +33,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/label_event_hint_title"
+            style="@style/TextAppearance.Inter.SemiBold"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
-            android:text="@string/label_explanation_date_tracker"
-            android:textColor="@color/grey"
+            android:text="@string/label_explanation_add_events"
             android:textSize="@dimen/dimen_sp16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
@@ -54,7 +52,7 @@
             android:hint="@string/hint_event_name"
             android:textColorHint="@color/grey"
             app:boxStrokeColor="@color/outlined_stroke_color"
-            app:hintTextColor="@color/LightPrimaryColor"
+            app:hintTextColor="@color/grey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/tv_add_event_title"
             app:layout_constraintStart_toStartOf="@id/tv_add_event_title"
@@ -62,6 +60,7 @@
             app:layout_constraintVertical_bias="0.07">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextAppearance.Inter.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -76,11 +75,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_selected_date_label"
+            style="@style/TextAppearance.Inter.Medium"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dimen_8dp"
             android:text="@string/label_selected_date"
-            android:textColor="@color/grey"
             android:textSize="@dimen/dimen_sp16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/guide_center"
@@ -90,10 +89,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_selected_date"
+            style="@style/TextAppearance.Inter.Medium"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_8dp"
-            android:textColor="@color/grey"
             android:textSize="@dimen/dimen_sp16"
             app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
             app:layout_constraintStart_toStartOf="@id/guide_center"
@@ -102,11 +101,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_tithi_label"
+            style="@style/TextAppearance.Inter.Medium"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dimen_8dp"
             android:text="@string/label_tithi"
-            android:textColor="@color/grey"
             android:textSize="@dimen/dimen_sp16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/guide_center"
@@ -116,10 +115,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_tithi"
+            style="@style/TextAppearance.Inter.Medium"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_8dp"
-            android:textColor="@color/grey"
             android:textSize="@dimen/dimen_sp16"
             app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
             app:layout_constraintStart_toStartOf="@id/guide_center"
@@ -128,10 +127,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_paksha_label"
+            style="@style/TextAppearance.Inter.Medium"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:text="@string/label_paksha"
-            android:textColor="@color/grey"
             android:textSize="@dimen/dimen_sp16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/tv_tithi_label"
@@ -141,9 +140,9 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_paksha"
+            style="@style/TextAppearance.Inter.Medium"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/grey"
             android:textSize="@dimen/dimen_sp16"
             app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
             app:layout_constraintStart_toStartOf="@id/tv_tithi"

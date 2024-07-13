@@ -29,29 +29,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gunmetal"
-                android:theme="@style/AppTheme.AppBarOverlay"
-                app:liftOnScroll="true">
+                android:theme="@style/AppTheme.AppBarOverlay">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen_6dp"
-                    android:orientation="vertical"
-                    app:layout_collapseMode="pin">
+                    android:padding="@dimen/dimen_12dp"
+                    app:layout_collapseMode="none">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/previousMonthImage"
-                        android:layout_width="@dimen/dimen_36dp"
-                        android:layout_height="@dimen/dimen_36dp"
-                        android:layout_marginHorizontal="@dimen/dimen_12dp"
+                        android:layout_width="@dimen/dimen_0dp"
+                        android:layout_height="@dimen/dimen_24dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="@string/cd_left_navigation"
                         android:onClick="@{() -> viewModel.leftClickEvent()}"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/monthYearTV"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_chevron_left"
-                        app:tint="@color/cv_text_grey" />
+                        app:srcCompat="@drawable/ic_back" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/monthYearTV"
@@ -59,27 +57,52 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.monthName}"
-                        android:textColor="@color/cv_text_grey"
-                        android:textSize="@dimen/dimen_sp22"
+                        android:textColor="@color/snow"
+                        android:textSize="@dimen/dimen_sp18"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/nextMonthImage"
-                        app:layout_constraintStart_toEndOf="@id/previousMonthImage"
+                        app:layout_constraintEnd_toStartOf="@+id/nextMonthImage"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/previousMonthImage"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="April 2018" />
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/nextMonthImage"
-                        android:layout_width="@dimen/dimen_36dp"
-                        android:layout_height="@dimen/dimen_36dp"
-                        android:layout_marginHorizontal="@dimen/dimen_12dp"
+                        android:layout_width="@dimen/dimen_0dp"
+                        android:layout_height="@dimen/dimen_0dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="@string/cd_right_navigation"
                         android:onClick="@{() -> viewModel.rightClickEvent()}"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_today"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/monthYearTV"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_chevron_right"
-                        app:tint="@color/cv_text_grey" />
+                        app:srcCompat="@drawable/ic_next" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btn_today"
+                        android:layout_width="@dimen/dimen_0dp"
+                        android:layout_height="@dimen/dimen_0dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_add"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/nextMonthImage"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_cal_today" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btn_add"
+                        android:layout_width="@dimen/dimen_0dp"
+                        android:layout_height="@dimen/dimen_0dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/btn_today"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_add_btn" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -120,8 +143,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0"
-                        tools:itemCount="4"
-                        tools:listitem="@layout/layout_day_event_item" />
+                        tools:itemCount="2"
+                        tools:listitem="@layout/layout_date_event_item" />
 
                     <View
                         android:id="@+id/separator_1"
@@ -129,6 +152,7 @@
                         android:layout_height="@dimen/dimen_1dp"
                         android:layout_marginBottom="@dimen/dimen_2dp"
                         android:background="@color/blue_grey_700"
+                        android:visibility="invisible"
                         app:layout_constraintBottom_toTopOf="@+id/tv_title_major"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -137,15 +161,13 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_title_major"
+                        style="@style/TextAppearance.Inter.SemiBold"
                         android:layout_width="@dimen/dimen_0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/dimen_8dp"
+                        android:layout_marginHorizontal="@dimen/dimen_16dp"
                         android:layout_marginTop="@dimen/dimen_8dp"
-                        android:gravity="start"
                         android:text="@string/important_events_for_this_month"
-                        android:textColor="@color/cv_text_grey"
                         android:textSize="@dimen/dimen_sp18"
-                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/separator_1"
@@ -174,22 +196,13 @@
                         app:itemBinding="@{viewModel.monthlyItemBinding}"
                         app:items="@{viewModel.monthlyItems}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toTopOf="@id/add_btn"
+                        app:layout_constraintBottom_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_title_major"
                         app:layout_constraintVertical_bias="0"
-                        tools:itemCount="4"
-                        tools:listitem="@layout/layout_special_event_item" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/add_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/rv_major_events"
-                        app:layout_constraintStart_toStartOf="@id/rv_major_events"
-                        app:srcCompat="@drawable/add_btn" />
+                        tools:itemCount="3"
+                        tools:listitem="@layout/layout_range_event_item" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </LinearLayout>

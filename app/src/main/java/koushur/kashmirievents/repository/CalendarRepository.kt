@@ -12,4 +12,8 @@ class CalendarRepository(private val monthDataDao: CalendarEventDataDao) {
     fun saveEvent(calEvent: SavedEventEntity): Long? {
         return monthDataDao.insertEvent(calEvent)
     }
+
+    fun deleteEvent(calEvent: SavedEventEntity): Int? {
+        return monthDataDao.deleteEvent(calEvent)
+    }
 }

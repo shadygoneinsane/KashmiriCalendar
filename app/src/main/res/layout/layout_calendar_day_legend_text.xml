@@ -1,11 +1,10 @@
 <androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/legendText1"
-    style="@style/TextSmall"
+    style="@style/TextAppearance.Inter.SemiBold"
     android:layout_width="@dimen/dimen_0dp"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/dimen_4dp"
     android:layout_weight="1"
     android:gravity="center"
-    tools:text="SUN"
-    android:textColor="@color/snow" />
+    tools:text="SUN" />

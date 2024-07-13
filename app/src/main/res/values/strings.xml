@@ -17,7 +17,9 @@
 
     <!-- menu items -->
     <string name="calendar">Calendar</string>
-    <string name="featured">Featured</string>
+    <string name="aarti">Aarti</string>
+    <string name="saved_event">Saved Event</string>
+
     <string name="add_event">Add Event</string>
 
     <string name="ic_om">om</string>
@@ -34,10 +36,16 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="hint_event_name">Event title</string>
     <string name="label_save_important_dates">Save Important Dates</string>
-    <string name="label_explanation_date_tracker">Welcome to the Hindu Calendar Date Tracker! Use this feature to save important dates, such as birthdays and festivals, based on the Hindu calendar. The dates will be automatically tracked for subsequent years, even as they change in the Gregorian calendar.</string>
+    <string name="label_my_saved_events">My Saved Events</string>
+    <string name="label_explanation_add_events">Welcome to the Hindu Calendar Date Tracker! Use this feature to save important dates, such as birthdays and festivals, based on the Hindu calendar. The dates will be automatically tracked for subsequent years, even as they change in the Gregorian calendar.</string>
+    <string name="label_explanation_view_events">Welcome to the Hindu Calendar Date Tracker! Here you can view, edit, or delete the important dates you have saved. Stay organized and never miss an important occasion!</string>
     <string name="label_selected_date">Selected Date</string>
     <string name="label_tithi">Tithi</string>
     <string name="label_paksha">Paksha</string>
     <string name="label_cancel">Cancel</string>
     <string name="label_save">Save</string>
+    <string name="label_dash">-</string>
+    <string name="label_title_warn_delete">Are you sure you want to delete: \n%1$s</string>
+    <string name="label_yes">Yes</string>
+    <string name="label_no">No</string>
 </resources>

@@ -7,10 +7,12 @@ import koushir.kashmirievents.databinding.ActivityMainBinding
 import koushur.kashmirievents.presentation.base.BaseActivity
 import koushur.kashmirievents.presentation.ui.main.calendar.LandingFragment
 import koushur.kashmirievents.presentation.ui.main.featured.FeaturedFragment
+import koushur.kashmirievents.presentation.ui.main.savedevents.SavedEventsFragment
 
 class ActivityMain : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val landingFragment = LandingFragment()
     private val featuredFragment = FeaturedFragment()
+    private val savedEvents = SavedEventsFragment.newInstance()
     private var activeFragment: Fragment = landingFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +22,7 @@ class ActivityMain : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             when (item.itemId) {
                 R.id.landing -> launchFragment(landingFragment)
                 R.id.featured -> launchFragment(featuredFragment)
+                R.id.saved_event -> launchFragment(savedEvents)
                 else -> false
             }
         }
@@ -29,14 +32,19 @@ class ActivityMain : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         this.supportFragmentManager.beginTransaction().apply {
             add(
                 R.id.fragment_container,
+                landingFragment,
+                landingFragment.javaClass.canonicalName
+            )
+            add(
+                R.id.fragment_container,
                 featuredFragment,
                 featuredFragment.javaClass.canonicalName
             ).hide(featuredFragment)
             add(
                 R.id.fragment_container,
-                landingFragment,
-                landingFragment.javaClass.canonicalName
-            )
+                savedEvents,
+                savedEvents.javaClass.canonicalName
+            ).hide(savedEvents)
         }.commit()
     }
 

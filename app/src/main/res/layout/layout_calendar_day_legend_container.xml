@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingVertical="@dimen/dimen_4dp"
-    tools:background="@color/dark_saturated_violet">
+    tools:background="@color/gunmetal">
 
     <include layout="@layout/layout_calendar_day_legend_text" />
 

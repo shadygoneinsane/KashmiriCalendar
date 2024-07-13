@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter
  * A [BaseFragment] for storing users events/festivals
  *
  * Author: Vikesh Dass
- * Created on: 29-10-2020
+ * Created on: 03-06-2024
  * Email : vikeshdass@gmail.com
  */
 class AddEventFragment : BaseFragment<FragmentAddEventBinding>(R.layout.fragment_add_event) {
