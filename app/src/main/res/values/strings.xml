@@ -48,4 +48,5 @@
     <string name="label_title_warn_delete">Are you sure you want to delete: \n%1$s</string>
     <string name="label_yes">Yes</string>
     <string name="label_no">No</string>
+    <string name="select_date_to_continue">Please select a date to save custom event.</string>
 </resources>

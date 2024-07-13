@@ -6,12 +6,12 @@
         android:title="@string/calendar" />
 
     <item
-        android:id="@+id/featured"
-        android:icon="@drawable/ic_featured"
-        android:title="@string/aarti" />
-
-    <item
         android:id="@+id/saved_event"
         android:icon="@drawable/ic_calendar_events"
         android:title="@string/saved_event" />
+
+    <item
+        android:id="@+id/featured"
+        android:icon="@drawable/ic_featured"
+        android:title="@string/aarti" />
 </menu>

@@ -6,6 +6,7 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.children
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
@@ -31,6 +32,7 @@ import koushur.kashmirievents.utility.makeGone
 import koushur.kashmirievents.utility.setDateDataAndColor
 import koushur.kashmirievents.utility.setOnSingleClickListener
 import koushur.kashmirievents.utility.setTextColorRes
+import koushur.kashmirievents.utility.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
 import java.io.InputStream
@@ -43,7 +45,8 @@ import java.util.Locale
 class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_landing) {
     private val viewModel: LandingViewModel by viewModel()
     private var selectedDate: LocalDate? = null
-    val daysOfWeek = daysOfWeek()
+    private val daysOfWeek = daysOfWeek()
+    private val today = LocalDate.now()
 
     override fun provideViewModel(): BaseViewModel {
         return viewModel
@@ -79,9 +82,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
         //setup calendar
         viewBinding.cvMain.setup(
-            YearMonth.of(2022, Month.MARCH),
-            YearMonth.of(2025, Month.APRIL),
-            daysOfWeek.first()
+            YearMonth.of(2022, Month.MARCH), YearMonth.of(2025, Month.APRIL), daysOfWeek.first()
         )
 
         viewBinding.rvHighlightEvents.addItemDecoration(
@@ -103,16 +104,19 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         }
 
         viewBinding.btnAdd.setOnClickListener {
-
+            selectedDate?.let { date ->
+                openAddEvent(viewModel.getDayEventsLiveData().value?.get(date), date)
+            } ?: getString(R.string.select_date_to_continue).toast(context, Toast.LENGTH_LONG)
         }
+
+        viewBinding.tvDateToday.text = today.dayOfMonth.toString()
     }
 
     private fun selectToday() {
         val oldDate = selectedDate
-        selectedDate = LocalDate.now()
         oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
         viewModel.updateSelectedDayItems(null, null)
-        viewBinding.cvMain.smoothScrollToDay(CalendarDay(LocalDate.now(), DayPosition.MonthDate))
+        viewBinding.cvMain.smoothScrollToDay(CalendarDay(today, DayPosition.MonthDate))
     }
 
     private fun loadEveryAvailableDayEventsData() {
@@ -139,8 +143,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
         viewBinding.cvMain.monthScrollListener = { month ->
             viewModel.updateMonthlyItemsList(
-                month.yearMonth,
-                getString(R.string.special_event_placeholder)
+                month.yearMonth, getString(R.string.special_event_placeholder)
             )
             viewModel.setMonthName(month.yearMonth)
 
@@ -220,29 +223,28 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
                 viewModel.updateSelectedDayItems(eventsForTheDay, date)
             } else {
-                Navigator.navigateAdd(
-                    context = requireActivity(),
-                    args = null,
-                    fragment = AddEventFragment.newInstance(
-                        viewModel.findYearMonthDetails(
-                            eventsForTheDay,
-                            date
-                        )
-                    ),
-                    container = android.R.id.content,
-                    addToBackStack = true
-                )
+                openAddEvent(eventsForTheDay, date)
             }
         }
 
         private fun setBackgroundDateData() {
             layout.setBackgroundResource(
-                if (date != LocalDate.now()) {
+                if (date != today) {
                     if (selectedDate == date) R.drawable.drawable_selected_bg
                     else 0
                 } else R.drawable.drawable_selected_highlighted_bg
             )
         }
+    }
+
+    private fun openAddEvent(eventsForTheDay: List<DayEvent>?, date: LocalDate) {
+        Navigator.navigateAdd(
+            context = requireActivity(), args = null, fragment = AddEventFragment.newInstance(
+                viewModel.findYearMonthDetails(
+                    eventsForTheDay, date
+                )
+            ), container = android.R.id.content, addToBackStack = true
+        )
     }
 
     inner class CVMonthHeaderBinder : MonthHeaderFooterBinder<MonthViewContainer> {
@@ -251,8 +253,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
             // Setup each header day text if we have not done that already.
             if (container.legendLayout.tag == null) {
                 container.legendLayout.tag = data.yearMonth
-                container.legendLayout.children.map { it as TextView }
-                    .forEachIndexed { index, tv ->
+                container.legendLayout.children.map { it as TextView }.forEachIndexed { index, tv ->
                         tv.text =
                             daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.getDefault())
                         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)

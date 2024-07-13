@@ -34,19 +34,18 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dimen_12dp"
-                    app:layout_collapseMode="none">
+                    android:padding="@dimen/dimen_12dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/previousMonthImage"
-                        android:layout_width="@dimen/dimen_0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_24dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="@string/cd_left_navigation"
                         android:onClick="@{() -> viewModel.leftClickEvent()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/monthYearTV"
-                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_back" />
@@ -61,45 +60,55 @@
                         android:textSize="@dimen/dimen_sp18"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/nextMonthImage"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/previousMonthImage"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="April 2018" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/nextMonthImage"
-                        android:layout_width="@dimen/dimen_0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_0dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="@string/cd_right_navigation"
                         android:onClick="@{() -> viewModel.rightClickEvent()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/btn_today"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/monthYearTV"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_next" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btn_today"
-                        android:layout_width="@dimen/dimen_0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_0dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/btn_add"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/nextMonthImage"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_cal_today" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_date_today"
+                        style="@style/TextAppearance.Inter.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimen_sp8"
+                        android:layout_marginTop="@dimen/dimen_4dp"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_today"
+                        app:layout_constraintEnd_toEndOf="@id/btn_today"
+                        app:layout_constraintStart_toStartOf="@id/btn_today"
+                        app:layout_constraintTop_toTopOf="@id/btn_today"
+                        tools:text="12" />
+
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btn_add"
-                        android:layout_width="@dimen/dimen_0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_0dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
                         app:layout_constraintStart_toEndOf="@+id/btn_today"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_add_btn" />
