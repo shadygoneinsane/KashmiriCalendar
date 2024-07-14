@@ -46,7 +46,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/eventFrom"
             style="@style/TextAppearance.Inter.Medium"
-            android:layout_width="@dimen/dimen_0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen_4dp"
             android:elevation="@dimen/dimen_4dp"
@@ -72,7 +72,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/eventTo"
             style="@style/TextAppearance.Inter.Medium"
-            android:layout_width="@dimen/dimen_0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_10dp"
             android:elevation="@dimen/dimen_4dp"
@@ -81,6 +81,7 @@
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@id/eventFrom"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/eventSeparator"
             app:layout_constraintTop_toTopOf="@id/eventFrom"
             tools:text="Mon, 16 August" />

@@ -32,11 +32,6 @@ class ActivityMain : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         this.supportFragmentManager.beginTransaction().apply {
             add(
                 R.id.fragment_container,
-                landingFragment,
-                landingFragment.javaClass.canonicalName
-            )
-            add(
-                R.id.fragment_container,
                 featuredFragment,
                 featuredFragment.javaClass.canonicalName
             ).hide(featuredFragment)
@@ -45,6 +40,11 @@ class ActivityMain : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 savedEvents,
                 savedEvents.javaClass.canonicalName
             ).hide(savedEvents)
+            add(
+                R.id.fragment_container,
+                landingFragment,
+                landingFragment.javaClass.canonicalName
+            )
         }.commit()
     }
 

@@ -32,7 +32,6 @@
     <string name="youtube_currently_installed">YouTube version installed on this device: <xliff:g id="youtube_version">%1$s</xliff:g>.</string>
     <string name="youtube_not_installed">YouTube is not installed on this device.</string>
 
-    <string name="special_event_placeholder">%s starts from %s and ends on %s</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="hint_event_name">Event title</string>
     <string name="label_save_important_dates">Save Important Dates</string>
@@ -49,4 +48,6 @@
     <string name="label_yes">Yes</string>
     <string name="label_no">No</string>
     <string name="select_date_to_continue">Please select a date to save custom event.</string>
+    <string name="label_edit">Edit</string>
+    <string name="label_delete">Delete</string>
 </resources>

@@ -78,6 +78,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
         viewModel.getDayEventsLiveData().observe(viewLifecycleOwner) { mapDateEvents ->
             setUpCalendar(mapDateEvents)
+            viewModel.updateSavedEvent()
         }
 
         //setup calendar
@@ -100,7 +101,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         )
 
         viewBinding.btnToday.setOnClickListener {
-            selectToday()
+            navigateToCurrent()
         }
 
         viewBinding.btnAdd.setOnClickListener {
@@ -112,10 +113,11 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         viewBinding.tvDateToday.text = today.dayOfMonth.toString()
     }
 
-    private fun selectToday() {
+    private fun navigateToCurrent() {
         val oldDate = selectedDate
+        selectedDate = null
         oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
-        viewModel.updateSelectedDayItems(null, null)
+        viewModel.updateSelectedDayItems(null)
         viewBinding.cvMain.smoothScrollToDay(CalendarDay(today, DayPosition.MonthDate))
     }
 
@@ -133,7 +135,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_24_25))
             }
 
-            viewModel.processEventsDataFromJson(dailyEvents, monthlyEvents)
+            viewModel.processDataFromJson(dailyEvents, monthlyEvents)
         }
     }
 
@@ -142,15 +144,13 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         viewBinding.cvMain.monthHeaderBinder = CVMonthHeaderBinder()
 
         viewBinding.cvMain.monthScrollListener = { month ->
-            viewModel.updateMonthlyItemsList(
-                month.yearMonth, getString(R.string.special_event_placeholder)
-            )
+            viewModel.updateMonthlyItemsList(month.yearMonth)
             viewModel.setMonthName(month.yearMonth)
 
             selectedDate?.let {
                 selectedDate = null
                 viewBinding.cvMain.notifyDateChanged(it)
-                viewModel.updateSelectedDayItems(null, null)
+                viewModel.updateSelectedDayItems(null)
             }
         }
 
@@ -221,7 +221,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 selectedDate = date
                 viewBinding.cvMain.notifyDateChanged(date)
                 oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
-                viewModel.updateSelectedDayItems(eventsForTheDay, date)
+                viewModel.updateSelectedDayItems(eventsForTheDay)
             } else {
                 openAddEvent(eventsForTheDay, date)
             }
@@ -232,6 +232,8 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 if (date != today) {
                     if (selectedDate == date) R.drawable.drawable_selected_bg
                     else 0
+                } else if (selectedDate == today) {
+                    R.drawable.drawable_selected_bg
                 } else R.drawable.drawable_selected_highlighted_bg
             )
         }

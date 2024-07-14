@@ -13,6 +13,8 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import koushir.kashmirievents.R
 
 
@@ -76,3 +78,9 @@ fun String.toast(context: Context?, duration: Int = Toast.LENGTH_SHORT): Toast {
 }
 
 fun EditText.resetText() = setText("")
+
+
+inline fun <reified T> Gson.fromJsonToList(json: String): List<T> {
+    val typeToken = object : TypeToken<List<T>>() {}.type
+    return this.fromJson(json, typeToken)
+}

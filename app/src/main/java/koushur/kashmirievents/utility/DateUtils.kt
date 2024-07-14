@@ -16,6 +16,8 @@ object DateUtils {
     val ddMMyyyyFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(ddMMyyyy)
 
     const val dayMonth = "EEE, dd MMMM"
+
+    const val dayMonthYear = "EEE, dd MMMM yyyy"
 }
 
 /**

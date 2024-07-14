@@ -47,7 +47,7 @@ class SavedEventsFragment :
         }
 
         viewModel.getUpdateItemClickedEvent().observe(viewLifecycleOwner) {
-            //showDialog(it)
+            "Feature coming soon".toast(requireActivity())
         }
 
         viewModel.getCancelEvent().observe(viewLifecycleOwner) {
@@ -63,18 +63,17 @@ class SavedEventsFragment :
     }
 
     private fun showDialog(savedEventEntity: SavedEventEntity) {
-        val dialogClickListener =
-            DialogInterface.OnClickListener { dialog, which ->
-                when (which) {
-                    DialogInterface.BUTTON_POSITIVE -> {
-                        viewModel.deleteEvent(savedEventEntity)
-                    }
+        val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    viewModel.deleteEvent(savedEventEntity)
+                }
 
-                    DialogInterface.BUTTON_NEGATIVE -> {
-                        dialog.dismiss()
-                    }
+                DialogInterface.BUTTON_NEGATIVE -> {
+                    dialog.dismiss()
                 }
             }
+        }
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder.setMessage(getString(R.string.label_title_warn_delete, savedEventEntity.eventName))
