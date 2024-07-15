@@ -5,24 +5,23 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
 import koushur.kashmirievents.database.entity.SavedEventEntity
 
 /**
  * Dao class for Data
  *
  * Author: Vikesh Dass
- * Created on: 30-03-2020
+ * Created on: 27-06-2023
  * Email : vikeshdass@gmail.com
  */
 @Dao
 interface CalendarEventDataDao {
     @Query("SELECT * FROM savedEvent")
-    fun fetchEvents(): Flow<List<SavedEventEntity>>
+    fun fetchEvents(): List<SavedEventEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertEvent(calEventEntity: SavedEventEntity) : Long?
+    fun insertEvent(calEventEntity: SavedEventEntity): Long?
 
     @Delete
-    fun deleteEvent(calEventEntity: SavedEventEntity) : Int?
+    fun deleteEvent(calEventEntity: SavedEventEntity): Int?
 }

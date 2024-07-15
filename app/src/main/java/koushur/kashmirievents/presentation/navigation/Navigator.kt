@@ -10,11 +10,22 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import koushur.kashmirievents.presentation.ui.main.ActivityMain
+import koushur.kashmirievents.presentation.ui.main.addevent.AddEventFragment
 
 /**
  * Navigation utility file
  */
 object Navigator {
+    fun navigateToAddEvent(activity: FragmentActivity, bundle: Bundle) {
+        navigateAdd(
+            context = activity,
+            args = bundle,
+            fragment = AddEventFragment(),
+            container = android.R.id.content,
+            addToBackStack = true
+        )
+    }
+
     fun restartMainActivity(appCompatActivity: FragmentActivity?) {
         val intent = Intent(appCompatActivity, ActivityMain::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -44,7 +55,7 @@ object Navigator {
         showDialogFragment(context = context, args = args, fragment = fragment)
     }
 
-    fun navigateAdd(
+    private fun navigateAdd(
         context: Context,
         args: Bundle? = null,
         fragment: Fragment,

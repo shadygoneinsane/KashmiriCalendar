@@ -4,7 +4,6 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.FragmentSavedEventsBinding
 import koushur.kashmirievents.database.entity.SavedEventEntity
@@ -91,13 +90,5 @@ class SavedEventsFragment :
             }
         }
         alert.show()
-    }
-
-    companion object {
-        fun newInstance(args: Bundle? = bundleOf()): SavedEventsFragment {
-            val fragment = SavedEventsFragment()
-            fragment.arguments = args
-            return fragment
-        }
     }
 }

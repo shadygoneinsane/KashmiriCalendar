@@ -12,7 +12,7 @@ import koushur.kashmirievents.presentation.ui.main.savedevents.SavedEventsFragme
 class ActivityMain : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val landingFragment = LandingFragment()
     private val featuredFragment = FeaturedFragment()
-    private val savedEvents = SavedEventsFragment.newInstance()
+    private val savedEvents = SavedEventsFragment()
     private var activeFragment: Fragment = landingFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {

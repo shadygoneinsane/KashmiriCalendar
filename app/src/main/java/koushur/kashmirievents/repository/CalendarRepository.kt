@@ -1,11 +1,10 @@
 package koushur.kashmirievents.repository
 
-import kotlinx.coroutines.flow.Flow
 import koushur.kashmirievents.database.dao.CalendarEventDataDao
 import koushur.kashmirievents.database.entity.SavedEventEntity
 
 class CalendarRepository(private val monthDataDao: CalendarEventDataDao) {
-    fun fetchAllEvents(): Flow<List<SavedEventEntity>> {
+    fun fetchAllEvents(): List<SavedEventEntity> {
         return monthDataDao.fetchEvents()
     }
 

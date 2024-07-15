@@ -25,7 +25,6 @@ import koushur.kashmirievents.database.data.DayEvent
 import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.Navigator
-import koushur.kashmirievents.presentation.ui.main.addevent.AddEventFragment
 import koushur.kashmirievents.utility.AppConstants
 import koushur.kashmirievents.utility.daysOfWeek
 import koushur.kashmirievents.utility.makeGone
@@ -78,7 +77,6 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
         viewModel.getDayEventsLiveData().observe(viewLifecycleOwner) { mapDateEvents ->
             setUpCalendar(mapDateEvents)
-            viewModel.updateSavedEvent()
         }
 
         //setup calendar
@@ -240,13 +238,10 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
     }
 
     private fun openAddEvent(eventsForTheDay: List<DayEvent>?, date: LocalDate) {
-        Navigator.navigateAdd(
-            context = requireActivity(), args = null, fragment = AddEventFragment.newInstance(
-                viewModel.findYearMonthDetails(
-                    eventsForTheDay, date
-                )
-            ), container = android.R.id.content, addToBackStack = true
-        )
+        val bundle = viewModel.findYearMonthDetails(eventsForTheDay, date)
+        activity?.let {
+            Navigator.navigateToAddEvent(it, bundle)
+        }
     }
 
     inner class CVMonthHeaderBinder : MonthHeaderFooterBinder<MonthViewContainer> {
@@ -256,10 +251,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
             if (container.legendLayout.tag == null) {
                 container.legendLayout.tag = data.yearMonth
                 container.legendLayout.children.map { it as TextView }.forEachIndexed { index, tv ->
-                        tv.text =
-                            daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.getDefault())
-                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-                    }
+                    tv.text = daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                    tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                }
             }
         }
     }

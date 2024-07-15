@@ -14,10 +14,10 @@ import koushur.kashmirievents.database.data.Event
 import koushur.kashmirievents.database.data.MonthEvent
 import koushur.kashmirievents.database.entity.DayDataEntity
 import koushur.kashmirievents.database.entity.Days
-import koushur.kashmirievents.database.entity.Months
 import koushur.kashmirievents.database.entity.MonthsDataEntity
 import koushur.kashmirievents.database.entity.SavedEventEntity
 import koushur.kashmirievents.database.entity.map
+import koushur.kashmirievents.database.entity.matchDayNameFromConstants
 import koushur.kashmirievents.di.module.DispatcherProvider
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
@@ -42,26 +42,41 @@ class LandingViewModel(
 
     /**
      * List of month events in [MonthEvent] format.
+     * Example :
+     * { MonthEvent(indexOfMonth=23, startDate=2025-02-28, endDate=2025-03-14, monthName=Phalgun Shukla Paksha, imp=0),
+     *   MonthEvent(indexOfMonth=-1, startDate=2025-03-26, endDate=2025-03-30, monthName=Panchak, imp=2),
+     *   MonthEvent(indexOfMonth=0, startDate=2025-03-15, endDate=2025-03-29, monthName=Chaitra Krishna Paksha, imp=0), ...}
      */
     private var listOfMonthEvents = mutableListOf<MonthEvent>()
 
     /**
      * Store list of all events month [YearMonth] wise, in [Event] format.
-     * Used in [updateMonthlyItemsList] to populate list of monthly items for current month on UI
+     * Used in [updateMonthlyItemsList] to populate list of all daily items for each month/current month on UI
+     * Example:
+     * {"2022-05" ->  { DayEvent(indexOfDay=1, date=2022-05-01, dayName=Okdoh, imp=0),
+     *                  DayEvent(indexOfDay=2, date=2022-05-02, dayName=Dwitya, imp=0),
+     *                  DayEvent(indexOfDay=3, date=2022-05-03, dayName=Tritya, imp=0),
+     *                  DayEvent(indexOfDay=3, date=2022-05-04, dayName=Tritya, imp=0),.... }
      */
     private var groupedByMonthMap: Map<YearMonth, List<Event>> = emptyMap()
+
+    /**
+     * Holds a Maps [YearMonth] to a list of month events
+     * Used to populate list of items [MonthEvent] for current month on UI
+     * Example :
+     * { "2025-03" -> { MonthEvent(indexOfMonth=23, startDate=2025-02-28, endDate=2025-03-14, monthName=Phalgun Shukla Paksha, imp=0),
+     *                  MonthEvent(indexOfMonth=-1, startDate=2025-02-26, endDate=2025-03-03, monthName=Panchak, imp=2),
+     *                  MonthEvent(indexOfMonth=0, startDate=2025-03-15, endDate=2025-03-29, monthName=Chaitra Krishna Paksha, imp=0)},
+     *   "2025-04" -> { MonthEvent(indexOfMonth=-1, startDate=2025-04-13, endDate=2025-04-27, monthName=Vaisakha Krishna Paksha , imp=0) ,
+     *                  MonthEvent(indexOfMonth=1, startDate=2025-03-29, endDate=2025-04-12, monthName=Chaitra Shukla Paksha, imp=0) }, ... }
+     */
+    private val monthEventsMap: MutableMap<YearMonth, MutableList<MonthEvent>> = mutableMapOf()
 
     /**
      * Holds a map of events grouped by local date in [LocalDate] format.
      * Used by calendar to populate list of selected day items [DayEvent] on UI
      */
     private var groupedByLocalDateMap = MutableLiveData<Map<LocalDate, List<DayEvent>>>(emptyMap())
-
-    /**
-     * Holds a Maps [YearMonth] to a list of month events
-     * Used to populate list of items [MonthEvent] for current month on UI
-     */
-    private val monthEventsMap: MutableMap<YearMonth, MutableList<MonthEvent>> = mutableMapOf()
 
     private val prevMonthEvent = SingleLiveEvent<Unit?>()
     private val nextMonthEvent = SingleLiveEvent<Unit?>()
@@ -81,23 +96,14 @@ class LandingViewModel(
         viewModelScope.launch(dispatcher.io()) {
             setMonthEventsData(monthlyEvents)
             setDaysEventsData(dailyEvents)
+            updateSavedEvent()
         }
     }
 
     /**
      * Deserializes month event data from JSON and populates [listOfMonthEvents].
-     * [listOfMonthEvents] will be something like:
-     * { MonthEvent(indexOfMonth=23, startDate=2025-02-28, endDate=2025-03-14, monthName=Phalgun Shukla Paksha, imp=0),
-     *   MonthEvent(indexOfMonth=-1, startDate=2025-03-26, endDate=2025-03-30, monthName=Panchak, imp=2),
-     *   MonthEvent(indexOfMonth=0, startDate=2025-03-15, endDate=2025-03-29, monthName=Chaitra Krishna Paksha, imp=0), ...}
      *
      * It then updates the [monthEventsMap] to group events by YearMonth.
-     * [monthEventsMap] will be something like:
-     * { "2025-03" -> { MonthEvent(indexOfMonth=23, startDate=2025-02-28, endDate=2025-03-14, monthName=Phalgun Shukla Paksha, imp=0),
-     *                  MonthEvent(indexOfMonth=-1, startDate=2025-02-26, endDate=2025-03-03, monthName=Panchak, imp=2),
-     *                  MonthEvent(indexOfMonth=0, startDate=2025-03-15, endDate=2025-03-29, monthName=Chaitra Krishna Paksha, imp=0)},
-     *   "2025-04" -> { MonthEvent(indexOfMonth=-1, startDate=2025-04-13, endDate=2025-04-27, monthName=Vaisakha Krishna Paksha , imp=0) ,
-     *                  MonthEvent(indexOfMonth=1, startDate=2025-03-29, endDate=2025-04-12, monthName=Chaitra Shukla Paksha, imp=0) }, ... }
      */
     private fun setMonthEventsData(allMonthsSpecialEvents: List<String?>) {
         allMonthsSpecialEvents.forEach { monthData ->
@@ -118,7 +124,8 @@ class LandingViewModel(
     }
 
     /**
-     * Deserializes day event data from JSON and populates listDaysEvent. It also groups these events by YearMonth and LocalDate.
+     * Deserializes day event data from JSON and populates listDaysEvent.
+     * It also groups these events by YearMonth and LocalDate.
      */
     private fun setDaysEventsData(allDaysEvents: List<String?>) {
         val listOfAllDaysEvents = mutableListOf<DayEvent>()
@@ -182,24 +189,26 @@ class LandingViewModel(
 
     /**
      * Fetches saved events from the [CalendarRepository] and updates the [monthEventsMap] with any changes.
-     * TODO : Incomplete
      */
-    fun updateSavedEvent() {
-        viewModelScope.launch(dispatcher.io()) {
-            repository.fetchAllEvents().collect { dbEvents: List<SavedEventEntity> ->
-                dbEvents.forEach { event ->
-                    val monthMap: MonthEvent? =
-                        listOfMonthEvents.find { it.indexOfMonth == event.monthIndex }
+    private fun updateSavedEvent() {
+        execute(dispatcher.io()) {
+            val dbEvents: List<SavedEventEntity> = repository.fetchAllEvents()
+            dbEvents.forEach { event ->
+                val monthEventsList: List<MonthEvent> =
+                    listOfMonthEvents.filter { it.indexOfMonth == event.monthIndex }
 
-                    println("This month name is: ${monthMap?.monthName}")
-                    monthMap?.startDate
-                    monthMap?.endDate
-                    val monthIndex = monthMap?.indexOfMonth ?: -1
-                    val monthName = monthMap?.monthName ?: "Not found"
-
-                    if (monthIndex != -1) monthEventsMap.filter { monthName == Months.monthsList[monthIndex] }
-                    //.forEach { println("This month repeats from $event") }
+                monthEventsList.forEach { month ->
+                    findDateWithinMonth(event, month.startDate, month.endDate).forEach {
+                        val monthEntry = MonthEvent(
+                            event.monthIndex, it.date, it.date, event.eventName, Importance.high
+                        )
+                        val yearMonth = YearMonth.from(monthEntry.localDate)
+                        monthEventsMap.getOrPut(yearMonth) { mutableListOf() }.add(monthEntry)
+                    }
                 }
+            }
+            execute(dispatcher.main()) {
+                updateMonthlyItemsList(YearMonth.now())
             }
         }
     }
@@ -225,6 +234,21 @@ class LandingViewModel(
         date: LocalDate, startDate: LocalDate, endDate: LocalDate
     ) = date in startDate..endDate
 
+    private fun findDateWithinMonth(
+        eventEntry: SavedEventEntity, startDate: LocalDate, endDate: LocalDate
+    ): MutableList<DayEvent> {
+        val list: MutableList<DayEvent> = mutableListOf()
+        var date = startDate
+        while (date.isBefore(endDate)) {
+            groupedByLocalDateMap.value?.get(date)?.forEach { dayData: DayEvent ->
+                if (dayData.indexOfDay == eventEntry.dayIndex && dayData.dayName.matchDayNameFromConstants() == eventEntry.dayName) {
+                    list.add(dayData)
+                }
+            }
+            date = date.plusDays(1)
+        }
+        return list
+    }
 
     private fun createMonthlyItemBinding() = OnItemBindClass<Any>().map(
         UIDateRangeEvent::class.java, BR.event, R.layout.layout_range_event_item

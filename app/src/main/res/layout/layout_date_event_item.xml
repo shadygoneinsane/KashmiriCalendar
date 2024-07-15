@@ -24,7 +24,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/eventName"
-            style="@style/TextAppearance.Inter.Bold"
+            style="@style/TextAppearance.Inter.SemiBold"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_16dp"

@@ -75,12 +75,4 @@ class AddEventFragment : BaseFragment<FragmentAddEventBinding>(R.layout.fragment
             }
         }
     }
-
-    companion object {
-        fun newInstance(args: Bundle): AddEventFragment {
-            val fragment = AddEventFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
 }
