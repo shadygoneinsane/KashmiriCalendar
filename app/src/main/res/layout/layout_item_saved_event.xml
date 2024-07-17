@@ -22,6 +22,13 @@
         app:setImportance="@{Importance.med}"
         tools:background="@color/royal_blue">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.45" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/eventName"
             style="@style/TextAppearance.Inter.Bold"
@@ -44,15 +51,15 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/labelEventDate"
             style="@style/TextAppearance.Inter.Medium"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_16dp"
-            android:layout_marginTop="@dimen/dimen_6dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
             android:elevation="@dimen/dimen_4dp"
             android:gravity="start"
-            android:text="Saved for date : "
+            android:text="@string/label_event_date_saved"
             android:textAlignment="viewStart"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guide_mid"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/eventName"
@@ -70,51 +77,81 @@
             app:layout_constraintBottom_toBottomOf="@id/labelEventDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@id/labelEventDate"
+            app:layout_constraintStart_toEndOf="@id/guide_mid"
             app:layout_constraintTop_toTopOf="@id/labelEventDate"
             app:layout_constraintVertical_bias="0"
             app:setLocalDate="@{event.selectedDate}"
             tools:text="Mon, 16 July" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/labelMonthName"
+            android:id="@+id/labelTithiName"
             style="@style/TextAppearance.Inter.Medium"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_16dp"
             android:layout_marginTop="@dimen/dimen_6dp"
             android:elevation="@dimen/dimen_4dp"
             android:gravity="start"
-            android:text="Falls on: "
+            android:text="@string/label_tithi"
             android:textAlignment="viewStart"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guide_mid"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/eventDate"
             app:layout_constraintVertical_bias="0" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tithiName"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:text="@{event.dayName}"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="@id/labelTithiName"
+            app:layout_constraintEnd_toEndOf="@id/eventName"
+            app:layout_constraintStart_toEndOf="@id/guide_mid"
+            app:layout_constraintTop_toTopOf="@id/labelTithiName"
+            tools:text="Ashtami " />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/labelMonthName"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_6dp"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:text="@string/label_paksha"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="@id/guide_mid"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tithiName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/monthName"
             style="@style/TextAppearance.Inter.Medium"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_16dp"
             android:elevation="@dimen/dimen_4dp"
             android:gravity="start"
             android:text="@{event.monthName}"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@id/labelMonthName"
             app:layout_constraintEnd_toEndOf="@id/eventName"
-            app:layout_constraintStart_toEndOf="@id/labelMonthName"
+            app:layout_constraintStart_toEndOf="@id/guide_mid"
             app:layout_constraintTop_toTopOf="@id/labelMonthName"
-            tools:text="Ashtami Ashtami Ashtami" />
+            tools:text="Vaishakh Shukla Paksha" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/edit_btn"
             style="@style/TextAppearance.Inter.SemiBold"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dimen_12dp"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
             android:layout_marginVertical="@dimen/dimen_8dp"
             android:background="@drawable/drawable_btn_bg"
             android:elevation="@dimen/dimen_4dp"
@@ -123,7 +160,7 @@
             android:paddingVertical="@dimen/dimen_6dp"
             android:text="@string/label_edit"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/delete_btn"
+            app:layout_constraintEnd_toStartOf="@+id/guide_mid"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/monthName" />
@@ -133,7 +170,7 @@
             style="@style/TextAppearance.Inter.SemiBold"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_36dp"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
             android:background="@drawable/drawable_btn_bg"
             android:elevation="@dimen/dimen_4dp"
             android:gravity="center"
@@ -143,7 +180,7 @@
             app:layout_constraintBottom_toBottomOf="@id/edit_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/edit_btn"
+            app:layout_constraintStart_toEndOf="@+id/guide_mid"
             app:layout_constraintTop_toTopOf="@id/edit_btn" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -28,6 +28,7 @@ import koushur.kashmirievents.presentation.navigation.Navigator
 import koushur.kashmirievents.utility.AppConstants
 import koushur.kashmirievents.utility.daysOfWeek
 import koushur.kashmirievents.utility.makeGone
+import koushur.kashmirievents.utility.makeVisible
 import koushur.kashmirievents.utility.setDateDataAndColor
 import koushur.kashmirievents.utility.setOnSingleClickListener
 import koushur.kashmirievents.utility.setTextColorRes
@@ -77,6 +78,17 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
         viewModel.getDayEventsLiveData().observe(viewLifecycleOwner) { mapDateEvents ->
             setUpCalendar(mapDateEvents)
+            if (mapDateEvents.isNotEmpty()) {
+                viewModel.updateSavedEvent()
+            }
+        }
+
+        viewModel.getMonthName().observe(viewLifecycleOwner) { name ->
+            if (name.isNotEmpty()) {
+                viewBinding.tvTitleMajor.makeVisible()
+                viewBinding.tvTitleMajor.text =
+                    getString(R.string.important_events_for_this_month, name)
+            }
         }
 
         //setup calendar

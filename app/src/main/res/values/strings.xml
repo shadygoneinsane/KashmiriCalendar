@@ -9,7 +9,7 @@
 
     <string name="something_wrong">Something went wrong</string>
     <string name="reload">RETRY</string>
-    <string name="important_events_for_this_month">Important events for this month :</string>
+    <string name="important_events_for_this_month">Important events for : %s</string>
 
     <!-- content desc for images -->
     <string name="cd_left_navigation">Left navigation</string>
@@ -50,4 +50,6 @@
     <string name="select_date_to_continue">Please select a date to save custom event.</string>
     <string name="label_edit">Edit</string>
     <string name="label_delete">Delete</string>
+    <string name="deleted_successfully">Event deleted successfully</string>
+    <string name="label_event_date_saved">Event date saved</string>
 </resources>

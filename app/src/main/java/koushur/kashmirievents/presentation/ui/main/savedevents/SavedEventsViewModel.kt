@@ -62,10 +62,11 @@ class SavedEventsViewModel(
 
     fun fetchAllEvents() {
         viewModelScope.launch(dispatcher.io()) {
-            val savedItems = repository.fetchAllEvents()
-            viewModelScope.launch(dispatcher.main()) {
-                savedEvents.clear()
-                savedEvents.addAll(savedItems)
+            repository.fetchAllEvents().collect { savedItems ->
+                viewModelScope.launch(dispatcher.main()) {
+                    savedEvents.clear()
+                    savedEvents.addAll(savedItems)
+                }
             }
         }
     }

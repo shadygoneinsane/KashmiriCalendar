@@ -59,6 +59,10 @@ class SavedEventsFragment :
                 resources.getDimensionPixelSize((R.dimen.dimen_4dp))
             )
         )
+
+        viewModel.getDeletedEvent().observe(viewLifecycleOwner) {
+            getString(R.string.deleted_successfully).toast(requireActivity())
+        }
     }
 
     private fun showDialog(savedEventEntity: SavedEventEntity) {

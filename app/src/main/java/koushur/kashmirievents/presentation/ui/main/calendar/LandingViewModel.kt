@@ -39,6 +39,7 @@ class LandingViewModel(
 ) : BaseViewModel() {
     private val monthNameLiveData = MutableLiveData<String>()
     private val gson = Gson()
+    private var selectedYrMonth = YearMonth.now()
 
     /**
      * List of month events in [MonthEvent] format.
@@ -67,7 +68,7 @@ class LandingViewModel(
      * { "2025-03" -> { MonthEvent(indexOfMonth=23, startDate=2025-02-28, endDate=2025-03-14, monthName=Phalgun Shukla Paksha, imp=0),
      *                  MonthEvent(indexOfMonth=-1, startDate=2025-02-26, endDate=2025-03-03, monthName=Panchak, imp=2),
      *                  MonthEvent(indexOfMonth=0, startDate=2025-03-15, endDate=2025-03-29, monthName=Chaitra Krishna Paksha, imp=0)},
-     *   "2025-04" -> { MonthEvent(indexOfMonth=-1, startDate=2025-04-13, endDate=2025-04-27, monthName=Vaisakha Krishna Paksha , imp=0) ,
+     *   "2025-04" -> { MonthEvent(indexOfMonth=-1, startDate=2025-04-13, endDate=2025-04-27, monthName=Vaishakh Krishna Paksha , imp=0) ,
      *                  MonthEvent(indexOfMonth=1, startDate=2025-03-29, endDate=2025-04-12, monthName=Chaitra Shukla Paksha, imp=0) }, ... }
      */
     private val monthEventsMap: MutableMap<YearMonth, MutableList<MonthEvent>> = mutableMapOf()
@@ -94,9 +95,12 @@ class LandingViewModel(
      */
     fun processDataFromJson(dailyEvents: List<String?>, monthlyEvents: List<String?>) {
         viewModelScope.launch(dispatcher.io()) {
+            listOfMonthEvents.clear()
+            monthEventsMap.clear()
+            groupedByLocalDateMap.postValue(emptyMap())
+            groupedByMonthMap = emptyMap()
             setMonthEventsData(monthlyEvents)
             setDaysEventsData(dailyEvents)
-            updateSavedEvent()
         }
     }
 
@@ -145,6 +149,7 @@ class LandingViewModel(
      * Populates the monthlyItems list with events for the specified [YearMonth].
      */
     fun updateMonthlyItemsList(yearMonth: YearMonth) {
+        selectedYrMonth = yearMonth
         var formatter = DateTimeFormatter.ofPattern("EEE, dd MMMM")
         monthlyItems.clear()
 
@@ -190,25 +195,26 @@ class LandingViewModel(
     /**
      * Fetches saved events from the [CalendarRepository] and updates the [monthEventsMap] with any changes.
      */
-    private fun updateSavedEvent() {
-        execute(dispatcher.io()) {
-            val dbEvents: List<SavedEventEntity> = repository.fetchAllEvents()
-            dbEvents.forEach { event ->
-                val monthEventsList: List<MonthEvent> =
-                    listOfMonthEvents.filter { it.indexOfMonth == event.monthIndex }
-
-                monthEventsList.forEach { month ->
-                    findDateWithinMonth(event, month.startDate, month.endDate).forEach {
-                        val monthEntry = MonthEvent(
-                            event.monthIndex, it.date, it.date, event.eventName, Importance.high
-                        )
-                        val yearMonth = YearMonth.from(monthEntry.localDate)
-                        monthEventsMap.getOrPut(yearMonth) { mutableListOf() }.add(monthEntry)
+    fun updateSavedEvent() {
+        viewModelScope.launch(dispatcher.io()) {
+            repository.fetchAllEvents().collect { dbEvents ->
+                dbEvents.forEach { event ->
+                    val monthEventsList: List<MonthEvent> =
+                        listOfMonthEvents.filter { it.indexOfMonth == event.monthIndex }
+                    println("Filtered months are : $monthEventsList")
+                    monthEventsList.forEach { month ->
+                        findEventWithinRange(event, month.startDate, month.endDate).forEach {
+                            val monthEntry = MonthEvent(
+                                event.monthIndex, it.date, it.date, event.eventName, Importance.high
+                            )
+                            val yearMonth = YearMonth.from(monthEntry.localDate)
+                            monthEventsMap.getOrPut(yearMonth) { mutableListOf() }.add(monthEntry)
+                        }
                     }
                 }
-            }
-            execute(dispatcher.main()) {
-                updateMonthlyItemsList(YearMonth.now())
+                execute(dispatcher.main()) {
+                    updateMonthlyItemsList(selectedYrMonth)
+                }
             }
         }
     }
@@ -234,20 +240,21 @@ class LandingViewModel(
         date: LocalDate, startDate: LocalDate, endDate: LocalDate
     ) = date in startDate..endDate
 
-    private fun findDateWithinMonth(
-        eventEntry: SavedEventEntity, startDate: LocalDate, endDate: LocalDate
+    private fun findEventWithinRange(
+        event: SavedEventEntity, from: LocalDate, to: LocalDate
     ): MutableList<DayEvent> {
-        val list: MutableList<DayEvent> = mutableListOf()
-        var date = startDate
-        while (date.isBefore(endDate)) {
+        val dayEventsIdentified: MutableList<DayEvent> = mutableListOf()
+        var date = from
+        while (date.isBefore(to)) {
             groupedByLocalDateMap.value?.get(date)?.forEach { dayData: DayEvent ->
-                if (dayData.indexOfDay == eventEntry.dayIndex && dayData.dayName.matchDayNameFromConstants() == eventEntry.dayName) {
-                    list.add(dayData)
+                println("For date $date, Looking for saved event : ${event.eventName}, \nThe dayData is $dayData")
+                if (dayData.indexOfDay == event.dayIndex && dayData.dayName.matchDayNameFromConstants() == event.dayName) {
+                    dayEventsIdentified.add(dayData)
                 }
             }
             date = date.plusDays(1)
         }
-        return list
+        return dayEventsIdentified
     }
 
     private fun createMonthlyItemBinding() = OnItemBindClass<Any>().map(
