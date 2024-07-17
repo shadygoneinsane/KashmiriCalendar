@@ -2,6 +2,7 @@ package koushur.kashmirievents.presentation.ui.main.addevent
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import koushur.kashmirievents.database.entity.SavedEventEntity
 import koushur.kashmirievents.di.module.DispatcherProvider
 import koushur.kashmirievents.presentation.base.BaseViewModel
@@ -13,7 +14,6 @@ class AddEventViewModel(
 ) : BaseViewModel() {
     private val cancelListener = SingleLiveEvent<Unit?>()
     private val saveClickListener = SingleLiveEvent<Unit?>()
-    private val errorListener = SingleLiveEvent<Unit?>()
 
     fun cancelEvent() = cancelListener.call()
 
@@ -22,11 +22,11 @@ class AddEventViewModel(
     fun saveEvent(event: SavedEventEntity) {
         viewModelScope.launch(dispatcher.io()) {
             repository.saveEvent(event)?.let {
-                viewModelScope.launch(dispatcher.main()) {
+                withContext(dispatcher.main()) {
                     saveClickListener.call()
                 }
             } ?: run {
-                viewModelScope.launch(dispatcher.main()) {
+                withContext(dispatcher.main()) {
                     errorListener.call()
                 }
             }
@@ -34,6 +34,4 @@ class AddEventViewModel(
     }
 
     fun getSaveEvent() = saveClickListener
-
-    fun getErrorEvent() = errorListener
 }

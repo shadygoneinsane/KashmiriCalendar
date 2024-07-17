@@ -250,10 +250,11 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
     }
 
     private fun openAddEvent(eventsForTheDay: List<DayEvent>?, date: LocalDate) {
-        val bundle = viewModel.findYearMonthDetails(eventsForTheDay, date)
-        activity?.let {
-            Navigator.navigateToAddEvent(it, bundle)
-        }
+        viewModel.findYearMonthDetails(eventsForTheDay, date)?.let { bundle ->
+            activity?.let {
+                Navigator.navigateToAddEvent(it, bundle)
+            }
+        } ?: complain(getString(R.string.something_wrong))
     }
 
     inner class CVMonthHeaderBinder : MonthHeaderFooterBinder<MonthViewContainer> {

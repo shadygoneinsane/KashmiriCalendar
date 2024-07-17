@@ -3,6 +3,7 @@ package koushur.kashmirievents.presentation.ui.main.savedevents
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import koushir.kashmirievents.BR
 import koushir.kashmirievents.R
 import koushur.kashmirievents.database.entity.SavedEventEntity
@@ -25,7 +26,6 @@ class SavedEventsViewModel(
     private val updateItemClick = SingleLiveEvent<SavedEventEntity>()
 
     private val saveClickListener = SingleLiveEvent<Unit?>()
-    private val errorListener = SingleLiveEvent<Unit?>()
 
     val savedEvents = ObservableArrayList<Any>()
     val savedEventsBinding: OnItemBindClass<Any> =
@@ -49,11 +49,11 @@ class SavedEventsViewModel(
     fun saveEvent(event: SavedEventEntity) {
         viewModelScope.launch(dispatcher.io()) {
             repository.saveEvent(event)?.let {
-                viewModelScope.launch(dispatcher.main()) {
+                withContext(dispatcher.main()) {
                     saveClickListener.call()
                 }
             } ?: run {
-                viewModelScope.launch(dispatcher.main()) {
+                withContext(dispatcher.main()) {
                     errorListener.call()
                 }
             }
@@ -82,8 +82,6 @@ class SavedEventsViewModel(
     }
 
     fun getSaveEvent() = saveClickListener
-
-    fun getErrorEvent() = errorListener
 
     fun getDeleteItemClickedEvent() = deleteItemClick
 

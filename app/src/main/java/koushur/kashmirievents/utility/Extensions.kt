@@ -13,9 +13,12 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import koushir.kashmirievents.R
+import koushur.kashmirievents.KashmiriEventsApplication
+import timber.log.Timber
 
 
 fun View.makeVisible() {
@@ -83,4 +86,16 @@ fun EditText.resetText() = setText("")
 inline fun <reified T> Gson.fromJsonToList(json: String): List<T> {
     val typeToken = object : TypeToken<List<T>>() {}.type
     return this.fromJson(json, typeToken)
+}
+
+fun String.materialAlert(context: Context?) {
+    context?.let {
+        val bld = MaterialAlertDialogBuilder(context, R.style.ThemeOverlay_App_MaterialAlertDialog)
+        bld.setMessage(this)
+        bld.setNeutralButton(
+            KashmiriEventsApplication.fetchResources().getString(android.R.string.ok), null
+        )
+        Timber.d("%s %s", "MaterialAlert", "Showing alert dialog: $this")
+        bld.create().show()
+    }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import koushir.kashmirievents.BR
 import koushir.kashmirievents.R
 import koushur.kashmirievents.database.data.DayEvent
@@ -14,6 +15,7 @@ import koushur.kashmirievents.database.data.Event
 import koushur.kashmirievents.database.data.MonthEvent
 import koushur.kashmirievents.database.entity.DayDataEntity
 import koushur.kashmirievents.database.entity.Days
+import koushur.kashmirievents.database.entity.Months
 import koushur.kashmirievents.database.entity.MonthsDataEntity
 import koushur.kashmirievents.database.entity.SavedEventEntity
 import koushur.kashmirievents.database.entity.map
@@ -117,7 +119,12 @@ class LandingViewModel(
                 )
             }
         }
-        listOfMonthEvents.forEach { monthEvent ->
+        reUploadMonthlyEvents(listOfMonthEvents)
+    }
+
+    private fun reUploadMonthlyEvents(monthEvents: MutableList<MonthEvent>) {
+        monthEventsMap.clear()
+        monthEvents.forEach { monthEvent ->
             val months = setOf(
                 YearMonth.from(monthEvent.startDate), YearMonth.from(monthEvent.endDate)
             )
@@ -198,6 +205,7 @@ class LandingViewModel(
     fun updateSavedEvent() {
         viewModelScope.launch(dispatcher.io()) {
             repository.fetchAllEvents().collect { dbEvents ->
+                reUploadMonthlyEvents(listOfMonthEvents)
                 dbEvents.forEach { event ->
                     val monthEventsList: List<MonthEvent> =
                         listOfMonthEvents.filter { it.indexOfMonth == event.monthIndex }
@@ -212,7 +220,7 @@ class LandingViewModel(
                         }
                     }
                 }
-                execute(dispatcher.main()) {
+                withContext(dispatcher.main()) {
                     updateMonthlyItemsList(selectedYrMonth)
                 }
             }
@@ -220,17 +228,18 @@ class LandingViewModel(
     }
 
 
-    fun findYearMonthDetails(events: List<DayEvent>?, date: LocalDate): Bundle {
+    fun findYearMonthDetails(events: List<DayEvent>?, date: LocalDate): Bundle? {
         val dayIndex = events?.find { it.indexOfDay != -1 }?.indexOfDay ?: -1
         val dayName = Days.daysList[dayIndex]
         val monthMap: MonthEvent? =
             listOfMonthEvents.find { isDateWithinMonth(date, it.startDate, it.endDate) }
-        val monthIndex = monthMap?.indexOfMonth ?: -1
-        val monthName = monthMap?.monthName ?: "Not found"
+        if (monthMap == null || monthMap.indexOfMonth == -1 || (monthMap.indexOfMonth != Months.monthsMap[monthMap.monthName])) {
+            return null
+        }
         return bundleOf(
             Constants.EXTRA_DATE to date,
-            Constants.EXTRA_MONTH_INDEX to monthIndex,
-            Constants.EXTRA_MONTH_NAME to monthName,
+            Constants.EXTRA_MONTH_INDEX to monthMap.indexOfMonth,
+            Constants.EXTRA_MONTH_NAME to monthMap.monthName,
             Constants.EXTRA_DAY_INDEX to dayIndex,
             Constants.EXTRA_DAY_NAME to dayName
         )

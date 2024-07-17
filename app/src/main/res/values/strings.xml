@@ -7,7 +7,7 @@
     <string name="contact">Contact for support</string>
     <string name="about">About</string>
 
-    <string name="something_wrong">Something went wrong</string>
+    <string name="something_wrong">Something went wrong, please try again later.</string>
     <string name="reload">RETRY</string>
     <string name="important_events_for_this_month">Important events for : %s</string>
 
