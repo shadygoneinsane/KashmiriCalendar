@@ -79,7 +79,10 @@ class LandingViewModel(
      * Holds a map of events grouped by local date in [LocalDate] format.
      * Used by calendar to populate list of selected day items [DayEvent] on UI
      */
-    private var groupedByLocalDateMap = MutableLiveData<Map<LocalDate, List<DayEvent>>>(emptyMap())
+    private var groupedByLocalDateMap =
+        MutableLiveData<MutableMap<LocalDate, MutableList<DayEvent>>>(
+            mutableMapOf()
+        )
 
     private val prevMonthEvent = SingleLiveEvent<Unit?>()
     private val nextMonthEvent = SingleLiveEvent<Unit?>()
@@ -99,7 +102,7 @@ class LandingViewModel(
         viewModelScope.launch(dispatcher.io()) {
             listOfMonthEvents.clear()
             monthEventsMap.clear()
-            groupedByLocalDateMap.postValue(emptyMap())
+            groupedByLocalDateMap.postValue(mutableMapOf())
             groupedByMonthMap = emptyMap()
             setMonthEventsData(monthlyEvents)
             setDaysEventsData(dailyEvents)
@@ -119,10 +122,10 @@ class LandingViewModel(
                 )
             }
         }
-        reUploadMonthlyEvents(listOfMonthEvents)
+        updateMonthlyEvents(listOfMonthEvents)
     }
 
-    private fun reUploadMonthlyEvents(monthEvents: MutableList<MonthEvent>) {
+    private fun updateMonthlyEvents(monthEvents: MutableList<MonthEvent>) {
         monthEventsMap.clear()
         monthEvents.forEach { monthEvent ->
             val months = setOf(
@@ -149,7 +152,7 @@ class LandingViewModel(
         }
 
         groupedByMonthMap = listOfAllDaysEvents.groupBy { it.localDate.getYearMonth() }
-        groupedByLocalDateMap.postValue(listOfAllDaysEvents.groupBy { it.localDate })
+        groupedByLocalDateMap.postValue(listOfAllDaysEvents.groupBy { it.localDate } as MutableMap<LocalDate, MutableList<DayEvent>>?)
     }
 
     /**
@@ -205,7 +208,7 @@ class LandingViewModel(
     fun updateSavedEvent() {
         viewModelScope.launch(dispatcher.io()) {
             repository.fetchAllEvents().collect { dbEvents ->
-                reUploadMonthlyEvents(listOfMonthEvents)
+                updateMonthlyEvents(listOfMonthEvents)
                 dbEvents.forEach { event ->
                     val monthEventsList: List<MonthEvent> =
                         listOfMonthEvents.filter { it.indexOfMonth == event.monthIndex }
@@ -217,6 +220,12 @@ class LandingViewModel(
                             )
                             val yearMonth = YearMonth.from(monthEntry.localDate)
                             monthEventsMap.getOrPut(yearMonth) { mutableListOf() }.add(monthEntry)
+                            groupedByLocalDateMap.value?.getOrPut(it.localDate) { mutableListOf() }
+                                ?.add(
+                                    DayEvent(
+                                        it.indexOfDay, it.date, event.eventName, Importance.high
+                                    )
+                                )
                         }
                     }
                 }

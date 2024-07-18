@@ -42,9 +42,11 @@
     <string name="label_tithi">Tithi</string>
     <string name="label_paksha">Paksha</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_confirm">Confirm</string>
     <string name="label_save">Save</string>
     <string name="label_dash">-</string>
-    <string name="label_title_warn_delete">Are you sure you want to delete: \n%1$s</string>
+    <string name="label_title_warn_delete">Are you sure</string>
+    <string name="label_message_warn_delete">You want to delete: \n%s</string>
     <string name="label_yes">Yes</string>
     <string name="label_no">No</string>
     <string name="select_date_to_continue">Please select a date to save custom event.</string>
@@ -52,4 +54,8 @@
     <string name="label_delete">Delete</string>
     <string name="deleted_successfully">Event deleted successfully</string>
     <string name="label_event_date_saved">Event date saved</string>
+    <string name="message_alarm_permission_needed">We need to schedule exact alarms so that your events get notified on time.\nPlease grant the permission on the following screen.</string>
+    <string name="name_cant_be_empty">Please give this event a name so that you can identify it later.</string>
+    <string name="label_ok">Ok</string>
+    <string name="label_error">Error</string>
 </resources>

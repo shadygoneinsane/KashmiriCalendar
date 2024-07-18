@@ -62,20 +62,44 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorSecondary">@color/gunmetal</item>
+    <style name="MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!--background color-->
         <item name="colorSurface">@color/ideal_background</item>
-        <item name="colorOnSurface">@color/white</item>
+        <!--action button color -->
+        <item name="colorPrimary">@color/snow</item>
+        <!--
+        <item name="colorSecondary">@color/snow</item>
+        <item name="colorOnPrimary">@color/snow</item>
+        <item name="colorOnSurface">@color/snow</item>
+        <item name="colorOnSecondary">@color/snow</item>
+        <item name="colorOnBackground">@color/snow</item>
+        -->
+        <!-- Title style -->
+        <item name="materialAlertDialogTitleTextStyle">@style/AlertDialog.Title.Text</item>
+        <!-- Body style -->
+        <item name="materialAlertDialogBodyTextStyle">@style/AlertDialog.Body.Text</item>
         <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
+    </style>
+
+    <style name="AlertDialog.Title.Text" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/snow</item>
+        <item name="android:textAppearance">@style/TextAppearance.Inter.SemiBold</item>
+    </style>
+
+    <style name="AlertDialog.Body.Text" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">@color/snow</item>
+        <item name="android:textSize">@dimen/dimen_sp17</item>
+        <item name="android:textAppearance">@style/TextAppearance.Inter.Medium.Body</item>
     </style>
 
     <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.MaterialComponents">
         <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="android:elevation">@dimen/dimen_4dp</item>
+        <item name="elevation">@dimen/dimen_4dp</item>
     </style>
 
     <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">2dp</item>
+        <item name="cornerSize">@dimen/dimen_4dp</item>
     </style>
 </resources>

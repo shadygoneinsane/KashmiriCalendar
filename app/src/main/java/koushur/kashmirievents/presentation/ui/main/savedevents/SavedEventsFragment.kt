@@ -3,15 +3,13 @@ package koushur.kashmirievents.presentation.ui.main.savedevents
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import koushir.kashmirievents.R
 import koushir.kashmirievents.databinding.FragmentSavedEventsBinding
-import koushur.kashmirievents.database.entity.SavedEventEntity
 import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.base.BaseViewModel
 import koushur.kashmirievents.presentation.navigation.Navigator
 import koushur.kashmirievents.presentation.ui.main.calendar.ItemDivider
-import koushur.kashmirievents.utility.setTextColorRes
+import koushur.kashmirievents.utility.showMaterialAlert
 import koushur.kashmirievents.utility.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -42,7 +40,22 @@ class SavedEventsFragment :
         }
 
         viewModel.getDeleteItemClickedEvent().observe(viewLifecycleOwner) {
-            showDialog(it)
+            context.showMaterialAlert(
+                title = getString(R.string.label_title_warn_delete),
+                message = getString(R.string.label_message_warn_delete, it.eventName),
+                positive = getString(R.string.label_confirm),
+                negative = getString(R.string.label_cancel)
+            ) { dialog, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> {
+                        viewModel.deleteEvent(it)
+                    }
+
+                    DialogInterface.BUTTON_NEGATIVE -> {
+                        dialog.dismiss()
+                    }
+                }
+            }
         }
 
         viewModel.getUpdateItemClickedEvent().observe(viewLifecycleOwner) {
@@ -63,36 +76,5 @@ class SavedEventsFragment :
         viewModel.getDeletedEvent().observe(viewLifecycleOwner) {
             getString(R.string.deleted_successfully).toast(requireActivity())
         }
-    }
-
-    private fun showDialog(savedEventEntity: SavedEventEntity) {
-        val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
-            when (which) {
-                DialogInterface.BUTTON_POSITIVE -> {
-                    viewModel.deleteEvent(savedEventEntity)
-                }
-
-                DialogInterface.BUTTON_NEGATIVE -> {
-                    dialog.dismiss()
-                }
-            }
-        }
-
-        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-        builder.setMessage(getString(R.string.label_title_warn_delete, savedEventEntity.eventName))
-            .setPositiveButton(getString(R.string.label_yes), dialogClickListener)
-            .setNegativeButton(getString(R.string.label_no), dialogClickListener)
-        val alert = builder.create()
-        alert.setOnShowListener {
-            alert.getButton(AlertDialog.BUTTON_POSITIVE).apply {
-                setTextColorRes(R.color.snow)
-                isAllCaps = false
-            }
-            alert.getButton(AlertDialog.BUTTON_NEGATIVE).apply {
-                setTextColorRes(R.color.snow)
-                isAllCaps = false
-            }
-        }
-        alert.show()
     }
 }

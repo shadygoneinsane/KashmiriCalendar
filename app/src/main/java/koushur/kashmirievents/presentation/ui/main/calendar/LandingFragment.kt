@@ -6,7 +6,6 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.children
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
@@ -32,7 +31,7 @@ import koushur.kashmirievents.utility.makeVisible
 import koushur.kashmirievents.utility.setDateDataAndColor
 import koushur.kashmirievents.utility.setOnSingleClickListener
 import koushur.kashmirievents.utility.setTextColorRes
-import koushur.kashmirievents.utility.toast
+import koushur.kashmirievents.utility.showMaterialAlert
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
 import java.io.InputStream
@@ -117,7 +116,10 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         viewBinding.btnAdd.setOnClickListener {
             selectedDate?.let { date ->
                 openAddEvent(viewModel.getDayEventsLiveData().value?.get(date), date)
-            } ?: getString(R.string.select_date_to_continue).toast(context, Toast.LENGTH_LONG)
+            } ?: context?.showMaterialAlert(
+                message = getString(R.string.select_date_to_continue),
+                neutral = getString(R.string.label_ok)
+            )
         }
 
         viewBinding.tvDateToday.text = today.dayOfMonth.toString()
