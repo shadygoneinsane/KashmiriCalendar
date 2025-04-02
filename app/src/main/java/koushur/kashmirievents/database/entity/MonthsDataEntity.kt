@@ -31,7 +31,7 @@ data class MonthsDataEntity(
  */
 fun List<MonthsDataEntity>.map(): List<MonthEvent> {
     return map { monthEntity: MonthsDataEntity ->
-        val indexFromList = Months.monthsList.indexOf(monthEntity.monthName)
+        val indexFromList = Months.monthsList.indexOf(monthEntity.monthName.trim())
         MonthEvent(
             indexFromList, LocalDate.parse(monthEntity.startDate, DateUtils.ddMMyyyyFormatter),
             LocalDate.parse(monthEntity.endDate, DateUtils.ddMMyyyyFormatter),
