@@ -11,9 +11,14 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.Locale
 
+object DateUtils {
+    private const val ddMMyyyy = "dd-MM-yyyy"
+    val ddMMyyyyFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(ddMMyyyy)
 
-const val ddMMyyyy = "dd-MM-yyyy"
-val ddMMyyyyFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(ddMMyyyy)
+    const val dayMonth = "EEE, dd MMMM"
+
+    const val dayMonthYear = "EEE, dd MMMM yyyy"
+}
 
 /**
  * Returns the days of week values such that the desired
@@ -33,12 +38,14 @@ fun daysOfWeek(firstDayOfWeek: DayOfWeek = firstDayOfWeekFromLocale()): List<Day
  */
 fun firstDayOfWeekFromLocale(): DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
 
-fun String.getLocalDate(): LocalDate? = LocalDate.parse(this, ddMMyyyyFormatter)
+fun String.getLocalDate(): LocalDate? = LocalDate.parse(this, DateUtils.ddMMyyyyFormatter)
 
 fun getCurrentDebugTime(): LocalDateTime = LocalDateTime.now()
 
 fun LocalDate.getYearMonth(): YearMonth = YearMonth.of(this.year, this.month)
 
-fun DayEvent.ifDayEventIsHighlighted() = Days.highlights.contains(Days.daysList[indexOfDay])
+fun DayEvent.ifDayEventIsHighlighted(): Boolean {
+    return Days.highlights.contains(Days.daysList[indexOfDay])
+}
 
 fun DayEvent.ifDayEventIsSpecial() = SpecialDays.specialDayEvents.keys.contains(eventName)

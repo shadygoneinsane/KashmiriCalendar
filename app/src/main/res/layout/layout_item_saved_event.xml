@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="event"
+            type="koushur.kashmirievents.database.entity.SavedEventEntity" />
+
+        <variable
+            name="clickListener"
+            type="koushur.kashmirievents.interfaces.OnOptionClickListener" />
+
+        <import type="koushur.kashmirievents.utility.Importance" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:setImportance="@{Importance.med}"
+        tools:background="@color/royal_blue">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.45" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/eventName"
+            style="@style/TextAppearance.Inter.Bold"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_6dp"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:text="@{event.eventName}"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/dimen_sp17"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            tools:text="My Birthday" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/labelEventDate"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:text="@string/label_event_date_saved"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="@id/guide_mid"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eventName"
+            app:layout_constraintVertical_bias="0"
+            tools:text="@string/label_event_date_saved" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/eventDate"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="@id/labelEventDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/guide_mid"
+            app:layout_constraintTop_toTopOf="@id/labelEventDate"
+            app:layout_constraintVertical_bias="0"
+            app:setLocalDate="@{event.selectedDate}"
+            tools:text="Mon, 16 July" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="labelEventDate,eventDate" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/labelTithiName"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_6dp"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:text="@string/label_tithi"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="@id/guide_mid"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier_event_date"
+            app:layout_constraintVertical_bias="0" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tithiName"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:text="@{event.dayName}"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="@id/labelTithiName"
+            app:layout_constraintEnd_toEndOf="@id/eventName"
+            app:layout_constraintStart_toEndOf="@id/guide_mid"
+            app:layout_constraintTop_toTopOf="@id/labelTithiName"
+            tools:text="Ashtami " />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_event_tithi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tithiName,labelTithiName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/labelMonthName"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_6dp"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:text="@string/label_paksha"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="@id/guide_mid"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barrier_event_tithi" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/monthName"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="start"
+            android:text="@{event.monthName}"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="@id/labelMonthName"
+            app:layout_constraintEnd_toEndOf="@id/eventName"
+            app:layout_constraintStart_toEndOf="@id/guide_mid"
+            app:layout_constraintTop_toTopOf="@id/labelMonthName"
+            tools:text="Vaishakh Shukla Paksha" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/edit_btn"
+            style="@style/TextAppearance.Inter.SemiBold"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
+            android:layout_marginVertical="@dimen/dimen_8dp"
+            android:background="@drawable/drawable_btn_bg"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="center"
+            android:onClick="@{() -> clickListener.onOptionClick(1)}"
+            android:paddingVertical="@dimen/dimen_6dp"
+            android:text="@string/label_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guide_mid"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/monthName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/delete_btn"
+            style="@style/TextAppearance.Inter.SemiBold"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
+            android:background="@drawable/drawable_btn_bg"
+            android:elevation="@dimen/dimen_4dp"
+            android:gravity="center"
+            android:onClick="@{() -> clickListener.onOptionClick(2)}"
+            android:paddingVertical="@dimen/dimen_6dp"
+            android:text="@string/label_delete"
+            app:layout_constraintBottom_toBottomOf="@id/edit_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/guide_mid"
+            app:layout_constraintTop_toTopOf="@id/edit_btn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

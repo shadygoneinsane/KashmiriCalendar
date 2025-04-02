@@ -14,13 +14,19 @@ import koushur.kashmirievents.database.data.Event
  * Created on: 30-10-2020
  * Email : vikeshdass@gmail.com
  */
-fun setTVFontColor(tv: TextView, decorView: View, event: Event) {
+fun setTVFontColor(tv: TextView, decorView: View, event: DayEvent) {
     decorView.setBackground(event.eventImp)
+    val importance = getDayEventImportance(event)
     decorView.makeVisible()
+    /*if (importance > Importance.med || event.indexOfDay == -1 || event.ifDayEventIsHighlighted() || event.ifDayEventIsSpecial()) {
+        decorView.makeVisible()
+    } else {
+        decorView.makeGone()
+    }*/
 
     tv.text = event.eventName
     tv.makeVisible()
-    tv.setImportance(getDayEventImportance(event))
+    tv.setImportance(importance)
 }
 
 fun getDayEventImportance(event: Event): Int {
@@ -34,7 +40,7 @@ fun getDayEventImportance(event: Event): Int {
 }
 
 fun setDateDataAndColor(
-    events: List<Event>?,
+    events: List<DayEvent>?,
     topTV: TextView, topView: View,
     bottomTV: TextView, bottomView: View,
     dateTV: TextView
@@ -42,7 +48,7 @@ fun setDateDataAndColor(
     events?.let { eventList ->
         when {
             eventList.count() == 1 -> {
-                //log("Date : ${day.date} | Event found is ${listEvents[0]}")
+                //log("Date : ${events.first().localDate} | Event found is ${events.first()}")
                 val event = eventList.first()
                 setTVFontColor(topTV, topView, event)
                 topView.setBackground(event.eventImp)
@@ -54,7 +60,7 @@ fun setDateDataAndColor(
                 dateTV.setTextSizeSp(7f)
                 val firstEvent = eventList.first()
                 val secondEvent = eventList[1]
-                //log("Date : ${day.date} | Events found are 1: ${firstEvent} 2: ${secondEvent}")
+                //log("Date : ${events.first().localDate} | Events found are 1: $firstEvent 2: $secondEvent")
                 setTVFontColor(topTV, topView, firstEvent)
 
                 setTVFontColor(bottomTV, bottomView, secondEvent)
@@ -64,7 +70,7 @@ fun setDateDataAndColor(
                 dateTV.setTextSizeSp(7f)
                 val firstEvent = eventList.first()
                 val secondEvent = eventList[1]
-                //log("Date : ${day.date} | Events found are 1: ${firstEvent} 2: ${secondEvent}")
+                //log("Date : ${events.first().localDate} | Events found are 1: $firstEvent 2: $secondEvent")
                 eventList.sortedBy { it.eventImp }
                 setTVFontColor(topTV, topView, firstEvent)
                 setTVFontColor(bottomTV, bottomView, secondEvent)
@@ -83,4 +89,12 @@ fun setDateDataAndColor(
 
 fun TextView.setTextSizeSp(size: Float) {
     setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
+}
+
+fun View.setOnSingleClickListener(action: (v: View) -> Unit) {
+    setOnClickListener { v ->
+        isClickable = false
+        action(v)
+        postDelayed({ isClickable = true }, 1000L)
+    }
 }

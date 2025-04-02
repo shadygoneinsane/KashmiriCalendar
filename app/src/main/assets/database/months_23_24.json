@@ -159,11 +159,6 @@
     "monthName": "Kartik Shukla Paksha"
   },
   {
-    "startDate": "28-11-2023",
-    "endDate": "12-12-2023",
-    "monthName": "Maarg Krishna Paksha"
-  },
-  {
     "startDate": "20-11-2023",
     "endDate": "24-11-2023",
     "monthName": "Panchak",
@@ -262,6 +257,6 @@
   {
     "startDate": "24-04-2024",
     "endDate": "08-05-2024",
-    "monthName": "Vaisakha Krishna Paksha"
+    "monthName": "Vaishakh Krishna Paksha"
   }
 ]

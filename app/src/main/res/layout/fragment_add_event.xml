@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="koushur.kashmirievents.presentation.ui.main.addevent.AddEventViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gunmetal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_add_event_title"
+            style="@style/TextAppearance.Inter.Bold"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_36dp"
+            android:gravity="center"
+            android:text="@string/label_save_important_dates"
+            android:textSize="@dimen/dimen_sp18"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.05" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label_event_hint_title"
+            style="@style/TextAppearance.Inter.SemiBold"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/label_explanation_add_events"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
+            app:layout_constraintStart_toStartOf="@+id/event_name_edittext"
+            app:layout_constraintTop_toBottomOf="@+id/tv_add_event_title"
+            app:layout_constraintVertical_bias="0.07" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/event_name_edittext"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_event_name"
+            android:textColorHint="@color/grey"
+            app:boxStrokeColor="@color/outlined_stroke_color"
+            app:hintTextColor="@color/grey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tv_add_event_title"
+            app:layout_constraintStart_toStartOf="@id/tv_add_event_title"
+            app:layout_constraintTop_toBottomOf="@id/label_event_hint_title"
+            app:layout_constraintVertical_bias="0.07">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextAppearance.Inter.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_selected_date_label"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:text="@string/label_selected_date"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guide_center"
+            app:layout_constraintStart_toStartOf="@id/event_name_edittext"
+            app:layout_constraintTop_toBottomOf="@+id/event_name_edittext"
+            app:layout_constraintVertical_bias="0.07" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_selected_date"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
+            app:layout_constraintStart_toStartOf="@id/guide_center"
+            app:layout_constraintTop_toTopOf="@+id/tv_selected_date_label"
+            tools:text="Sun, 7 Jul" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_tithi_label"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:text="@string/label_tithi"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guide_center"
+            app:layout_constraintStart_toStartOf="@id/event_name_edittext"
+            app:layout_constraintTop_toBottomOf="@+id/tv_selected_date_label"
+            app:layout_constraintVertical_bias="0.07" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_tithi"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
+            app:layout_constraintStart_toStartOf="@id/guide_center"
+            app:layout_constraintTop_toTopOf="@+id/tv_tithi_label"
+            tools:text="Satam" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_paksha_label"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/label_paksha"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_tithi_label"
+            app:layout_constraintStart_toStartOf="@id/event_name_edittext"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tithi"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_paksha"
+            style="@style/TextAppearance.Inter.Medium"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintEnd_toEndOf="@+id/event_name_edittext"
+            app:layout_constraintStart_toStartOf="@id/tv_tithi"
+            app:layout_constraintTop_toTopOf="@+id/tv_paksha_label"
+            tools:text="Aashad shukla paksha" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel_button"
+            style="@style/ShapeAppearanceOverlay.Material3.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_10"
+            android:layout_weight="1"
+            android:onClick="@{() -> viewModel.cancelEvent()}"
+            android:text="@string/label_cancel"
+            android:textAllCaps="false"
+            android:textSize="@dimen/dimen_sp16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guide_center"
+            app:layout_constraintStart_toStartOf="@id/tv_tithi_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_paksha"
+            app:layout_constraintVertical_bias="0.9" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/save_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_10"
+            android:layout_weight="1"
+            android:text="@string/label_save"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="@id/tv_paksha"
+            app:layout_constraintStart_toStartOf="@+id/guide_center"
+            app:layout_constraintTop_toTopOf="@+id/cancel_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

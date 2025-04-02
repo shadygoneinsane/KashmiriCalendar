@@ -23,11 +23,15 @@ import koushir.kashmirievents.databinding.FragmentLandingBinding
 import koushur.kashmirievents.database.data.DayEvent
 import koushur.kashmirievents.presentation.base.BaseFragment
 import koushur.kashmirievents.presentation.base.BaseViewModel
+import koushur.kashmirievents.presentation.navigation.Navigator
 import koushur.kashmirievents.utility.AppConstants
 import koushur.kashmirievents.utility.daysOfWeek
 import koushur.kashmirievents.utility.makeGone
+import koushur.kashmirievents.utility.makeVisible
 import koushur.kashmirievents.utility.setDateDataAndColor
+import koushur.kashmirievents.utility.setOnSingleClickListener
 import koushur.kashmirievents.utility.setTextColorRes
+import koushur.kashmirievents.utility.showMaterialAlert
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
 import java.io.InputStream
@@ -40,7 +44,8 @@ import java.util.Locale
 class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_landing) {
     private val viewModel: LandingViewModel by viewModel()
     private var selectedDate: LocalDate? = null
-    val daysOfWeek = daysOfWeek()
+    private val daysOfWeek = daysOfWeek()
+    private val today = LocalDate.now()
 
     override fun provideViewModel(): BaseViewModel {
         return viewModel
@@ -72,13 +77,22 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
         viewModel.getDayEventsLiveData().observe(viewLifecycleOwner) { mapDateEvents ->
             setUpCalendar(mapDateEvents)
+            if (mapDateEvents.isNotEmpty()) {
+                viewModel.updateSavedEvent()
+            }
+        }
+
+        viewModel.getMonthName().observe(viewLifecycleOwner) { name ->
+            if (name.isNotEmpty()) {
+                viewBinding.tvTitleMajor.makeVisible()
+                viewBinding.tvTitleMajor.text =
+                    getString(R.string.important_events_for_this_month, name)
+            }
         }
 
         //setup calendar
         viewBinding.cvMain.setup(
-            YearMonth.of(2022, Month.MARCH),
-            YearMonth.of(2025, Month.APRIL),
-            daysOfWeek.first()
+            YearMonth.of(2022, Month.MARCH), YearMonth.of(2026, Month.MARCH), daysOfWeek.first()
         )
 
         viewBinding.rvHighlightEvents.addItemDecoration(
@@ -94,6 +108,29 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 resources.getDimensionPixelSize((R.dimen.dimen_4dp))
             )
         )
+
+        viewBinding.btnToday.setOnClickListener {
+            navigateToCurrent()
+        }
+
+        viewBinding.btnAdd.setOnClickListener {
+            selectedDate?.let { date ->
+                openAddEvent(viewModel.getDayEventsLiveData().value?.get(date), date)
+            } ?: context?.showMaterialAlert(
+                message = getString(R.string.select_date_to_continue),
+                neutral = getString(R.string.label_ok)
+            )
+        }
+
+        viewBinding.tvDateToday.text = today.dayOfMonth.toString()
+    }
+
+    private fun navigateToCurrent() {
+        val oldDate = selectedDate
+        selectedDate = null
+        oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
+        viewModel.updateSelectedDayItems(null)
+        viewBinding.cvMain.smoothScrollToDay(CalendarDay(today, DayPosition.MonthDate))
     }
 
     private fun loadEveryAvailableDayEventsData() {
@@ -102,15 +139,17 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 add(loadJSONFromAsset(it, AppConstants.dbDayEvents_22_23))
                 add(loadJSONFromAsset(it, AppConstants.dbDayEvents_23_24))
                 add(loadJSONFromAsset(it, AppConstants.dbDayEvents_24_25))
+                add(loadJSONFromAsset(it, AppConstants.dbDayEvents_25_26))
             }
 
             val monthlyEvents = mutableListOf<String?>().apply {
                 add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_23_24))
                 add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_22_23))
                 add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_24_25))
+                add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_25_26))
             }
 
-            viewModel.processEventsDataFromJson(dailyEvents, monthlyEvents)
+            viewModel.processDataFromJson(dailyEvents, monthlyEvents)
         }
     }
 
@@ -119,16 +158,13 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
         viewBinding.cvMain.monthHeaderBinder = CVMonthHeaderBinder()
 
         viewBinding.cvMain.monthScrollListener = { month ->
-            viewModel.updateMonthlyItemsList(
-                month.yearMonth,
-                getString(R.string.special_event_placeholder)
-            )
+            viewModel.updateMonthlyItemsList(month.yearMonth)
             viewModel.setMonthName(month.yearMonth)
 
             selectedDate?.let {
                 selectedDate = null
                 viewBinding.cvMain.notifyDateChanged(it)
-                viewModel.updateSelectedDayItems(null, null)
+                viewModel.updateSelectedDayItems(null)
             }
         }
 
@@ -159,7 +195,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
             this.date = data.date
             val eventsForTheDay: List<DayEvent>? = mapDateEvents[data.date]
 
-            view.setOnClickListener {
+            view.setOnSingleClickListener {
                 selectDate(date, eventsForTheDay)
             }
             dateTV.text = data.date.dayOfMonth.toString()
@@ -169,7 +205,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
             when (data.position) {
                 DayPosition.MonthDate -> {
-                    dateTV.setTextColorRes(R.color.cv_text_grey)
+                    dateTV.setTextColorRes(R.color.snow)
                     setBackgroundDateData()
                     setDateDataAndColor(
                         eventsForTheDay, topTV, topView, bottomTV, bottomView, dateTV
@@ -199,18 +235,30 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 selectedDate = date
                 viewBinding.cvMain.notifyDateChanged(date)
                 oldDate?.let { viewBinding.cvMain.notifyDateChanged(it) }
-                viewModel.updateSelectedDayItems(eventsForTheDay, date)
+                viewModel.updateSelectedDayItems(eventsForTheDay)
+            } else {
+                openAddEvent(eventsForTheDay, date)
             }
         }
 
         private fun setBackgroundDateData() {
             layout.setBackgroundResource(
-                if (date != LocalDate.now()) {
+                if (date != today) {
                     if (selectedDate == date) R.drawable.drawable_selected_bg
                     else 0
+                } else if (selectedDate == today) {
+                    R.drawable.drawable_selected_bg
                 } else R.drawable.drawable_selected_highlighted_bg
             )
         }
+    }
+
+    private fun openAddEvent(eventsForTheDay: List<DayEvent>?, date: LocalDate) {
+        viewModel.findYearMonthDetails(eventsForTheDay, date)?.let { bundle ->
+            activity?.let {
+                Navigator.navigateToAddEvent(it, bundle)
+            }
+        } ?: complain(getString(R.string.something_wrong))
     }
 
     inner class CVMonthHeaderBinder : MonthHeaderFooterBinder<MonthViewContainer> {
@@ -219,13 +267,10 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
             // Setup each header day text if we have not done that already.
             if (container.legendLayout.tag == null) {
                 container.legendLayout.tag = data.yearMonth
-                container.legendLayout.children.map { it as TextView }
-                    .forEachIndexed { index, tv ->
-                        tv.text =
-                            daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.getDefault())
-                        tv.setTextColorRes(R.color.cv_text_grey)
-                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-                    }
+                container.legendLayout.children.map { it as TextView }.forEachIndexed { index, tv ->
+                    tv.text = daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                    tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                }
             }
         }
     }

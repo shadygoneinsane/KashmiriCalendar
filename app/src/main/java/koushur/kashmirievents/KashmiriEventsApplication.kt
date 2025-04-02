@@ -2,6 +2,7 @@ package koushur.kashmirievents
 
 import android.app.Application
 import android.content.Context
+import android.content.res.Resources
 import koushir.kashmirievents.BuildConfig
 import koushur.kashmirievents.di.module.application.dbModule
 import koushur.kashmirievents.di.module.application.mainModule
@@ -19,6 +20,10 @@ class KashmiriEventsApplication : Application() {
         private lateinit var instance: KashmiriEventsApplication
         fun applicationContext(): Context {
             return instance.applicationContext
+        }
+
+        fun fetchResources(): Resources {
+            return instance.applicationContext.resources
         }
     }
 

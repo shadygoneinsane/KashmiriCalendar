@@ -1,5 +1,15 @@
 [
   {
+    "startDate": "02-04-2022",
+    "endDate": "16-04-2022",
+    "monthName": "Chaitra Shukla Paksha"
+  },
+  {
+    "startDate": "17-04-2022",
+    "endDate": "30-04-2022",
+    "monthName": "Vaishakh Krishna Paksha"
+  },
+  {
     "startDate": "01-05-2022",
     "endDate": "16-05-2022",
     "monthName": "Vaishakh Shukla Paksha"
@@ -33,7 +43,7 @@
   },
   {
     "startDate": "30-06-2022",
-    "endDate": "13-06-2022",
+    "endDate": "13-07-2022",
     "monthName": "Aashaad Shukla Paksha"
   },
   {
@@ -113,7 +123,7 @@
   {
     "startDate": "09-11-2022",
     "endDate": "23-11-2022",
-    "monthName": "Maagh Krishna Paksha"
+    "monthName": "Maarg Krishna Paksha"
   },
   {
     "startDate": "02-11-2022",

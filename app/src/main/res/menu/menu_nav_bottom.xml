@@ -2,11 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/landing"
-        android:icon="@drawable/menu_calendar"
+        android:icon="@drawable/ic_menu_calendar"
         android:title="@string/calendar" />
 
     <item
+        android:id="@+id/saved_event"
+        android:icon="@drawable/ic_calendar_events"
+        android:title="@string/saved_event" />
+
+    <item
         android:id="@+id/featured"
-        android:icon="@drawable/asl_featured"
-        android:title="@string/featured" />
+        android:icon="@drawable/ic_featured"
+        android:title="@string/aarti" />
 </menu>

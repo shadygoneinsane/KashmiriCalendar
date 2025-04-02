@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import koushur.kashmirievents.database.data.MonthEvent
+import koushur.kashmirievents.utility.DateUtils
 import koushur.kashmirievents.utility.Importance
-import koushur.kashmirievents.utility.ddMMyyyyFormatter
 import java.time.LocalDate
 
 @Entity(tableName = "monthData")
@@ -33,8 +33,8 @@ fun List<MonthsDataEntity>.map(): List<MonthEvent> {
     return map { monthEntity: MonthsDataEntity ->
         val indexFromList = Months.monthsList.indexOf(monthEntity.monthName)
         MonthEvent(
-            indexFromList, LocalDate.parse(monthEntity.startDate, ddMMyyyyFormatter),
-            LocalDate.parse(monthEntity.endDate, ddMMyyyyFormatter),
+            indexFromList, LocalDate.parse(monthEntity.startDate, DateUtils.ddMMyyyyFormatter),
+            LocalDate.parse(monthEntity.endDate, DateUtils.ddMMyyyyFormatter),
             monthEntity.monthName, monthEntity.importance
         )
     }

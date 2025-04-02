@@ -1427,23 +1427,23 @@
   },
   {
     "date": "13-04-2025",
-    "events": "Sankranti, Okdoh"
+    "events": "Vaisakhi, Okdoh"
   },
   {
     "date": "14-04-2025",
-    "events": "Dwitya"
+    "events": "Sankranti, Okdoh"
   },
   {
     "date": "15-04-2025",
-    "events": "Tritya"
+    "events": "Dwitya"
   },
   {
     "date": "16-04-2025",
-    "events": "Choram"
+    "events": "Tritya"
   },
   {
     "date": "17-04-2025",
-    "events": "Paancham"
+    "events": "Choram"
   },
   {
     "date": "18-04-2025",
@@ -1471,15 +1471,15 @@
   },
   {
     "date": "24-04-2025",
-    "events": "Dwadashi"
+    "events": "Ekadashi"
   },
   {
     "date": "25-04-2025",
-    "events": "Triyodashi"
+    "events": "Dwadashi"
   },
   {
     "date": "26-04-2025",
-    "events": "Chaturdashi"
+    "events": "Triyodashi"
   },
   {
     "date": "27-04-2025",
@@ -1491,10 +1491,10 @@
   },
   {
     "date": "29-04-2025",
-    "events": "Akshya Tritya, Dwitya"
+    "events": "Dwitya"
   },
   {
     "date": "30-04-2025",
-    "events": "Choram"
+    "events": "Akshya Tritya, Tritya"
   }
 ]

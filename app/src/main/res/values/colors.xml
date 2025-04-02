@@ -3,8 +3,6 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
-    <color name="LightPrimaryColor">#B2DFDB</color>
-
     <color name="grey">#BEBEBE</color>
 
     <color name="colorTextPrimary2">#333333</color>
@@ -13,16 +11,18 @@
     <color name="statusBarColor">#333333</color>
 
     <color name="ideal_background">#1E252F</color>
+    <color name="gunmetal">#1E252F</color>
+    <color name="persian_green">#339989</color>
+    <color name="sea_green">#058C42</color>
+    <color name="teal">#028090</color>
+    <color name="royal_blue">#4169e2</color>
+    <color name="tiffany_blue">#7DE2D1</color>
+    <color name="snow">#FFFAFB</color>
+    <color name="thistle">#B7ADCF</color>
 
-    <!--Calendar-->
-    <color name="dark_desaturated_violet">#3A284C</color>
-    <color name="dark_saturated_violet">#433254</color>
+    <color name="violet">#522B47</color>
 
-    <color name="cv_page_bg_color">#0E0E0E</color>
-    <color name="cv_item_view_bg_color">#1B1B1B</color>
-    <color name="cv_toolbar_color">#282828</color>
-    <color name="cv_text_grey">#bdbdbd</color>
-    <color name="cv_text_grey_light">#616161</color>
+    <color name="cv_text_grey_light">#B7ADCF</color>
 
     <color name="brown_700">#5D4037</color>
     <color name="blue_grey_700">#455A64</color>

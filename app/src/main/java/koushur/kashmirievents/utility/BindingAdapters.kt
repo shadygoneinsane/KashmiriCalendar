@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.databinding.BindingAdapter
 import koushir.kashmirievents.R
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 @BindingAdapter("setColor")
@@ -28,13 +30,13 @@ fun View.setBackground(@Importance imp: Int?) {
 
 @BindingAdapter("setImportance")
 fun View.setImportance(@Importance imp: Int?) {
-    val r = 8f
+    val r = 24f
     val shape = ShapeDrawable(RoundRectShape(floatArrayOf(r, r, r, r, r, r, r, r), null, null))
     val color = context.getColorCompat(
         when (imp) {
             Importance.high -> R.color.red_800
             Importance.med -> R.color.teal_700
-            Importance.low -> R.color.blue_800
+            Importance.low -> R.color.royal_blue
             else -> R.color.brown_700
         }
     )
@@ -69,7 +71,14 @@ fun TextView.setImportance(@Importance imp: Int?) {
     setTextColor(context.getColorCompat(color))
     setTypeface(Typeface.DEFAULT, typeFace)
 }
+
 @BindingAdapter("isVisible")
 fun showHide(view: View, isVisible: Boolean?) {
     view.visibility = if (isVisible != null && isVisible) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("setLocalDate")
+fun TextView.setLocalDate(localDate: LocalDate?) {
+    val formatter = DateTimeFormatter.ofPattern(DateUtils.dayMonthYear)
+    text = localDate?.format(formatter) ?: ""
 }

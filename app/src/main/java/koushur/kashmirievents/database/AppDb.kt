@@ -12,7 +12,7 @@ import koushur.kashmirievents.database.entity.SavedEventEntity
  */
 @Database(
     entities = [SavedEventEntity::class],
-    version = 2, exportSchema = false
+    version = 2, exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class AppDb : RoomDatabase() {

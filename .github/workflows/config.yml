@@ -32,7 +32,7 @@ jobs:
           KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
           KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
           KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
-        run: echo -n $ENCODED_KEYSTORE | base64 -d > keys/release/keystore.jks
+        run: echo -n $ENCODED_KEYSTORE | base64 -d > keys/release/KashmiriEvents.jks
 
       #- name: Verify keystore file
       #  run: ls -l keys/release/

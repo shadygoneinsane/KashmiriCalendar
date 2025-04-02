@@ -31,7 +31,7 @@ annotation class Days {
             ashtami, navum, dhashmi, ekadashi, dwadashi, triyodashi, chaturdashi, poornima
         )
 
-        val highlights = listOf(amavasya, ashtami, poornima)
+        val highlights = listOf(amavasya, ashtami, ekadashi, poornima)
 
         val days = mapOf(
             amavasya to 0,

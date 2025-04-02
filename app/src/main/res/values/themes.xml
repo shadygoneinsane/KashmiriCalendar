@@ -16,20 +16,20 @@
         <!--colorPrimary colors map to components and elements, such as app bars and buttons. -->
         <!--colorSecondary colors are most often used as accents on components, such as FABs and -->
         <!--selection controls.-->
-        <item name="colorPrimary">@color/dark_saturated_violet</item>
+        <item name="colorPrimary">@color/gunmetal</item>
         <!--<item name="colorPrimaryVariant">@color/purple_700</item>-->
-        <item name="colorSecondary">@color/dark_desaturated_violet</item>
+        <item name="colorSecondary">@color/gunmetal</item>
         <!--<item name="colorSecondaryVariant">@color/dBlue</item>-->
         <!--colorBackground appears behind scrollable content and is used for the default window-->
         <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
         <!--and menus. colorError is used to indicate an error state for components such as-->
         <!--text fields.-->
-        <item name="android:colorBackground">@color/white</item>
-        <item name="colorSurface">@color/dark_saturated_violet</item>
+        <item name="android:colorBackground">@color/gunmetal</item>
+        <item name="colorSurface">@color/violet</item>
         <item name="colorError">@color/red_600</item>
         <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
         <!--on which they appear.-->
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/snow</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="colorOnBackground">@color/black</item>
         <item name="colorOnSurface">@color/colorTextPrimary3</item>
@@ -60,5 +60,46 @@
 
     <style name="AppTheme.Fullscreen" parent="AppTheme.NoActionBar">
         <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!--background color-->
+        <item name="colorSurface">@color/ideal_background</item>
+        <!--action button color -->
+        <item name="colorPrimary">@color/snow</item>
+        <!--
+        <item name="colorSecondary">@color/snow</item>
+        <item name="colorOnPrimary">@color/snow</item>
+        <item name="colorOnSurface">@color/snow</item>
+        <item name="colorOnSecondary">@color/snow</item>
+        <item name="colorOnBackground">@color/snow</item>
+        -->
+        <!-- Title style -->
+        <item name="materialAlertDialogTitleTextStyle">@style/AlertDialog.Title.Text</item>
+        <!-- Body style -->
+        <item name="materialAlertDialogBodyTextStyle">@style/AlertDialog.Body.Text</item>
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
+    </style>
+
+    <style name="AlertDialog.Title.Text" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/snow</item>
+        <item name="android:textAppearance">@style/TextAppearance.Inter.SemiBold</item>
+    </style>
+
+    <style name="AlertDialog.Body.Text" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">@color/snow</item>
+        <item name="android:textSize">@dimen/dimen_sp17</item>
+        <item name="android:textAppearance">@style/TextAppearance.Inter.Medium.Body</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="android:elevation">@dimen/dimen_4dp</item>
+        <item name="elevation">@dimen/dimen_4dp</item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/dimen_4dp</item>
     </style>
 </resources>

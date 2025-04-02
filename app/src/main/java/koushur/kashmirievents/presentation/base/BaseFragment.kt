@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import koushir.kashmirievents.R
+import koushur.kashmirievents.utility.materialAlert
 
 
 abstract class BaseFragment<VB : ViewDataBinding>(private val layoutId: Int) : Fragment() {
@@ -61,5 +62,9 @@ abstract class BaseFragment<VB : ViewDataBinding>(private val layoutId: Int) : F
     protected fun hideLoading() {
         if (::progressAlertDialog.isInitialized)
             progressAlertDialog.dismiss()
+    }
+
+    protected fun complain(message: String) {
+        "Error: $message".materialAlert(context)
     }
 }

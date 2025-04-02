@@ -16,7 +16,7 @@ import java.io.PrintStream
  * Author: Vikesh Dass
  * Created on: 30-03-2020
  */
-fun log(text: String, writeToText: Boolean = true) {
+fun log(text: String, writeToText: Boolean = false) {
     Timber.tag(LOGGER).d(text.formatLogText(LOGGER))
     if (writeToText) text.formatLogText().writeLogsToTextFile()
 }

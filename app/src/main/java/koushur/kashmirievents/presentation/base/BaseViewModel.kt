@@ -1,18 +1,10 @@
 package koushur.kashmirievents.presentation.base
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.CoroutineContext
+import koushur.kashmirievents.presentation.navigation.SingleLiveEvent
 
 open class BaseViewModel : ViewModel() {
+    protected val errorListener = SingleLiveEvent<Unit?>()
 
-    fun execute(context: CoroutineContext, block: () -> Unit) {
-        viewModelScope.launch {
-            withContext(context) {
-                block.invoke()
-            }
-        }
-    }
+    fun getErrorEvent() = errorListener
 }

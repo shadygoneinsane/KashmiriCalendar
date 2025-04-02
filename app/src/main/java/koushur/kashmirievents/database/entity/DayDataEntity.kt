@@ -2,18 +2,15 @@ package koushur.kashmirievents.database.entity
 
 import com.google.gson.annotations.SerializedName
 import koushur.kashmirievents.database.data.DayEvent
-import koushur.kashmirievents.utility.ddMMyyyyFormatter
+import koushur.kashmirievents.utility.DateUtils
 import java.time.LocalDate
 
 data class DayDataEntity(
-    @SerializedName("date")
-    val date: String,
+    @SerializedName("date") val date: String,
 
-    @SerializedName("events")
-    val eventName: String = "",
+    @SerializedName("events") val eventName: String = "",
 
-    @SerializedName("imp")
-    val imp: Int = 0
+    @SerializedName("imp") val imp: Int = 0
 )
 
 /**
@@ -22,15 +19,18 @@ data class DayDataEntity(
  */
 fun List<DayDataEntity>.map(): List<DayEvent> {
     val list = this.map { dayEntity ->
-        val indexFromList =
-            Days.daysList.indexOf(Days.daysList.find { dayEntity.eventName.contains(it) } ?: "")
+        val indexFromList = Days.daysList.indexOf(dayEntity.eventName.matchDayNameFromConstants())
         DayEvent(
             indexOfDay = indexFromList,
-            date = LocalDate.parse(dayEntity.date, ddMMyyyyFormatter),
+            date = LocalDate.parse(dayEntity.date, DateUtils.ddMMyyyyFormatter),
             dayName = dayEntity.eventName,
             imp = dayEntity.imp
         )
     }
 
     return list
+}
+
+fun String.matchDayNameFromConstants(): String {
+    return Days.daysList.find { contains(it) } ?: ""
 }

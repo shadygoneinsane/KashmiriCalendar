@@ -30,7 +30,7 @@ private fun provideRetrofit(
 }
 
 private fun provideBaseUrl(): String {
-    return BuildConfig.BASE_URL
+    return "https//api.github.com/"
 }
 
 private fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient.Builder {

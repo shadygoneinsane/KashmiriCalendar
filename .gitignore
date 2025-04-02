@@ -11,4 +11,5 @@
 /keys/keystore.properties
 /keys/release/KashmiriEvents.jks
 /app/release/
+/app/schemas/
 /app/gradle.properties
