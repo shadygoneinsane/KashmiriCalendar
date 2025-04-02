@@ -63,7 +63,8 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/eventName"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintVertical_bias="0"
+            tools:text="@string/label_event_date_saved" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/eventDate"
@@ -83,6 +84,13 @@
             app:setLocalDate="@{event.selectedDate}"
             tools:text="Mon, 16 July" />
 
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="labelEventDate,eventDate" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/labelTithiName"
             style="@style/TextAppearance.Inter.Medium"
@@ -97,7 +105,7 @@
             app:layout_constraintEnd_toEndOf="@id/guide_mid"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/eventDate"
+            app:layout_constraintTop_toBottomOf="@id/barrier_event_date"
             app:layout_constraintVertical_bias="0" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -115,6 +123,13 @@
             app:layout_constraintTop_toTopOf="@id/labelTithiName"
             tools:text="Ashtami " />
 
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_event_tithi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tithiName,labelTithiName" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/labelMonthName"
             style="@style/TextAppearance.Inter.Medium"
@@ -129,7 +144,7 @@
             app:layout_constraintEnd_toEndOf="@id/guide_mid"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tithiName" />
+            app:layout_constraintTop_toBottomOf="@+id/barrier_event_tithi" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/monthName"

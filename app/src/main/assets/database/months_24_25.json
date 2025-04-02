@@ -91,7 +91,7 @@
   },
   {
     "startDate": "14-01-2025",
-    "endDate": "29-12-2025",
+    "endDate": "29-01-2025",
     "monthName": "Maagh Krishna Paksha"
   },
   {
@@ -170,6 +170,11 @@
     "imp": "2"
   },
   {
+    "startDate": "31-12-2024",
+    "endDate": "13-01-2025",
+    "monthName": "Poh Shukla Paksha"
+  },
+  {
     "startDate": "03-01-2025",
     "endDate": "07-01-2025",
     "monthName": "Panchak",
@@ -207,10 +212,5 @@
     "startDate": "15-03-2025",
     "endDate": "29-03-2025",
     "monthName": "Chaitra Krishna Paksha"
-  },
-  {
-    "startDate": "31-12-2024",
-    "endDate": "13-01-2025",
-    "monthName": "Poh Shukla Paksha"
   }
 ]

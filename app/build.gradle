@@ -23,8 +23,8 @@ android {
         applicationId "koshur.kashmirievents"
         minSdkVersion 22
         targetSdkVersion project.android_sdk_version
-        versionCode 16
-        versionName "1.4.00"
+        versionCode 18
+        versionName "1.5.00"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField STRING, APP_ID, app_id

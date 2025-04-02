@@ -92,7 +92,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
 
         //setup calendar
         viewBinding.cvMain.setup(
-            YearMonth.of(2022, Month.MARCH), YearMonth.of(2025, Month.APRIL), daysOfWeek.first()
+            YearMonth.of(2022, Month.MARCH), YearMonth.of(2026, Month.MARCH), daysOfWeek.first()
         )
 
         viewBinding.rvHighlightEvents.addItemDecoration(
@@ -139,12 +139,14 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(R.layout.fragment_l
                 add(loadJSONFromAsset(it, AppConstants.dbDayEvents_22_23))
                 add(loadJSONFromAsset(it, AppConstants.dbDayEvents_23_24))
                 add(loadJSONFromAsset(it, AppConstants.dbDayEvents_24_25))
+                add(loadJSONFromAsset(it, AppConstants.dbDayEvents_25_26))
             }
 
             val monthlyEvents = mutableListOf<String?>().apply {
                 add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_23_24))
                 add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_22_23))
                 add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_24_25))
+                add(loadJSONFromAsset(it, AppConstants.dbMonthEvents_25_26))
             }
 
             viewModel.processDataFromJson(dailyEvents, monthlyEvents)
