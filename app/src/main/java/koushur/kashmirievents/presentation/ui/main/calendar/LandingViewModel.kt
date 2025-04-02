@@ -100,13 +100,17 @@ class LandingViewModel(
      */
     fun processDataFromJson(dailyEvents: List<String?>, monthlyEvents: List<String?>) {
         viewModelScope.launch(dispatcher.io()) {
-            listOfMonthEvents.clear()
-            monthEventsMap.clear()
-            groupedByLocalDateMap.postValue(mutableMapOf())
-            groupedByMonthMap = emptyMap()
+            resetData()
             setMonthEventsData(monthlyEvents)
             setDaysEventsData(dailyEvents)
         }
+    }
+
+    private fun resetData() {
+        listOfMonthEvents.clear()
+        monthEventsMap.clear()
+        groupedByLocalDateMap.postValue(mutableMapOf())
+        groupedByMonthMap = emptyMap()
     }
 
     /**
@@ -239,19 +243,21 @@ class LandingViewModel(
 
     fun findYearMonthDetails(events: List<DayEvent>?, date: LocalDate): Bundle? {
         val dayIndex = events?.find { it.indexOfDay != -1 }?.indexOfDay ?: -1
+        if (dayIndex !in Days.daysList.indices) return null
         val dayName = Days.daysList[dayIndex]
         val monthMap: MonthEvent? =
             listOfMonthEvents.find { isDateWithinMonth(date, it.startDate, it.endDate) }
-        if (monthMap == null || monthMap.indexOfMonth == -1 || (monthMap.indexOfMonth != Months.monthsMap[monthMap.monthName])) {
-            return null
+        return if (monthMap == null || monthMap.indexOfMonth == -1 || (monthMap.indexOfMonth != Months.monthsMap[monthMap.monthName.trim()])) {
+            null
+        } else {
+            bundleOf(
+                Constants.EXTRA_DATE to date,
+                Constants.EXTRA_MONTH_INDEX to monthMap.indexOfMonth,
+                Constants.EXTRA_MONTH_NAME to monthMap.monthName,
+                Constants.EXTRA_DAY_INDEX to dayIndex,
+                Constants.EXTRA_DAY_NAME to dayName
+            )
         }
-        return bundleOf(
-            Constants.EXTRA_DATE to date,
-            Constants.EXTRA_MONTH_INDEX to monthMap.indexOfMonth,
-            Constants.EXTRA_MONTH_NAME to monthMap.monthName,
-            Constants.EXTRA_DAY_INDEX to dayIndex,
-            Constants.EXTRA_DAY_NAME to dayName
-        )
     }
 
     private fun isDateWithinMonth(
